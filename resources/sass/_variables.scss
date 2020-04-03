@@ -1,0 +1,44 @@
+// Body
+@import '~bootstrap/scss/bootstrap';
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$ph-bg:                   #fff !default;
+$ph-color:                #ced4da !default;
+$ph-border-radius:        2px !default;
+
+$ph-gutter:               30px !default;
+$ph-spacer:               15px !default;
+
+$ph-avatar-border-radius: 50% !default;
+
+$ph-animation-duration: .8s;
+
+// Colors
+$white:white;
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$padding_zero: 0px;
+$padding_one: 1px;
+$padding_two: 2px;
+$padding_five: 5px;
+$padding_seven: 7px;
+$padding_ten: 10px;
+$fb: #e9ebee;
+$site_blue: #3697ad;
+$top_point3:.3em !important;
+$top_point5: .5em !important;
+$one_em: 1em !important;
+$grey_white: #8e8080;

@@ -1,0 +1,273 @@
+<div class="col-md-4 padding-0" >
+	<div class="col-md-12 profile-sticky" >
+		<ul class="list-group nav nav-tabs" role="tablist">
+			<li class="list-group-item font side-border whitesmoke">
+				<i class="fa fa-newspaper site-color"></i>
+			</li>
+			<li class="list-group-item nav-item padding-2">
+			  <a class="nav-link active" data-toggle="tab" data-target="#aboutme">
+			  	<i class="fa fa-user-tie"></i>&nbsp;&nbsp;&nbsp;Profile
+			  </a>
+			</li>
+			<li class="list-group-item nav-item padding-2">
+			  <a class="nav-link font" data-toggle="tab" data-target="#experience">
+			  	<i class="fa fa-hammer"></i>&nbsp;&nbsp;&nbsp;Work Experience
+			  </a>
+			</li>
+			<li class="list-group-item nav-item padding-2">
+			  <a class="nav-link" data-toggle="tab" data-target="#education">
+			  	<i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;&nbsp;Education
+			  </a>
+			</li>
+			<br />
+			<li class="list-group-item font side-border whitesmoke">
+				<i class="fa fa-folder-open site-color"></i>
+			</li>
+			<li class="list-group-item nav-item padding-2">
+			  <a class="nav-link" data-toggle="tab" data-target="#business">
+			  	<i class="fa fa-chart-bar"></i>&nbsp;&nbsp;&nbsp;Business
+			  </a>
+			</li>
+		</ul>
+	</div>
+	<br />
+</div>
+<div class="col-md-8 padding-left-0" >
+  <div class="tab-content" >
+    <ul class="list-group" >
+		<li class="list-group-item side-border font site-color" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+			<i class="fa fa-map-marker-alt"></i>
+		</li>
+    </ul>
+    <div id="aboutme" class="container tab-pane active padding-0 top_point3">
+	     <ul class="list-group" >
+			<li class="list-group-item font" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<div class="col padding-0" ng-if="!pc.editing_profilename">
+					<span class="badge badge-primary badge-pill float-right cursor" ng-click="pc.editProfileNameAddress(p)">Edit</span> 
+					Name: <span>{{p.firstname}}&nbsp;{{p.middlename}}&nbsp;{{p.lastname}}</span>
+					<br />
+					Address: <span>{{p.address}}</span>
+				</div>
+				<div class="col" ng-if="pc.editing_profilename">
+					Firstname:
+					<input type="text" ng-model="pc.firstname" class="form-control form-control-sm">
+					Middlename:
+					<input type="text" ng-model="pc.middlename" class="form-control form-control-sm">
+					Lastname:
+					<input type="text" ng-model="pc.lastname" class="form-control form-control-sm">
+					Address:
+					<input type="text" ng-model="pc.address" class="form-control form-control-sm">
+					<br />
+					<button class="btn btn-info btn-sm"  ng-click="pc.updateNameAddress()" ng-disabled="pc.updating_name_address">
+						<i class="fa fa-spinner fa-spin font-17px" ng-if="pc.updating_name_address"></i>
+						{{pc.updatingNameAddress}}
+					</button>
+					<button class="btn btn-secondary btn-sm" ng-click="pc.cancelNameAddressEdit()" >Cancel</button>
+				</div>
+			</li>
+			<li class="list-group-item top_point3">
+				<div class="col padding-0" ng-if="!pc.editing_profile">
+					<span class="badge badge-success badge-pill float-right cursor" ng-click="pc.editProfileDetails(p)">Edit</span> 
+					<span>Contact: {{p.contact_no}}</span>
+					<br />
+					<span>Gender: {{p.gender}}</span>
+					<br />
+					<span>Date of Birth: {{p.birthdate}}</span>
+					<br /> 
+					<span >Permanent Address: {{p.permanent_address}}</span>
+					<br />
+				</div>
+				<div class="col" ng-if="pc.editing_profile">
+					Contact:
+					<input type="text" ng-model="pc.contact_no" class="form-control form-control-sm">
+					Gender:
+					<select class="custom-select custom-select-sm" ng-model="pc.gender">
+						<option value="male">male</option>
+						<option value="female">female</option>
+					</select>
+					Date of Birth:
+					<input type="text" ng-model="pc.birthdate" class="form-control form-control-sm">
+					Permanent Address: 
+					<input type="text" ng-model="pc.permanent_address" class="form-control form-control-sm">
+					<br />
+					<button class="btn btn-info btn-sm"  ng-click="pc.updateProfile()" ng-disabled="pc.updating_profile">
+						<i class="fa fa-spinner fa-spin font-17px" ng-if="pc.updating_profile"></i>
+						{{pc.updatingProfile}}
+					</button>
+					<button class="btn btn-secondary btn-sm" ng-click="pc.cancelProfileEdit()" >Cancel</button>
+				</div>
+			</li>
+			<li class="list-group-item font top_1em site-color" style="border-bottom: solid 1px #d6d6d6;height: 47px;border-radius: 2px !important;">
+				<i class="fa fa-briefcase"></i>&nbsp;Works at
+				<span class="badge badge-success badge-pill float-right cursor" ng-click="pc.editJob(p)">Edit</span>
+			</li>
+			<li class="list-group-item font" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<div class="col padding-0" ng-if="!pc.editing_job">
+					Company:&nbsp;
+					<span>{{p.company | status }}</span>
+					<br />
+					Position:&nbsp;
+					<span>{{p.job | status }}</span>
+				</div>
+				<div class="col" ng-if="pc.editing_job">
+					Company:
+					<input type="text" ng-model="pc.company" class="form-control form-control-sm">
+					Job:
+					<input type="text" ng-model="pc.job" class="form-control form-control-sm">
+					<br />
+					<button class="btn btn-info btn-sm"  ng-click="pc.updateJob()" ng-disabled="pc.updating_job">
+						<i class="fa fa-spinner fa-spin font-17px" ng-if="pc.updating_job"></i>
+						{{pc.updatingJob}}
+					</button>
+					<button class="btn btn-secondary btn-sm" ng-click="pc.cancelJobEdit()">Cancel</button>
+				</div>
+			</li>
+			<li class="list-group-item font top_1em site-color" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<i class="fa fa-user-graduate"></i>&nbsp;Graduated at the University of antique
+			</li>
+			<li class="list-group-item font" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<span>{{p.course_name}} - {{p.department_name}}</span>
+				<br />
+				Year - <span>{{p.year_graduated}}</span>
+				<br />
+				<br />
+				Student ID NO.
+				<br />
+				<span>{{p.student_id_number}}</span>
+			</li>
+			<br />
+			<li class="list-group-item font side-border site-color" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<i class="fa fa-users-cog"></i>&nbsp;Skills
+				<span class="badge badge-primary badge-pill float-right cursor" ng-click="pc.showInput()">
+					&nbsp;<i class="fa fa-plus"></i>&nbsp;
+				</span>
+			</li>
+			<li class="list-group-item font" ng-if="pc.show_add_input">
+				<div class="row">
+					<div class="col-md-8 padding-0">
+						<input type="text" class="form-control form-control-sm" ng-model="pc.skill" >
+					</div>
+					<div class="col">
+						<button class="btn btn-info btn-sm" ng-click="pc.addSkill(pc.skill)">Add</button>
+						<button class="btn btn-secondary btn-sm" ng-click="pc.cancelAddingSkill()">Cancel</button>	
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item" ng-repeat="s in pc.skills">
+				{{s.skills}}
+				<span class="badge badge-danger badge-pill float-right cursor" ng-click="pc.removeSkills(s)">
+					<i class="fa fa-minus"></i>
+				</span>
+			</li>
+			<li class="list-group-item" ng-if="pc.emptySkills">
+				Add Some Skills to your profile.
+			</li>
+			<br />
+	    </ul>
+    </div>
+    <div id="experience" class="container tab-pane fade padding-0 top_point3">
+	     <ul class="list-group" >
+			<li class="list-group-item font site-color" style="border-bottom: solid 1px #d6d6d6;height: 47px;border-radius: 2px !important;">
+				<i class="fa fa-briefcase"></i>&nbsp;Experience
+				<span class="badge badge-primary badge-pill float-right cursor" ng-click="pc.showWorkExpInput()">
+					&nbsp;<i class="fa fa-plus"></i>&nbsp;
+				</span>
+			</li>
+			<li class="list-group-item bottom_point1" ng-if="pc.showWorkExp">
+				<form ng-submit="pc.saveWorkExperience()">
+					<label>Company</label>
+					<input type="text" class="form-control form-control-sm" ng-model="pc.w_company_name" required>
+					<label>Position</label>
+					<input type="text" class="form-control form-control-sm" ng-model="pc.w_position" required>
+					<input type="submit" class="btn btn-info top_1em" value="Save">
+					<input type="button" class="btn btn-secondary top_1em" value="Cancel" ng-click="pc.cancelAddWorkExp()">
+				</form>
+			</li>
+			<li class="list-group-item font bottom_point1" >
+				Company:&nbsp;{{p.company}}
+				<br />
+				Position:&nbsp;{{p.job}}
+			</li>
+			<li class="list-group-item font bottom_point1" ng-repeat="w in pc.work_experiences">
+				<span class="badge badge-danger badge-pill float-right cursor" ng-click="pc.removeWorkExp(w)">
+					<i class="fa fa-minus"></i>
+				</span>				
+				Company:&nbsp;{{w.w_company_name}}
+				<br />
+				Position:&nbsp;{{w.w_position}}
+			</li>
+			<br />
+	    </ul>
+    </div>
+    <div id="education" class="container tab-pane fade padding-0 top_point3" >
+	     <ul class="list-group" >
+			<li class="list-group-item font top_point3 site-color" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<i class="fa fa-user-graduate"></i>&nbsp;Educational Background
+				<span class="badge badge-info badge-pill float-right cursor" ng-click="pc.addingEducation()">
+					<i class="fa fa-plus"></i>
+				</span>		
+			</li>
+			<li class="list-group-item" ng-if="pc.education_adding">
+				<form>
+					<label>Course</label>	
+					<input type="text" class="form-control form-control-sm" ng-model="pc.degree">
+					<label>School</label>
+					<input type="text" class="form-control form-control-sm" ng-model="pc.school">
+					<label>Year Graduated</label>
+					<input type="text" class="form-control form-control-sm" ng-model="pc.year_graduated">
+					<br />
+					<button class="btn btn-info btn-sm"  ng-click="pc.addEducation()" >
+						{{pc.add_status}}
+					</button>
+					<button class="btn btn-secondary btn-sm" ng-click="pc.cancelAdding()" >Cancel</button>
+				</form>
+			</li>
+			<li class="list-group-item font" style="border-bottom: solid 1px #d6d6d6;border-radius: 2px !important;">
+				<span>Course</span>:&nbsp;<span>{{p.course_name}}</span>
+				<br />
+				<span>School</span>:&nbsp;<span>{{p.department_name}} Department</span>
+				<br />
+				<span>Year Graduated - </span>:&nbsp;<span>{{p.year_graduated}}</span>
+				<br />
+			</li>
+	     	<li class="list-group-item font bottom_point1" ng-repeat="e in pc.educations">
+				<update-education education="e"></update-education>	
+			</li>
+			<br />
+	    </ul>
+    </div>
+    <div id="job" class="container tab-pane fade padding-0 top_point3">
+	     <ul class="list-group" >
+			<li class="list-group-item font" >
+				Job
+			</li>
+	    </ul>
+    </div>
+    <div id="business" class="container tab-pane fade padding-0 top_point3">
+	    <ul class="list-group" >
+			<li class="list-group-item font side-border site-color" >
+				<i class="fa fa-briefcase"></i>&nbsp;Businesses
+				<span class="badge badge-primary badge-pill float-right cursor" ng-click="pc.showBusinessInput()">
+					&nbsp;<i class="fa fa-plus"></i>&nbsp;
+				</span>
+			</li>
+			<li class="list-group-item bottom_point1" ng-if="pc.show_business_input">
+				<form ng-submit="pc.saveBusiness()">
+					<label>Company</label>
+					<input type="text" class="form-control form-control-sm" ng-model="pc.business_name" required>
+					<input type="submit" class="btn btn-info top_1em" value="Save">
+					<input type="button" class="btn btn-secondary top_1em" value="Cancel" ng-click="pc.cancelAddingBusiness()">
+				</form>
+			</li>
+			<li class="list-group-item font" ng-repeat="b in pc.businesses">
+				<span class="badge badge-danger badge-pill float-right cursor" ng-click="pc.removeBusiness(b)">
+					<i class="fa fa-minus"></i>
+				</span>
+				<span>Owner of</span>
+				<br />
+				{{b.business_name}}
+			</li>
+	    </ul>
+    </div>
+  </div>
+</div>
