@@ -7,9 +7,13 @@
                              <span style="font-size: 12px;padding-right: 7px;">Dane Vincent Painaga</span>
 				                  </a>
 				                  <a class="nav-link" href="#!/account" style="position: relative;border-right: solid 1px #e0e0e0;color: #25a6bf;">
-				                    <i class="fa fa-users font-19"></i>
+				                    <i class="fa fa-users "></i>
 				                    <span style="font-size: 13px;">&nbsp;Followers</span>
 				                  </a>
+                          <a class="nav-link" href="#!/account" style="position: relative;border-right: solid 1px #e0e0e0;color: #25a6bf;">
+                            <i class="fa fa-user "></i>
+                            <span style="font-size: 13px;">&nbsp;Following</span>
+                          </a>
 					          </nav>
 					        </div>
                   <div class="col-md-1"></div>
@@ -55,12 +59,20 @@
             Events
           </a>
         </li>
+        <li class="list-group-item font padding-7" style="color: rgba(0,0,0,.6) !important;border-radius: 0px;">
+          <img src="images/donation.png" style="max-width:21px; ">
+          &nbsp;
+          <a href="#" style="color: rgba(0,0,0,.6) !important;">
+            Donations
+          </a>
+        </li>
       </ul>
 
       <div class="row">
         <div class="col-md-12">
           <ul class="list-group" style="margin-top: 1em;">
             <li class="list-group-item font padding-10" style="background-color: #f5f6f763;border-bottom: solid 2px #4bb9d2; ">
+              <img src="images/information.svg" style="max-width:16px; ">
               <span>Info</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center font padding-7">
@@ -77,7 +89,7 @@
 
       <ul class="list-group" style="margin-top: 1em;">
        <li class="list-group-item font padding-7 side-border" style="border-radius: 0px;background-color: #f5f6f763;">
-          <img src="images/friend.svg" style="max-width:20px; ">&nbsp;<span>Suggested people...</span>
+          <img src="images/team.svg" style="max-width:21px; ">&nbsp;<span>Suggested people...</span>
         </li>
         <li class="list-group-item font padding-2">
           <div class="row" style="margin-right: 0px !important; margin-left: 0px !important;" >
@@ -108,9 +120,22 @@
           </div>
         </li>
         <li class="list-group-item font padding-5">
-          <button class="btn btn-light btn-sm whitesmoke" style="color:#349ee6;">View All</button>
+          <button class="btn btn-light btn-sm whitesmoke" style="color:#349ee6;" ng-click="navigate('/suggested_people')">View All</button>
         </li>
       </ul>
+      <div class="col-md-12 padding-0 top_point3">
+        <div class="card padding-5" style="border-radius: 0px;">
+          <div class="card-body text-center padding-0">
+            <img src="images/fb.svg" style="width: 30px;">
+            <img src="images/twitter.svg" style="width: 31px;">
+            <img src="images/instagram.svg" style="width: 31px;">
+            <img src="images/linkedin.svg" style="width: 33px;">
+            <img src="images/youtube.svg" style="width: 31px;">
+            <img src="images/gmail.svg" style="width: 29px;">
+          </div>
+        </div>
+      </div>
+
   </div>
 </div>
 <div class="col-md-7 padding-0">
