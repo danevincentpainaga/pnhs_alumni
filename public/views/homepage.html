@@ -1,196 +1,159 @@
-					<div class="container-fluid" >
-					    <div class="row">
-					      <div class="col" style="padding-right: 0px;">
-					        <nav class="navbar navbar-expand-md padding-0" style="background-color: white;border-bottom: solid 1px #dddfe2;padding-top: 0px; padding-bottom: 0px;height: 45px;border-left:1px solid #8e9196 !important;border-right: 1px solid #8e9196 !important;">
-				                  <a class="nav-link" href="#!/account" style="border-right: solid 1px #e0e0e0;color: rgba(0,0,0,.6);padding: 0.5rem .6rem;">
-                             <img src="uploads/dane.jpg" style="width: 30px;border-radius: 50%;">&nbsp;<span style="font-weight: 500;">
-                             <span style="font-size: 12px;padding-right: 7px;">Dane Vincent Painaga</span>
-				                  </a>
-				                  <a class="nav-link" href="#!/account" style="position: relative;border-right: solid 1px #e0e0e0;color: #25a6bf;">
-				                    <i class="fa fa-users "></i>
-				                    <span style="font-size: 13px;">&nbsp;Followers</span>
-				                  </a>
-                          <a class="nav-link" href="#!/account" style="position: relative;border-right: solid 1px #e0e0e0;color: #25a6bf;">
-                            <i class="fa fa-user "></i>
-                            <span style="font-size: 13px;">&nbsp;Following</span>
-                          </a>
-					          </nav>
-					        </div>
-                  <div class="col-md-1"></div>
-					    </div>
-					    <div class="row" style="margin-top: .7em;">
-
-
-
-<div class="col-md-4 " >
-              <div class="col">
-                <div class="row box-shadow" style="background: linear-gradient(90deg,#2896b7,#23b8c7 40%,#09f3e8);height: 120px;border-left: 1px solid #8e9196 !important; border-right: 1px solid #8e9196 !important;" >
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <nav class="navbar navbar-expand-md" style="background-color: white;padding-top: 0px; padding-bottom: 0px;height: 45px;border-left:1px solid #8e9196 !important;border-right: 1px solid #8e9196 !important;">
-                        <div class="col" >
-                          <img src="uploads/zoe.jpg" style="height: 125px;z-index: 1;position: absolute;top:-119px;width: 125px;border: solid 3px white; border-radius: 6em; min-width: 125px; max-height: 125px;left: 58px;">
-                        </div>
-                    </nav>
-                  </div>
-              </div>
-  <div class="col-md-12 padding-0 timeline-sticky">
-    <ul class="list-group ">
-        <li class="list-group-item font padding-7" style="border-radius: 0px;" >
-          <img src="images/responsive.svg" style="max-width:20px; ">
-          &nbsp;
-          <a href="#!/admin" style="color: rgba(0,0,0,.6) !important;">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" style="padding-right: 0px;">
+      <nav class="navbar navbar-expand-md padding-0" style="background-color: white;border-bottom: solid 1px #dddfe2;padding-top: 0px; padding-bottom: 0px;height: 45px;border-left:1px solid #8e9196 !important;border-right: 1px solid #8e9196 !important;">
+        <a class="nav-link" href="#!/account" style="border-right: solid 1px #e0e0e0;color: rgba(0,0,0,.6);padding: 0.5rem .6rem;">
+          <img src="uploads/dane.jpg" style="width: 30px;border-radius: 50%;">&nbsp;<span style="font-weight: 500;">
+          <span style="font-size: 12px;padding-right: 7px;">Dane Vincent Painaga</span>
+        </a>
+        <a class="nav-link" href="/#!/profile/{{accountName}}/followers" style="position: relative;border-right: solid 1px #e0e0e0;color: #666666;"> <i class="fa fa-users "></i>
+          <span style="font-size: 13px;">&nbsp;Followers</span>
+        </a>
+        <a class="nav-link" href="/#!/following" style="position: relative;border-right: solid 1px #e0e0e0;color: #666666;"> <i class="fa fa-user-tag"></i>
+          <span style="font-size: 13px;">&nbsp;Following</span>
+        </a>
+      </nav>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <div class="row" style="margin-top: .7em;">
+    <div class="col-md-4 ">
+      <div class="col">
+        <div class="row box-shadow" style="background: linear-gradient(90deg,#2896b7,#23b8c7 40%,#09f3e8);height: 120px;border-left: 1px solid #8e9196 !important; border-right: 1px solid #8e9196 !important;"></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <nav class="navbar navbar-expand-md" style="background-color: white;padding-top: 0px; padding-bottom: 0px;height: 45px;border-left:1px solid #8e9196 !important;border-right: 1px solid #8e9196 !important;">
+            <div class="col">
+              <img src="uploads/zoe.jpg" style="height: 125px;z-index: 1;position: absolute;top:-119px;width: 125px;border: solid 3px white; border-radius: 6em; min-width: 125px; max-height: 125px;left: 58px;">
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="col-md-12 padding-0 timeline-sticky">
+        <ul class="list-group ">
+          <li class="list-group-item font padding-7" style="border-radius: 0px;">
+            <img src="images/responsive.svg" style="max-width:20px; ">&nbsp; <a href="#!/admin" style="color: rgba(0,0,0,.6) !important;">
             Administrator
           </a>
-        </li>
-        <li class="list-group-item font padding-7">
-          <img src="images/shield.svg" style="max-width:20px; ">
-          &nbsp;
-          <a href="#!/security?stud={{accountName}}" style="color: rgba(0,0,0,.6) !important;">
+          </li>
+          <li class="list-group-item font padding-7">
+            <img src="images/shield.svg" style="max-width:20px; ">&nbsp; <a href="/#!/security?stud={{accountName}}" style="color: rgba(0,0,0,.6) !important;">
             Security
           </a>
-        </li>
-        <li class="list-group-item font padding-7" style="color: rgba(0,0,0,.6) !important;border-radius: 0px;">
-          <img src="images/calendar.svg" style="max-width:20px; ">
-          &nbsp;
-          <a href="#" style="color: rgba(0,0,0,.6) !important;">
+          </li>
+          <li class="list-group-item font padding-7" style="color: rgba(0,0,0,.6) !important;border-radius: 0px;">
+            <img src="images/calendar.svg" style="max-width:20px; ">&nbsp; <a href="#" style="color: rgba(0,0,0,.6) !important;">
             Events
           </a>
-        </li>
-        <li class="list-group-item font padding-7" style="color: rgba(0,0,0,.6) !important;border-radius: 0px;">
-          <img src="images/donation.png" style="max-width:21px; ">
-          &nbsp;
-          <a href="#" style="color: rgba(0,0,0,.6) !important;">
+          </li>
+          <li class="list-group-item font padding-7" style="color: rgba(0,0,0,.6) !important;border-radius: 0px;">
+            <img src="images/donation.png" style="max-width:21px; ">&nbsp; <a href="#" style="color: rgba(0,0,0,.6) !important;">
             Donations
           </a>
-        </li>
-      </ul>
-
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="list-group" style="margin-top: 1em;">
+              <li class="list-group-item font padding-10" style="background-color: #f5f6f763;border-bottom: solid 2px #4bb9d2; ">
+                <img src="images/information.svg" style="max-width:16px; "> <span>Info</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center font padding-7">Year Graduated <span class="badge badge-info badge-pill">2014</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center font padding-7">Employment Status <span class="badge badge-pill" job-status status="{{ job }}" id="job"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul class="list-group" style="margin-top: 1em;">
+          <li class="list-group-item font padding-7 side-border" style="border-radius: 0px;background-color: #f5f6f763;">
+            <img src="images/team.svg" style="max-width:21px; ">&nbsp;<span>Suggested people...</span>
+          </li>
+          <li class="list-group-item font padding-2">
+            <div class="row" style="margin-right: 0px !important; margin-left: 0px !important;">
+              <div class="col-md-4 padding-2" style="height: 84px;">
+                <img src="uploads/1569745479.jpg" style="width: 87px; height: 80px;"> <span class="co-department-pics">{{co.firstname}}</span>
+              </div>
+              <div class="col-md-4 padding-2" style="height: 84px;">
+                <img src="uploads/dane.jpg" style="width: 87px; height: 80px;"> <span class="co-department-pics">{{co.firstname}}</span>
+              </div>
+              <div class="col-md-4 padding-2" style="height: 84px;">
+                <img src="uploads/user.jpg" style="width: 87px; height: 80px;"> <span class="co-department-pics">{{co.firstname}}</span>
+              </div>
+              <div class="col-md-4 padding-2" style="height: 84px;">
+                <img src="uploads/user.jpg" style="width: 87px; height: 80px;"> <span class="co-department-pics">{{co.firstname}}</span>
+              </div>
+              <div class="col-md-4 padding-2" style="height: 84px;">
+                <img src="uploads/user.jpg" style="width: 87px; height: 80px;"> <span class="co-department-pics">{{co.firstname}}</span>
+              </div>
+              <div class="col-md-4 padding-2" style="height: 84px;">
+                <img src="uploads/user.jpg" style="width: 87px; height: 80px;"> <span class="co-department-pics">{{co.firstname}}</span>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item font padding-5">
+            <button class="btn btn-light btn-sm whitesmoke" style="color:#349ee6;" ng-click="navigate('/suggested_people')">View All</button>
+          </li>
+        </ul>
+        <div class="col-md-12 padding-0 top_point3">
+          <div class="card padding-5" style="border-radius: 0px;">
+            <div class="card-body text-center padding-0">
+              <img src="images/fb.svg" style="width: 30px;">
+              <img src="images/twitter.svg" style="width: 31px;">
+              <img src="images/instagram.svg" style="width: 31px;">
+              <img src="images/linkedin.svg" style="width: 33px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7 padding-0">
       <div class="row">
         <div class="col-md-12">
-          <ul class="list-group" style="margin-top: 1em;">
-            <li class="list-group-item font padding-10" style="background-color: #f5f6f763;border-bottom: solid 2px #4bb9d2; ">
-              <img src="images/information.svg" style="max-width:16px; ">
-              <span>Info</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center font padding-7">
-              Year Graduated
-              <span class="badge badge-info badge-pill">2014</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center font padding-7">
-              Employment Status
-              <span class="badge badge-pill" job-status status="{{ job }}" id="job"></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <ul class="list-group" style="margin-top: 1em;">
-       <li class="list-group-item font padding-7 side-border" style="border-radius: 0px;background-color: #f5f6f763;">
-          <img src="images/team.svg" style="max-width:21px; ">&nbsp;<span>Suggested people...</span>
-        </li>
-        <li class="list-group-item font padding-2">
-          <div class="row" style="margin-right: 0px !important; margin-left: 0px !important;" >
-            <div class="col-md-4 padding-2" style="height: 77px;" >
-              <img src="uploads/1569745479.jpg" style="width: 85px; height: 75px;">
-              <span class="co-department-pics">{{co.firstname}}</span>
+          <div class="card">
+            <div class="card-header padding-5 text-left" style="background-color: #f5f6f763;color:#7f8282;"> <i class="fa fa-pen"></i>  <span>Create Post</span>
             </div>
-            <div class="col-md-4 padding-2" style="height: 77px;" >
-              <img src="uploads/dane.jpg" style="width: 85px; height: 75px;">
-              <span class="co-department-pics">{{co.firstname}}</span>
-            </div>
-            <div class="col-md-4 padding-2" style="height: 77px;" >
-              <img src="uploads/user.jpg" style="width: 85px; height: 75px;">
-              <span class="co-department-pics">{{co.firstname}}</span>
-            </div>
-            <div class="col-md-4 padding-2" style="height: 77px;" >
-              <img src="uploads/user.jpg" style="width: 85px; height: 75px;">
-              <span class="co-department-pics">{{co.firstname}}</span>
-            </div>
-            <div class="col-md-4 padding-2" style="height: 77px;" >
-              <img src="uploads/user.jpg" style="width: 85px; height: 75px;">
-              <span class="co-department-pics">{{co.firstname}}</span>
-            </div>
-            <div class="col-md-4 padding-2" style="height: 77px;" >
-              <img src="uploads/user.jpg" style="width: 85px; height: 75px;">
-              <span class="co-department-pics">{{co.firstname}}</span>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item font padding-5">
-          <button class="btn btn-light btn-sm whitesmoke" style="color:#349ee6;" ng-click="navigate('/suggested_people')">View All</button>
-        </li>
-      </ul>
-      <div class="col-md-12 padding-0 top_point3">
-        <div class="card padding-5" style="border-radius: 0px;">
-          <div class="card-body text-center padding-0">
-            <img src="images/fb.svg" style="width: 30px;">
-            <img src="images/twitter.svg" style="width: 31px;">
-            <img src="images/instagram.svg" style="width: 31px;">
-            <img src="images/linkedin.svg" style="width: 33px;">
-            <img src="images/youtube.svg" style="width: 31px;">
-            <img src="images/gmail.svg" style="width: 29px;">
-          </div>
-        </div>
-      </div>
-
-  </div>
-</div>
-<div class="col-md-7 padding-0">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-              <div class="card-header padding-5 text-left" style="background-color: #f5f6f763;color:#7f8282;">
-                <i class="fa fa-pen"></i> <span>Create Post</span>
-              </div>
-              <div class="card-body padding-10" >
-                <div class="row">
-                  <div style="width: 70px;padding-left: 1em;">
-                    <img src="uploads/zoe.jpg" class="post-pic">
-                  </div>  
-                  <div class="col-md-10 padding-0">
-                    <div class="row">
-                      <div class="col-md-12">                   
-                        <textarea class="form-control" rows="2" id="event" name="text" placeholder="What's on your mind?" ng-model="t.event" style="border:none;box-shadow: none;"></textarea>  
-                      </div>
+            <div class="card-body padding-10">
+              <div class="row">
+                <div style="width: 70px;padding-left: 1em;">
+                  <img src="uploads/zoe.jpg" class="post-pic">
+                </div>
+                <div class="col-md-10 padding-0">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <textarea class="form-control" rows="2" id="event" name="text" placeholder="What's on your mind?" ng-model="t.event" style="border:none;box-shadow: none;"></textarea>
                     </div>
                   </div>
                 </div>
-                <hr class="custom-hr">
-                <button class="btn btn-info btn-sm white font-13"  trigger-upload message="{{t.event}}" event_date="{{t.eventdate}}" etype="{{t.type_of_event}}" cmodal="t.modalstate" style="width: 110px;background-color: #1accd2;">
-                  <i class="fa fa-download"></i>&nbsp;Photo/video
-                </button>
-                <button class="btn btn-light btn-sm font-13" style="width: 110px;background-color: #f3f6f8;">
-                  <i class="fa fa-paper-plane"></i>&nbsp;Post
-                </button>
-                <img src="images/fbloader.svg" width="35" class="float-right" >
               </div>
+              <hr class="custom-hr">
+              <button class="btn btn-info btn-sm white font-13" trigger-upload message="{{t.event}}" event_date="{{t.eventdate}}" etype="{{t.type_of_event}}" cmodal="t.modalstate" style="width: 110px;background-color: #1accd2;"> <i class="fa fa-download"></i>&nbsp;Photo/video</button>
+              <button class="btn btn-light btn-sm font-13" style="width: 110px;background-color: #f3f6f8;"> <i class="fa fa-paper-plane"></i>&nbsp;Post</button>
+              <img src="images/fbloader.svg" width="35" class="float-right">
             </div>
+          </div>
         </div>
-    </div>
-    <div class="row" style="margin-top: 1em;" >
+      </div>
+      <div class="row" style="margin-top: 1em;">
         <div class="col-md-12">
-           <div class="card">
+          <div class="card">
             <div class="card-body padding-0">
               <div class="col" style="margin-top: 1em;">
                 <div class="row">
                   <div style="width: 70px;padding-left: 1em;">
                     <img src="uploads/zoe.jpg" class="event-post-profile-pic">
-                  </div>  
+                  </div>
                   <div class="col-md-10 padding-0">
                     <div class="row">
-                      <div class="col-md-12">
-                        <a href="" class="blue text-deco-none" >
-                        	Dane Vincent Painaga
+                      <div class="col-md-12"> <a href="" class="blue text-deco-none">
+                          Dane Vincent Painaga
                           <!-- {{event.firstname}}&nbsp;{{event.middlename}}&nbsp;{{event.lastname}} -->
                         </a>
                       </div>
-                      <div class="col-md-12">
-                        <span class="font-13">
-                       		January 20, 2020
-                        	<!-- {{event.date_posted}} -->
+                      <div class="col-md-12"> <span class="font-13">
+                          January 20, 2020
+                          <!-- {{event.date_posted}} -->
                         </span>
                       </div>
                     </div>
@@ -198,59 +161,49 @@
                 </div>
               </div>
               <div class="col" style="margin-top: .5em;margin-bottom: 2em;">
-              <hr>
-              <p>
-                This is my first post for the day...
-              </p>
-				<div class="gg-container">
-				  <div class="gg-box"> 
-				    <img src="uploads/zoe.jpg">
-				    <img src="uploads/dane.jpg">
-				    <img src="images/dane.jpg">
-				  </div>
-				  ... more galleries here ... 
-				</div>
+                <hr>
+                <p>This is my first post for the day...</p>
+                <div class="gg-container">
+                  <div class="gg-box" >
+                    <img src="uploads/zoe.jpg" stats>
+                    <img src="uploads/dane.jpg" stats>
+                    <img src="images/dane.jpg" stats>
+                  </div>... more galleries here ...</div>
               </div>
-            </div> 
+            </div>
             <div class="card-footer padding-5 bg-white">
               <div class="row">
                 <div class="col event-btn">
                   <button class="btn btn-light btn-sm float-right">
-                    <i class="fa fa-save grey-white"></i><span class="grey-white">&nbsp;Like</span>
+                    <i class="fa fa-thumbs-up grey-white"></i><span class="grey-white">&nbsp;Like</span>
                   </button>
                 </div>
               </div>
             </div>
-          </div>                                   
-        </div>
-    </div>
-    <div class="row top_point3" >
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <img src="images/info.png" width="30">
-            &nbsp;
-            No post yet
-            <!-- {{t.response_message}} -->
-          </div>
-        </div>
-        <div class="card top_point3">
-          <div class="card-body padding-5">
-            <img src="images/web.gif" style="width: 100%;">
           </div>
         </div>
       </div>
+      <div class="row top_point3">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <img src="images/info.png" width="30">&nbsp; No post yet
+              <!-- {{t.response_message}} -->
+            </div>
+          </div>
+          <div class="card top_point3">
+            <div class="card-body padding-5">
+              <img src="images/web.gif" style="width: 100%;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
     </div>
-    <br />
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-					    </div>
-					</div>
+<div class="col-12">
+  <hr class="top_1em">
+  <p class="center">Welcome to Pis-anan National Highschool Alumni website.</p>
+  <p class="center">&copyCopyright 2020 PNHS Alumni website</p>
+</div>

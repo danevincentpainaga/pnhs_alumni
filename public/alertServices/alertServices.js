@@ -95,21 +95,6 @@
 
 app.factory('swalert', ['$http', function ($http) {
   return {
-    deleteInfo: function deleteInfo(obj, method) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'No'
-      }).then(function (result) {
-        if (result.value) {
-          method(obj);
-        }
-      });
-    },
     successInfo: function successInfo(message, nofitificationType, timeExpire) {
       var time;
       timeExpire != undefined ? time = timeExpire : time = false;
@@ -120,68 +105,8 @@ app.factory('swalert', ['$http', function ($http) {
         timer: time
       });
       Toast.fire({
-        type: nofitificationType,
+        icon: nofitificationType,
         title: message
-      });
-    },
-    successAlert: function successAlert(message) {
-      Swal.fire({
-        position: 'center',
-        type: 'success',
-        title: 'Success!',
-        text: message,
-        showConfirmButton: false,
-        timer: 1600
-      });
-    },
-    errorAlert: function errorAlert(message) {
-      Swal.fire({
-        allowOutsideClick: false,
-        position: 'center',
-        type: 'error',
-        title: 'Error!',
-        text: message,
-        confirmButtonText: 'Ok'
-      });
-    },
-    updateAlert: function updateAlert(obj, method) {
-      Swal.fire({
-        title: 'Update Details',
-        text: "Proceed to update...",
-        type: 'info',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'No'
-      }).then(function (result) {
-        if (result.value) {
-          method(obj);
-        }
-      });
-    },
-    saveAlert: function saveAlert(obj, method) {
-      Swal.fire({
-        title: 'Save Details?',
-        text: "Proceed to save...",
-        type: 'info',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'No'
-      }).then(function (result) {
-        if (result.value) {
-          method(obj);
-        }
-      });
-    },
-    noTimeoutSuccessAlert: function noTimeoutSuccessAlert(message) {
-      Swal.fire({
-        allowOutsideClick: false,
-        position: 'center',
-        type: 'success',
-        title: 'Successful!',
-        text: message,
-        confirmButtonText: 'Ok'
       });
     }
   };

@@ -7,7 +7,7 @@
  * # loginCtrl
  * Controller of the pnhs_alumni
  */ 
-var app = angular.module('myApp')
+var app = angular.module('pnhsApp')
   app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'apiService', 'swalert',
   function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert) {
 
@@ -23,24 +23,26 @@ var app = angular.module('myApp')
       lg.loginBtn = true;
       lg.buttonMessage = 'Signing In...';
       
-      swalert.successInfo("<label><i class='fa fa-spinner fa-spin'></i>&nbsp;Checking Identity...</label>", "info");
+      swalert.successInfo("<label>Checking Identity...</label>", 'info');
       var credentials = {
         email: lg.email,
         password: lg.password
       };
+      console.log(credentials);
 
       apiService.validateLogin(credentials)
         .then(function(response){
           $cookies.putObject('auth', response.data);
           console.log(response);
-          $timeout(function() { $location.path('/account/'+response.data.account_name); $scope.$emit("Authenticated"); lg.loginBtn = false;});
+          $timeout(function() {  $location.path('/'); $scope.$emit("Authenticated"); lg.loginBtn = false; });
       }, function(err){
         console.log(err);
-        err.data.error === "Unauthorised" ?
-          swalert.successInfo("<label class='red'>Incorrect Username/password!</label>", 'error' ) : 
-          swalert.successInfo("<label class='red'>"+err.data.error+"!</label>", 'error' );
-          lg.buttonMessage = 'Sign In';
-          lg.loginBtn = false;
+        $location.path('/login');
+        // err.data.error === "Unauthorised" ?
+        //   swalert.successInfo("<label class='red'>Incorrect Username/password!</label>", 'error' ) : 
+        //   swalert.successInfo("<label class='red'>"+err.data.error+"!</label>", 'error' );
+        //   lg.buttonMessage = 'Sign In';
+        //   lg.loginBtn = false;
       });
     }
   }

@@ -20,12 +20,12 @@
             </p>
              <form >
               <div class="form-group login">
-                <input type="text" class="form-control" ng-model="_bl.username" style="border-radius: 2em; background-color: ghostwhite;border: 1px solid whitesmoke;" placeholder="username" required>
+                <input type="text" class="form-control" ng-model="lg.email" style="border-radius: 2em; background-color: ghostwhite;border: 1px solid whitesmoke;" placeholder="email" required>
                 <br />
-                <input type="password" class="form-control" ng-model="_bl.password" style="border-radius: 2em;background-color: ghostwhite; border: 1px solid whitesmoke;" placeholder="password" required>
+                <input type="password" class="form-control" ng-model="lg.password" style="border-radius: 2em;background-color: ghostwhite; border: 1px solid whitesmoke;" placeholder="password" required>
               </div>
-              <button class="btn btn-default col-md-12 verdana" ng-click="_bl.login()" ng-disabled="_bl.loginBtn" style="color: white;border-radius: 20px;background-color: #18d2d6;">
-                Sign in
+              <button class="btn btn-default col-md-12 verdana" ng-click="lg.login()" ng-disabled="lg.loginBtn" style="color: white;border-radius: 20px;background-color: #18d2d6;">
+                {{ lg.buttonMessage }}
               </button> 
             </form>
           </div>

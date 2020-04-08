@@ -73520,10 +73520,12 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-angular.module('myApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'ui.router.state.events', 'ngSanitize', 'ngTouch']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('pnhsApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'ui.router.state.events', 'ngSanitize', 'ngTouch']).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('login', {
     url: '/login',
-    templateUrl: 'views/login.html'
+    templateUrl: 'views/login.html',
+    controller: 'loginCtrl',
+    controllerAs: 'lg'
   }).state('base', {
     url: '/',
     views: {
@@ -73554,6 +73556,30 @@ angular.module('myApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'u
         templateUrl: 'views/classmates.html'
       }
     }
+  }).state('base.following', {
+    url: 'following',
+    views: {
+      'pages-view@base': {
+        templateUrl: 'views/following.html'
+      }
+    }
+  }).state('base.profile.followers', {
+    url: '/followers',
+    views: {
+      'pages-view@base': {
+        templateUrl: 'views/profile.html'
+      },
+      'profile-content@base.profile.followers': {
+        templateUrl: 'views/followers.html'
+      }
+    }
+  }).state('base.suggested_people', {
+    url: 'suggested_people',
+    views: {
+      'pages-view@base': {
+        templateUrl: 'views/suggested_people.html'
+      }
+    }
   }).state('base.profile.about', {
     url: '/about',
     views: {
@@ -73564,29 +73590,37 @@ angular.module('myApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'u
         templateUrl: 'views/about.html'
       }
     }
-  }).state('base.suggested_people', {
-    url: 'suggested_people',
+  }).state('base.security', {
+    url: 'security?stud',
     views: {
       'pages-view@base': {
-        templateUrl: 'views/suggested_people.html'
+        templateUrl: 'views/security.html'
       }
     }
   });
   $urlRouterProvider.otherwise('/login');
-}).run(['$transitions', '$rootScope', '$cookies', '$timeout', '$stateParams', function ($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {
+}).run(['$transitions', '$rootScope', 'apiService', '$cookies', '$timeout', '$stateParams', function ($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {
   $transitions.onStart({}, function (transitions, err) {
+    var $state = transitions.router.stateService;
     console.log(transitions.to().name);
-    checkedLogged(transitions.to().name);
 
-    function checkedLogged(route) {
-      if (route != 'login') {
-        $rootScope.loggedin = true;
-      } else {
-        $rootScope.loggedin = false;
+    if (!apiService.AuthenticatedUser()) {
+      $state.go('login');
+      $rootScope.loggedin = false;
+    } else {
+      var auth = $cookies.getObject('auth');
+      $rootScope.loggedin = true;
+
+      if (transitions.to().name === 'login') {
+        $state.go('base');
       }
+
+      console.log(auth);
     }
 
-    ;
+    $state.defaultErrorHandler(function (error) {
+      console.log(error);
+    });
   });
   $transitions.onSuccess({}, function (transitions) {
     console.log(transitions.to().name);

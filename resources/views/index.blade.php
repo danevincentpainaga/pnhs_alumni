@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="myApp" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html ng-app="pnhsApp" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,8 +32,11 @@
         <script src="{{asset('node_modules/sweetalert2/dist/sweetalert2.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/socket.io-client/dist/socket.io.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/grid-gallery/js/grid-gallery.min.js')}}" type="text/javascript"></script>
-
+        
+        <script>var baseUrl = "{{url('/')}}/";</script>
         <script src="{{asset('controller/bundleCtrl.js')}}" type="text/javascript" ></script>
         <script type="text/javascript" src="{{asset('alertServices/alertServices.js')}}"></script>
+        <script type="text/javascript" src="{{asset('httpServices/httpServices.js')}}"></script>
+        
     </body>
 </html>
