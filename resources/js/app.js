@@ -110,6 +110,31 @@ angular
       }
     }
   })
+
+  .state('admin', {
+    url: '/admin',
+    views:{
+      '':{
+        templateUrl: 'views/administrator.html',
+        controller: 'dashboardCtrl',
+        controllerAs: 'db'
+      },
+      'admin-view@admin':{
+        templateUrl: 'views/dashboard.html',
+        controller: 'dashboardCtrl',
+        controllerAs: 'db'
+      }
+    },
+  })
+  .state('admin.manage_accounts', {
+    url: '/manage_accounts',
+    views:{
+      'admin-view@admin':{
+        templateUrl: 'views/manage_accounts.html',
+      }
+    }
+  })
+
   $urlRouterProvider.otherwise('/login');
 })
 .run(['$transitions', '$rootScope', 'apiService', '$cookies', '$timeout', '$stateParams', function($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {
@@ -127,9 +152,18 @@ angular
     else{
         var auth = $cookies.getObject('auth');
         $rootScope.loggedin = true;
+        $rootScope.loggedUser = 'danepainaga';
 
         if (transitions.to().name === 'login') {
           $state.go('base');
+        }
+        else if
+        (
+          transitions.to().name === 'admin' || 
+          transitions.to().name === 'admin.manage_accounts'
+        )
+        {
+          $rootScope.loggedin = false;
         }
 
         console.log(auth);
@@ -143,5 +177,6 @@ angular
 
   $transitions.onSuccess({}, function(transitions) {
     console.log(transitions.to().name);
+    console.log($cookies.getObject('auth'));
   });
 }]);

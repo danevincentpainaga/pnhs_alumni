@@ -1,0 +1,29 @@
+<div class="row bg-white" ng-style="style()" resize>
+  <div class="col-sm-2 padding-0" style="border-right: solid 2px #d6d6d6; background-color: black;">
+  	<ul class="list-group admin-menu" >
+	  <li class="list-group-item box-shadow" style="background-color: #339ff5 !important; color: white;">
+	  	PNHS
+	  	<i class="fa fa-bars custom-list float-right" style="font-size: 23px;"></i>
+	  </li>
+	  <li class="list-group-item center" style="height: 235px;">
+	  	<img ng-src="{{ user_photo | checkPostPhoto}}" style="width: 120px;height: 120px;border: 1px solid #d1d5da !important;border-radius: 5em; padding: 2px;">
+	  	<div class="row">
+	  		<div class="col top_point5">
+	  			<span>{{ loggedUser }}</span>
+	  		</div>
+	  	</div>
+	  	<div class="row">
+	  		<div class="col top_point5" ng-if="db.updating">
+	  			<button class="btn btn-primary btn-sm upload" ng-click="db.updateProfilePic()">Upload</button>
+	  			<button class="btn btn-secondary btn-sm cancel" ng-click="db.getTheFiles(db.file)">Cancel</button>
+	  		</div>
+		  	<div class="upload-btn-wrapper">
+			  <button class="btn-file" ng-if="!db.updating">{{ db.editBtnText }}</button>
+			  <input type="file" id="file" name="file" ng-files="db.getTheFiles($files)" />
+			</div>	
+	  	</div>
+	  </li>
+	</ul>
+  </div>
+  <div class="col-md-10 whitesmoke padding-0" ui-view="admin-view" ></div>
+</div>

@@ -113,6 +113,17 @@ app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $
       } else {
         return false;
       }
+    },
+    uploadProfilePic: function uploadProfilePic(formData) {
+      return $http({
+        method: 'POST',
+        url: baseUrl + 'api/uploadProfilePic',
+        data: formData,
+        headers: {
+          "Content-Type": undefined,
+          Authorization: 'Bearer ' + $rootScope.token
+        }
+      });
     }
   };
 }]);

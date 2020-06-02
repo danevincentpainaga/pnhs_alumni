@@ -37,12 +37,12 @@ var app = angular.module('pnhsApp')
           $timeout(function() {  $location.path('/'); $scope.$emit("Authenticated"); lg.loginBtn = false; });
       }, function(err){
         console.log(err);
-        $location.path('/login');
-        // err.data.error === "Unauthorised" ?
-        //   swalert.successInfo("<label class='red'>Incorrect Username/password!</label>", 'error' ) : 
-        //   swalert.successInfo("<label class='red'>"+err.data.error+"!</label>", 'error' );
-        //   lg.buttonMessage = 'Sign In';
-        //   lg.loginBtn = false;
+        err.data.error === "Unauthorised" ?
+          swalert.successInfo("<label class='red'>Incorrect Username/password!</label>", 'error' ) : 
+          swalert.successInfo("<label class='red'>"+err.data.error+"!</label>", 'error' );
+          lg.buttonMessage = 'Sign In';
+          lg.loginBtn = false;
+          $location.path('/login');
       });
     }
   }

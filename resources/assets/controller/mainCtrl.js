@@ -8,8 +8,8 @@
  */
 
 var app = angular.module('pnhsApp')
-	app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', 'swalert', 
-		function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, swalert) {
+	app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', 'swalert', 'socket', 
+		function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, swalert, socket) {
 
 	$scope.accountName = "danepainaga";
 	
@@ -27,10 +27,53 @@ var app = angular.module('pnhsApp')
 	}
 	
 	$scope.$on('Authenticated', function(){
-		swalert.successInfo("<label>Welcome "+$cookies.getObject('auth').name+"!</label>", 'success', 2000);
+		swalert.successInfo("<label>Welcome "+$scope.accountName+"!</label>", 'success', 2000);
 	});
 	
+    socket.on('test-channel', function(data) {
+    	console.log(data);
+    	alert();
+    });
+
 }]);
+
+app.filter('checkPostPhoto', function(){
+  return function(image){
+    if (image) {
+      return image;
+    }
+    else{
+      return 'images/user.jpg';
+    }
+  }
+});
+
+app.directive('resize', function ($window) {
+    return function (scope, element) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+            return {
+                'h': w.height(),
+                'w': w.width()
+            };
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            scope.windowHeight = newValue.h;
+            scope.windowWidth = newValue.w;
+            
+            scope.style = function () {
+                return {
+                  'min-height': (newValue.h - 0) + 'px',
+                  'max-height': (newValue.h - 0) + 'px'
+                };
+            };
+        }, true);
+
+        w.bind('resize', function () {
+            scope.$apply();
+        });
+    }
+});
 
 	app.directive('stats', function(){
 		return{
@@ -121,3 +164,28 @@ var app = angular.module('pnhsApp')
 
 		}
 	});
+
+
+app.factory('socket', function ($rootScope) {
+  var socket = io.connect('127.0.0.1:8000');
+  return {
+      on: function (eventName, callback) {
+          socket.on(eventName, function () {
+              var args = arguments;
+              $rootScope.$apply(function () {
+                  callback.apply(socket, args);
+              });
+          });
+      },
+      emit: function (eventName, data, callback) {
+          socket.emit(eventName, data, function () {
+              var args = arguments;
+              $rootScope.$apply(function () {
+                  if (callback) {
+                      callback.apply(socket, args);
+                  }
+              });
+          })
+      }
+  };
+});
