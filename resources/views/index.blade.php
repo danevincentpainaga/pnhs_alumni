@@ -15,12 +15,11 @@
         
 
     </head>
-    <body ng-cloak ng-controller="mainCtrl" style="background-color: #f3f3f3;">
-        <ng-include src="'views/header.html'" ng-if="loggedin" ></ng-include> 
+    <body ng-cloak ng-controller="mainCtrl">
+        <ng-include src="'views/header.html'" ng-if="!loggedin" ></ng-include> 
         <div class="container-fluid" ui-view="" ></div>
 
-
-        <script src="{{asset('node_modules/jquery/dist/jquery.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/app.js')}}" type="text/javascript" ></script>
 
         <script src="{{asset('node_modules/@uirouter/angularjs/release/angular-ui-router.min.js')}}" type="text/javascript"></script>

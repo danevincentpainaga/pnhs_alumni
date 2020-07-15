@@ -12,7 +12,31 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+   	.sass('resources/sass/app.scss', 'public/css')
+   	.options({processCssUrls: false})
+   	.browserSync({
+    	proxy: process.env.APP_URL,
+    	browser: ["chrome"],
+	    files: [
+	    	'resources/views/index.blade.php',
+	        'public/views/*.html',
+	        'public/js',
+	        'public/css',
+	    ],
+	});
+	
+// mix.browserSync({
+//     proxy: process.env.APP_URL,
+//     files: [
+//         'public/views/*.html',
+//         'public/js',
+//         'public/css',
+//     ],
+//     watchOptions: {
+//         usePolling: true,
+//         interval: 500
+//     }
+// });
 
 mix.combine(['resources/assets/controller/*'], 'public/controller/bundleCtrl.js');
 mix.js('resources/assets/services/alertServices.js', 'public/alertServices')

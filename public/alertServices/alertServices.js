@@ -108,6 +108,29 @@ app.factory('swalert', ['$http', function ($http) {
         icon: nofitificationType,
         title: message
       });
+    },
+    successAlert: function successAlert(message) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Success!',
+        text: message
+      });
+    },
+    deleteInfo: function deleteInfo(obj, method) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No'
+      }).then(function (result) {
+        if (result.value) {
+          method(obj);
+        }
+      });
     }
   };
 }]);
