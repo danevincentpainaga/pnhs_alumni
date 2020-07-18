@@ -11,7 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.combine(['resources/assets/controller/*'], 'public/controller/bundleCtrl.js')
+	.js('resources/js/app.js', 'public/js')
+	.js('resources/assets/services/alertServices.js', 'public/alertServices')
+	.js('resources/assets/services/httpServices.js', 'public/httpServices')
    	.sass('resources/sass/app.scss', 'public/css')
    	.options({processCssUrls: false})
    	.browserSync({
@@ -20,11 +23,9 @@ mix.js('resources/js/app.js', 'public/js')
 	    files: [
 	    	'resources/views/index.blade.php',
 	        'public/views/*.html',
-	        'public/js',
-	        'public/css',
 	    ],
 	});
-	
+
 // mix.browserSync({
 //     proxy: process.env.APP_URL,
 //     files: [
@@ -38,9 +39,6 @@ mix.js('resources/js/app.js', 'public/js')
 //     }
 // });
 
-mix.combine(['resources/assets/controller/*'], 'public/controller/bundleCtrl.js');
-mix.js('resources/assets/services/alertServices.js', 'public/alertServices')
-mix.js('resources/assets/services/httpServices.js', 'public/httpServices')
 mix.copyDirectory('node_modules/@uirouter', 'public/node_modules/@uirouter');
 mix.copyDirectory('node_modules/angular', 'public/node_modules/angular');
 mix.copyDirectory('node_modules/angular-animate', 'public/node_modules/angular-animate');

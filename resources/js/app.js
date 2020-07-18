@@ -25,16 +25,22 @@ angular
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
-  .state('/', {
+    .state('base', {
+      url: '/',
+      templateUrl: 'views/home.html',
+    })
+    .state('timeline', {
+      url: '/timeline',
+      templateUrl: 'views/timeline.html',
+    })
 
-  })
-
-  $urlRouterProvider.otherwise('/login');
+  // $urlRouterProvider.otherwise('/login');
 })
-.run(['$transitions', '$rootScope', 'apiService', '$cookies', '$timeout', '$stateParams', function($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {
+.run(['$transitions', function($transitions) {
  
   $transitions.onStart({}, function(transitions, err) {
-
+    var $state = transitions.router.stateService;  
+    console.log(transitions.to().name);
     
   });
 

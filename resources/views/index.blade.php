@@ -16,8 +16,19 @@
 
     </head>
     <body ng-cloak ng-controller="mainCtrl">
-        <ng-include src="'views/header.html'" ng-if="!loggedin" ></ng-include> 
-        <div class="container-fluid" ui-view="" ></div>
+        <ng-include src="'views/header.html'"></ng-include> 
+        <div class="container" style="padding-left: 30px;padding-right:30px;margin-top: 60px;">
+          <br />
+            <div class="row" ui-view="" ></div>
+          <br />
+          <br />
+        </div>
+         <ng-include src="'views/popup_post_modal.html'" ng-if="posting"></ng-include>
+
+
+
+
+
 
         <script src="{{asset('node_modules/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/app.js')}}" type="text/javascript" ></script>

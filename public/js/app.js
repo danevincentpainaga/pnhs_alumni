@@ -73521,10 +73521,18 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 angular.module('pnhsApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'ui.router.state.events', 'ngSanitize', 'ngTouch']).config(function ($stateProvider, $urlRouterProvider) {
-  $stateProvider.state('/', {});
-  $urlRouterProvider.otherwise('/login');
-}).run(['$transitions', '$rootScope', 'apiService', '$cookies', '$timeout', '$stateParams', function ($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {
-  $transitions.onStart({}, function (transitions, err) {});
+  $stateProvider.state('base', {
+    url: '/',
+    templateUrl: 'views/home.html'
+  }).state('timeline', {
+    url: '/timeline',
+    templateUrl: 'views/timeline.html'
+  }); // $urlRouterProvider.otherwise('/login');
+}).run(['$transitions', function ($transitions) {
+  $transitions.onStart({}, function (transitions, err) {
+    var $state = transitions.router.stateService;
+    console.log(transitions.to().name);
+  });
   $transitions.onSuccess({}, function (transitions) {});
 }]);
 
