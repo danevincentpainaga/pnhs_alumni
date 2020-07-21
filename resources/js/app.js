@@ -34,7 +34,7 @@ angular
       templateUrl: 'views/timeline.html',
     })
 
-  // $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 })
 .run(['$transitions', function($transitions) {
  

@@ -73527,7 +73527,8 @@ angular.module('pnhsApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 
   }).state('timeline', {
     url: '/timeline',
     templateUrl: 'views/timeline.html'
-  }); // $urlRouterProvider.otherwise('/login');
+  });
+  $urlRouterProvider.otherwise('/');
 }).run(['$transitions', function ($transitions) {
   $transitions.onStart({}, function (transitions, err) {
     var $state = transitions.router.stateService;
