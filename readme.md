@@ -1,5 +1,6 @@
 Requirements.
+ * Redis
  * Install predis
  * node
- *socketio
- *browsersync
+ * socket.io
+ * browsersync
