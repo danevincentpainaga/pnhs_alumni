@@ -1,4 +1,5 @@
-<div class="pop-up-post">
+<div class="pop-up-post-backdrop">test</div>
+<div class="pop-up-post" style="overflow: auto;">
 	<div class="container">
 	  <div class="row pop-up-body">
 	  	<div class="col-md-3"></div>
@@ -24,9 +25,13 @@
 		    	<div class="create-post-body">
 		    		<textarea style="" placeholder="Whats on your mind?"></textarea>
 		    	</div>
+		    	<div class="images" style="display: flex;width: 100%;overflow: auto;">
+		    		<img ng-src="{{p}}" style="width: 100%;" ng-repeat="p in uploadedImage">
+		    	</div>
+		    	<input type="file" id="file" name="file" ng-files="getTheFiles($files)" multiple/>
 			      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
 			      <div class="buttons">
-			        <a href="">
+			        <a href="" file>
 			          <img src="images/shield.svg">
 			          Photo/Video
 			        </a>
@@ -41,7 +46,7 @@
 			      </div>
 			      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
 			      <div class="post-button">
-			      	<button>Post</button>
+			      	<button ng-click="uploadFile()">Post</button>
 			      </div>
 		    </div>
 	  	</div>

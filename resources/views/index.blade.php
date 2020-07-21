@@ -28,8 +28,6 @@
 
 
 
-
-
         <script src="{{asset('node_modules/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/app.js')}}" type="text/javascript" ></script>
 

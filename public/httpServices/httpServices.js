@@ -93,7 +93,21 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $cookies, $rootScope) {}]);
+app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $cookies, $rootScope) {
+  return {
+    uploadProfilePic: function uploadProfilePic(formData) {
+      return $http({
+        method: 'POST',
+        url: baseUrl + 'api/uploadProfilePic',
+        data: formData,
+        headers: {
+          "Content-Type": undefined // Authorization : 'Bearer '+ $rootScope.token
+
+        }
+      });
+    }
+  };
+}]);
 
 /***/ }),
 

@@ -10062,7 +10062,7 @@ body {
   height: 20px;
   left: 9px;
   position: absolute;
-  top: 19.7%;
+  top: 27.7%;
   transform: translateY(-50%);
   width: 2px;
   background-color: #2db1ef;
@@ -10259,11 +10259,19 @@ body {
   margin-right: 7px;
 }
 
+.pop-up-post-backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
 .pop-up-post {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0px;
-  background: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
 }
@@ -10318,7 +10326,7 @@ body {
   margin-bottom: 0px;
 }
 .pop-up-post .pop-up-body .create-post-card .create-post-header .create-post-username p:nth-child(2) select {
-  width: 25%;
+  width: 20%;
   background: whitesmoke;
   border: none;
   height: 30px;

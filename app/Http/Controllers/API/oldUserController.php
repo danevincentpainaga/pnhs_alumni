@@ -151,7 +151,41 @@ class userAccountsController extends Controller
     }
 
     public function uploadProfilePic(Request $request){
+        // if ($request->hasFile('file')) {
+            // $file = $request->file('file');
+            // $filename = time().'.'.$file->getClientOriginalName().'.'.$file->extension();
+            // $filename = time().'.'.$file->getClientOriginalExtension();
+            // $file->storeAs('public/upload/', $filename);
+            // $oldfile = Storage::putFileAs('public/uploads', $file, $filename);
+            // $oldfile = Storage::get('public/upload/'.$filename);
+            // $olddata = Storage::append('public/upload/'.$filename, $file);
+            // $destinationPath = public_path('uploads');
+            // $img = Image::make($file);
+            // $img-> (150,150, function ($constraint) {
+            //   $constraint->aspectRatio();
+            // })->save($destinationPath.'\\'.$filename);
 
+            // if(!Storage::disk('public')->exists('uploads'))
+            // {
+                // Storage::putFileAs('public/uploads', $file, $filename);
+            // }
+            // else{
+            //     Storage::append('public/uploads/'.$filename, $file);
+            // }
+
+            // $fp = fopen('../Storage/app/public/uploads/'.$filename, 'wb');
+
+            // return response()->json( $filename );
+            // $array = unpack('v*', $request->file)
+            // return response()->json( Storage::disk('public')->exists('uploads')); 
+            // $f = fopen('../Storage/app/public/testimage.png', 'wb');
+
+            $keys = [];
+            foreach (explode(',', $request->file) as $key => $value) {
+                $keys[] = $value;
+            }
+            return response()->json($keys);
+        // }
     }
 
 }
