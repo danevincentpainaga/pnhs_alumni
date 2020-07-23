@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadFailedException;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
+use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use DB;
 use App\User;
 use App\education;
@@ -19,7 +25,8 @@ class userAccountsController extends Controller
 {
 	public $successStatus = 200;
 
-    public function getUserAccounts(){
+    public function getUserAccounts()
+    {
         $app = Redis::connection();
         $value = Cache::remember('userlogged', 30, function () {
             return [Auth::user()];
@@ -27,7 +34,8 @@ class userAccountsController extends Controller
         return $value;
     }
 
-    public function updateNameAddress(Request $request){
+    public function updateNameAddress(Request $request)
+    {
 
         $user = User::find(Auth::user()->id);
         $user->firstname = $request->input('firstname');
@@ -39,7 +47,8 @@ class userAccountsController extends Controller
         
     }
 
-    public function updateUserAdditionalDetails(Request $request){
+    public function updateUserAdditionalDetails(Request $request)
+    {
 
         $user = User::find(Auth::user()->id);
         $user->contact_no = $request->input('contact_no');
@@ -56,7 +65,8 @@ class userAccountsController extends Controller
         return skill::where('s_uid', Auth::user()->id)->orderBy('skills', 'asc')->get();
     }
 
-    public function updateJob(Request $request){
+    public function updateJob(Request $request)
+    {
 
         $user = User::find(Auth::user()->id);
         $user->company = $request->input('company');
@@ -67,11 +77,13 @@ class userAccountsController extends Controller
 
     }
 
-    public function getUserLoggedEducationalBackground(){
+    public function getUserLoggedEducationalBackground()
+    {
         return education::where('e_uid', Auth::user()->id)->orderBy('education_id', 'desc')->get();
     }
 
-    public function updateEducation(Request $request){
+    public function updateEducation(Request $request)
+    {
 
         $education = education::find($request->input('education_id'));
         $education->degree = $request->input('degree');
@@ -83,33 +95,38 @@ class userAccountsController extends Controller
     
     }
 
-    public function saveEducation(Request $request){
+    public function saveEducation(Request $request)
+    {
     	$request["e_uid"] = Auth::user()->id;
         return response()->json(education::create($request->all()));  
     }
 
-    public function removeEducations(Request $request){
+    public function removeEducations(Request $request)
+    {
         education::destroy($request->education_id);
         return response()->json(['message'=>'Deleted'], $this->successStatus);
     }
 
-    public function getWorkExperience(){
+    public function getWorkExperience()
+    {
     	$we = work_experience::where('w_uid', Auth::user()->id)->orderBy('work_experience_id', 'desc')->get();
     	return response()->json($we, $this->successStatus);  
     }
 
-    public function saveWorkExperience(Request $request){
+    public function saveWorkExperience(Request $request)
+    {
     	$request['w_uid'] = Auth::user()->id;
         return response()->json(work_experience::create($request->all()));
     }
 
-    public function removeWorkExperience(Request $request){
+    public function removeWorkExperience(Request $request)
+    {
         work_experience::destroy($request->work_experience_id);
         return response()->json(['message'=>'Work experience deleted'], $this->successStatus);
     }
 
-    public function updateWorkExperience(Request $request){
-
+    public function updateWorkExperience(Request $request)
+    {
         $user = work_experience::find($request->work_experience_id);
         $user->company_name = $request->input('company_name');
         $user->position = $request->input('position');
@@ -120,7 +137,8 @@ class userAccountsController extends Controller
 
     }
 
-    public function removeSkills(Request $request){
+    public function removeSkills(Request $request)
+    {
         skill::destroy($request->skills_id);
         return response()->json(['message'=>'Skill deleted'], $this->successStatus);
     }
@@ -129,12 +147,14 @@ class userAccountsController extends Controller
         return business::where('b_uid', Auth::user()->id)->orderBy('business_name', 'asc')->get();
     }
 
-    public function saveBusiness(Request $request){
+    public function saveBusiness(Request $request)
+    {
         $request['b_uid'] = Auth::user()->id;
         return business::create($request->all());
     }
 
-    public function updateBusiness(Request $request){
+    public function updateBusiness(Request $request)
+    {
 
         $b = business::find($request->business_id);
         $b->business_type = $request->input('business_type');
@@ -145,13 +165,76 @@ class userAccountsController extends Controller
 
     }
 
-    public function removeBusiness(Request $request){
+    public function removeBusiness(Request $request
+    ){
         business::destroy($request->business_id);
         return response()->json(['message'=>'Business deleted'], $this->successStatus);
     }
 
-    public function uploadProfilePic(Request $request){
+    public function uploadProfilePic(Request $request)
+    {
+        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
 
+        // check if the upload is success, throw exception or return response you need
+        if ($receiver->isUploaded() === false) {
+            throw new UploadMissingFileException();
+        }
+
+        // receive the file
+        $save = $receiver->receive();
+
+
+
+        // check if the upload has finished (in chunk mode it will send smaller files)
+        if ($save->isFinished()) {
+            // save the file and return any response you need, current example uses `move` function. If you are
+            // not using move, you need to manually delete the file by unlink($save->getFile()->getPathname())
+            return $this->saveFile($save->getFile());
+        }
+
+        // we are in chunk mode, lets send the current progress
+        /** @var AbstractHandler $handler */
+        $handler = $save->handler();
+
+        return response()->json([
+            "done" => $handler->getPercentageDone(),
+            'status' => true
+        ]);
+
+    }
+
+
+    protected function saveFile(UploadedFile $file)
+    {
+        $fileName = $this->createFilename($file);
+        // Group files by mime type
+        $mime = str_replace('/', '-', $file->getMimeType());
+        // Group files by the date (week
+        $dateFolder = date("Y-m-W");
+
+        // Build the file path
+        $filePath = "upload/{$mime}/{$dateFolder}/";
+        $finalPath = storage_path("app/".$filePath);
+
+        // // move the file name
+        $file->move($finalPath, $fileName);
+
+        return response()->json([
+            'path' => $filePath,
+            'name' => $fileName,
+            'mime_type' => $mime
+        ]);
+    }
+
+    protected function createFilename(UploadedFile $file)
+    {
+        $extension = $file->getClientOriginalExtension();
+        $filename = str_replace(".".$extension, "", $file->getClientOriginalName()); // Filename without extension
+
+        // Add timestamp hash to name of the file
+        $filename .= "_" . md5(time()) . "." . $extension;
+
+        return $filename;
     }
 
 }

@@ -39,6 +39,7 @@ mix.combine(['resources/assets/controller/*'], 'public/controller/bundleCtrl.js'
 //     }
 // });
 
+mix.copyDirectory('node_modules/ng-file-upload', 'public/node_modules/ng-file-upload');
 mix.copyDirectory('node_modules/@uirouter', 'public/node_modules/@uirouter');
 mix.copyDirectory('node_modules/angular', 'public/node_modules/angular');
 mix.copyDirectory('node_modules/angular-animate', 'public/node_modules/angular-animate');

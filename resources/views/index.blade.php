@@ -27,7 +27,6 @@
 
 
 
-
         <script src="{{asset('node_modules/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/app.js')}}" type="text/javascript" ></script>
 
@@ -40,7 +39,9 @@
         <script src="{{asset('node_modules/sweetalert2/dist/sweetalert2.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/socket.io-client/dist/socket.io.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/grid-gallery/js/grid-gallery.min.js')}}" type="text/javascript"></script>
-        
+        <script src="{{asset('node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/ng-file-upload/dist/ng-file-upload.min.js')}}" type="text/javascript"></script>
+
         <script>var baseUrl = "{{url('/')}}/";</script>
         <script src="{{asset('controller/bundleCtrl.js')}}" type="text/javascript" ></script>
         <script type="text/javascript" src="{{asset('alertServices/alertServices.js')}}"></script>

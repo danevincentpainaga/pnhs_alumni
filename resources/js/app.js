@@ -22,6 +22,7 @@ angular
   'ui.router.state.events',
   'ngSanitize',
   'ngTouch',
+  'ngFileUpload',
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider

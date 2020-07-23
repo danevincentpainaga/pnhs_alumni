@@ -73520,7 +73520,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-angular.module('pnhsApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'ui.router.state.events', 'ngSanitize', 'ngTouch']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('pnhsApp', ['ngAnimate', 'ngCookies', 'ngResource', 'ui.router', 'ui.router.state.events', 'ngSanitize', 'ngTouch', 'ngFileUpload']).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('base', {
     url: '/',
     templateUrl: 'views/home.html'

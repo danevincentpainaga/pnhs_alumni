@@ -8,99 +8,106 @@
  */
 
 var app = angular.module('pnhsApp')
-	app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', 'swalert', 'fileReader', 'apiService',
-		function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, swalert, fileReader, apiService) {
+  app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', 'swalert', 'fileReader', 'apiService', 'Upload',
+    function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, swalert, fileReader, apiService, Upload) {
 
-    var loaded = 0;
-    var max_chunk_size = 10000;
+    $rootScope.uploadedImage = [];
 
-		$rootScope.uploadedImage = [];
+    $scope.closePosting = function(){
+      $rootScope.posting = false;
+    }
 
-		$scope.closePosting = function(){
-			$rootScope.posting = false;
-		}
-
-
-		$scope.getTheFiles  = function(file){
-
-      $scope.filedata = file[0];
-      console.log($scope.filedata);
-
-		}
-
-
-    $scope.uploadFile = function(){
-
-      console.log($scope.filedata);
-      var reader = new FileReader();
-      var blob = $scope.filedata.slice(loaded, max_chunk_size);
-
-      reader.onload = function(e){
-         var fd = new FormData();
-         // console.log(e.target.result);
-          fd.append('file', new File([e.target.result], 'filechunk'));
-          // fd.append('file', new Uint16Array(e.target.result));
-          fd.append('loaded', loaded);
-          apiService.uploadProfilePic(fd).then(function(response){
-            loaded += max_chunk_size;
-            if (loaded < $scope.filedata.size) {
-              console.log(response)
-              blob = $scope.filedata.slice(loaded, loaded + max_chunk_size + 1);
-              reader.readAsArrayBuffer(blob);
-              console.log(loaded+" loaded");
-            }
-          }, function(err){
-            console.log(err);
-          });
+    // upload later on form submit or something similar
+    $scope.uploadFile = function() {
+      if ($scope.file) {
+        uploadFileToServer($scope.file);
       }
-      reader.readAsArrayBuffer(blob);
+    };
 
+    // upload on file select or drop
+    $scope.getTheFiles = function (file) {
+      $scope.file = file;
+      fileReader.readAsDataUrl(file, $scope)
+        .then(function(result){
+          $rootScope.uploadedImage = [result];
+        }, function(err){
+          console.log(err);
+        });
+      console.log(file);
+    };
+
+    // for multiple files:
+    $scope.uploadFiles = function (files) {
+      if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+          Upload.upload({data: {file: files[i]}});
+        }
+        // or send them all together for HTML5 browsers:
+        Upload.upload({data: {file: files}});
+      }
+    }
+
+
+    function uploadFileToServer(file){
+      Upload.upload({
+          url: 'api/uploadProfilePic',
+          data: {file: file, 'username': $scope.username},
+          resumeChunkSize: 10000,
+      }).then(function (resp) {
+          console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+      }, function (resp) {
+          console.log('Error status: ' + resp.status);
+      }, function (evt) {
+          var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+          console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+      });
     }
 
 
 }]);
 
-app.directive('menuDirective', function(){
-	return{
-		restrict: 'E',
-		scope:{
 
-		},
-		templateUrl: 'views/menu.html',
-	}
+app.directive('menuDirective', function(){
+  return{
+    restrict: 'E',
+    scope:{
+
+    },
+    templateUrl: 'views/menu.html',
+  }
 });
 
 app.directive('postsDirective', function(){
-	return{
-		restrict: 'E',
-		scope:{
+  return{
+    restrict: 'E',
+    scope:{
 
-		},
-		templateUrl: 'views/posts_directive.html',
-		controller: 'postsCtrl',
-		controllerAs: 'p'
-	}
+    },
+    templateUrl: 'views/posts_directive.html',
+    controller: 'postsCtrl',
+    controllerAs: 'p'
+  }
 });
 
 app.directive('rightColumnDirective', function(){
-	return{
-		restrict: 'E',
-		scope:{
+  return{
+    restrict: 'E',
+    scope:{
 
-		},
-		templateUrl: 'views/officers_friends_-directive.html',
-	}
+    },
+    templateUrl: 'views/officers_friends_-directive.html',
+  }
 });
 
 app.directive('file', function(){
-	return{
-		restrict:'A',
-		link: function(scope, elem, attr){
-			elem.on('click', function(){
-				console.log(attr.file);
-			});
-		}
-	}
+  return{
+    restrict:'A',
+    link: function(scope, elem, attr){
+      elem.on('click', function(){
+        console.log(attr.file);
+      });
+    }
+  }
 });
 
 
