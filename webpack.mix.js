@@ -23,6 +23,7 @@ mix.combine(['resources/assets/controller/*'], 'public/controller/bundleCtrl.js'
 	    files: [
 	    	'resources/views/index.blade.php',
 	        'public/views/*.html',
+	        'public/controller/bundleCtrl.js',
 	    ],
 	});
 
