@@ -105,6 +105,17 @@ app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $
 
         }
       });
+    },
+    savePost: function savePost(post) {
+      return $http({
+        method: 'POST',
+        url: baseUrl + 'api/savePost',
+        data: post,
+        headers: {
+          "Content-Type": "application/json" // Authorization : 'Bearer '+ $rootScope.token
+
+        }
+      });
     }
   };
 }]);

@@ -20,6 +20,8 @@ use App\education;
 use App\work_experience;
 use App\skill;
 use App\business;
+use App\post;
+use App\post_photo;
 
 class userAccountsController extends Controller
 {
@@ -165,8 +167,8 @@ class userAccountsController extends Controller
 
     }
 
-    public function removeBusiness(Request $request
-    ){
+    public function removeBusiness(Request $request)
+    {
         business::destroy($request->business_id);
         return response()->json(['message'=>'Business deleted'], $this->successStatus);
     }
@@ -189,7 +191,7 @@ class userAccountsController extends Controller
         if ($save->isFinished()) {
             // save the file and return any response you need, current example uses `move` function. If you are
             // not using move, you need to manually delete the file by unlink($save->getFile()->getPathname())
-            return $this->saveFile($save->getFile());
+            return $this->saveFile($save->getFile(), $request);
         }
 
         // we are in chunk mode, lets send the current progress
@@ -204,7 +206,7 @@ class userAccountsController extends Controller
     }
 
 
-    protected function saveFile(UploadedFile $file)
+    protected function saveFile(UploadedFile $file, $request)
     {
         $fileName = $this->createFilename($file);
         // Group files by mime type
@@ -219,8 +221,14 @@ class userAccountsController extends Controller
         // // move the file name
         $file->move($finalPath, $fileName);
 
+        $photo = new post_photo();
+        $photo->photo_post_id = $request->post['post_id'];
+        $photo->image_name = $fileName;
+        $photo->save();
+
+
         return response()->json([
-            'path' => $filePath,
+            'path' => $request->post['post_id'],
             'name' => $fileName,
             'mime_type' => $mime
         ]);
@@ -235,6 +243,18 @@ class userAccountsController extends Controller
         $filename .= "_" . md5(time()) . "." . $extension;
 
         return $filename;
+    }
+
+    public function savePost(Request $request){
+        $post = new post();
+        $post->description = $request->description;
+        $post->privacy = $request->privacy;
+        $post->p_userid  = $request->id;
+        $post->save();
+
+        return response()->json([
+            'post_id' => $post->post_id
+        ]);
     }
 
 }

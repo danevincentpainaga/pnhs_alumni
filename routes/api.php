@@ -17,7 +17,7 @@ Route::post('register', 'API\AuthController@register');
 
 
 Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');
-
+Route::post('savePost', 'API\userAccountsController@savePost');
 
 Route::group(['middleware'=>'auth:api'], function(){
 

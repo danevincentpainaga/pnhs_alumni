@@ -15,24 +15,25 @@
 			        <div class="create-post-username">
 			        	<p>Dane Vincent Painaga</p>
 			        	<p>
-				        	<select>
-				        		<option>public</option>
-				        		<option>Friends</option>
+				        	<select ng-model="privacy_status">
+				        		<option ng-repeat="p in privacy" value="{{p}}" >{{ p }}</option>
 				        	</select>
 			        	</p>
 			        </div>
 		    	</div>
 		    	<div class="create-post-body">
-		    		<textarea style="" placeholder="Whats on your mind?"></textarea>
+		    		<textarea placeholder="Whats on your mind?" ng-model="post_description"></textarea>
 		    	</div>
 		    	<div class="images" style="display: flex;width: 100%;overflow: auto;">
-		    		<img ng-src="{{p}}" style="width: 100%;" ng-repeat="p in uploadedImage">
+		    		<div class="uploaded-images" style="display: flex;width: 100%;">
+		    			<img ng-src="{{p}}" style="width: 100%;" ng-repeat="p in uploadedImage">
+		    		</div>
 		    	</div>
 		    	<!-- <input type="file" id="file" name="file" ng-files="getTheFiles($files)" multiple/> -->
 		    	<!-- <div class="button" ngf-select="upload($file)">Upload</div> -->
 			      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
 			      <div class="buttons">
-			        <a href="" class="button" ngf-select="getTheFiles($file)">
+			        <a href="" class="button" ngf-select="getTheFiles($files)" multiple="multiple">
 			          <img src="images/shield.svg">
 			          Photo/Video
 			        </a>
@@ -47,7 +48,7 @@
 			      </div>
 			      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
 			      <div class="post-button">
-			      	<button ng-click="uploadFile()">Post</button>
+			      	<button ng-click="uploadPost()">Post</button>
 			      </div>
 		    </div>
 	  	</div>

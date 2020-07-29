@@ -8,53 +8,65 @@
  */
 
 var app = angular.module('pnhsApp')
-  app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', 'swalert', 'fileReader', 'apiService', 'Upload',
-    function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, swalert, fileReader, apiService, Upload) {
+  app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
+    function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
     $rootScope.uploadedImage = [];
+
+    $scope.privacy = ['public', 'friends'];
+    $scope.privacy_status = 'public';
 
     $scope.closePosting = function(){
       $rootScope.posting = false;
     }
 
-    // upload later on form submit or something similar
-    $scope.uploadFile = function() {
-      if ($scope.file) {
-        uploadFileToServer($scope.file);
-      }
+    // upload later on form submit
+    $scope.uploadPost = function() {
+
+      var user_post = {
+        privacy: this.privacy_status,
+        description: this.post_description,
+        id: 1
+      };
+
+      $q.all([apiService.savePost(user_post)]).then(function(response){
+        console.log(response[0].data);
+        loopFiles($scope.file, response[0].data);
+      }, function(err){
+        console.log(err);
+      });
+
     };
 
-    // upload on file select or drop
     $scope.getTheFiles = function (file) {
       $scope.file = file;
-      fileReader.readAsDataUrl(file, $scope)
-        .then(function(result){
-          $rootScope.uploadedImage = [result];
-        }, function(err){
-          console.log(err);
-        });
-      console.log(file);
+      angular.forEach(file, function(val, i){
+        fileReader.readAsDataUrl(val, $scope)
+          .then(function(result){
+             $rootScope.uploadedImage.push(result);
+          }, function(err){
+            console.log(err);
+          });
+      });
+      console.log($scope.file);
     };
 
-    // for multiple files:
-    $scope.uploadFiles = function (files) {
+    function loopFiles(files, post){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          Upload.upload({data: {file: files[i]}});
+          uploadFileToServer(files[i], post);
         }
-        // or send them all together for HTML5 browsers:
-        Upload.upload({data: {file: files}});
       }
     }
 
-
-    function uploadFileToServer(file){
+    function uploadFileToServer(file, post){
       Upload.upload({
           url: 'api/uploadProfilePic',
-          data: {file: file, 'username': $scope.username},
+          data: {file: file, 'post': post},
           resumeChunkSize: 10000,
       }).then(function (resp) {
           console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+          console.log(resp.data);
       }, function (resp) {
           console.log('Error status: ' + resp.status);
       }, function (evt) {

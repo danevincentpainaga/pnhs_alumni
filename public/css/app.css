@@ -10339,7 +10339,7 @@ body {
   width: 100%;
 }
 .pop-up-post .pop-up-body .create-post-card .create-post-body textarea {
-  height: 150px;
+  height: 100px;
   color: #535165;
   font-size: 13px;
   border: medium none;
