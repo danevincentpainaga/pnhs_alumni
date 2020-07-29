@@ -216,14 +216,14 @@ class userAccountsController extends Controller
 
         // Build the file path
         $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path("app/".$filePath);
+        $finalPath = storage_path("app/public/".$filePath);
 
         // // move the file name
         $file->move($finalPath, $fileName);
 
         $photo = new post_photo();
         $photo->photo_post_id = $request->post['post_id'];
-        $photo->image_name = $fileName;
+        $photo->image_name = $filePath.$fileName;
         $photo->save();
 
 
@@ -240,7 +240,7 @@ class userAccountsController extends Controller
         $filename = str_replace(".".$extension, "", $file->getClientOriginalName()); // Filename without extension
 
         // Add timestamp hash to name of the file
-        $filename .= "_" . md5(time()) . "." . $extension;
+        $filename .= "1_" . md5(time()) . "." . $extension;
 
         return $filename;
     }
