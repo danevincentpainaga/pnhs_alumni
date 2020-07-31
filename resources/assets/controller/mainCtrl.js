@@ -16,10 +16,6 @@ var app = angular.module('pnhsApp')
     $scope.privacy = ['public', 'friends'];
     $scope.privacy_status = 'public';
 
-    $scope.closePosting = function(){
-      $rootScope.posting = false;
-    }
-
     // upload later on form submit
     $scope.uploadPost = function() {
 
@@ -39,11 +35,12 @@ var app = angular.module('pnhsApp')
     };
 
     $scope.getTheFiles = function (file) {
+      $rootScope.uploadedImage = [];
       $scope.file = file;
       angular.forEach(file, function(val, i){
         fileReader.readAsDataUrl(val, $scope)
           .then(function(result){
-             $rootScope.uploadedImage.push(result);
+             $rootScope.uploadedImage.push({name:val.name, type: val.type, result: result});
           }, function(err){
             console.log(err);
           });
@@ -63,7 +60,7 @@ var app = angular.module('pnhsApp')
       Upload.upload({
           url: 'api/uploadProfilePic',
           data: {file: file, 'post': post},
-          resumeChunkSize: 10000,
+          resumeChunkSize: 90000,
       }).then(function (resp) {
           console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
           console.log(resp.data);
@@ -123,19 +120,72 @@ app.directive('file', function(){
 });
 
 
-app.directive('ngFiles', ['$parse', function ($parse) {
-    function fn_link(scope, element, attrs) {
-        var onChange = $parse(attrs.ngFiles);
-        element.on('change', function (event) {
-            onChange(scope, { $files: event.target.files });
-            element.val(null);
-        });
-    };
-
-    return {
-        link: fn_link
+app.directive('openModal', function(){
+  return{
+    restrict:'A',
+    link: function(scope, elem, attr){
+      elem.on('click', function(e){
+        $('body').css({'overflow':'hidden'});
+        $('#pop-up-post-modal').css({'display':'block'});
+      });
     }
-}]);
+  }
+});
+
+app.directive('modalDirective', function(){
+  return{
+    restrict:'E',
+    link: function(scope, elem, attr){
+      elem.on('click', function(e){
+        if (e.target == e.currentTarget || $(e.target).hasClass('close-post-modal')) {
+          $('body').css({'overflow':'auto'});
+          $('#pop-up-post-modal').css({'display':'none'});
+        }
+      });
+    }
+  }
+});
+
+app.directive('files', function(){
+    function link(scope, element, attrs){
+        scope.$watch('filedata', function(n, o){
+          displayFiles(JSON.parse(n));
+        });
+        // scope.$watch('files', function(n, o){ console.log(scope.files); });
+    }
+
+    function displayFiles(file){
+      file.forEach(function(val, i){
+        if (val.type.slice(0, val.type.indexOf('/')) =='video') {
+          var photo = $('<video />', {
+              id: i,
+              src: val.result,
+              alt: '',
+              controls: true,
+              width: 100+'%'
+          });
+        }
+        else{
+          var photo = $('<img />', {
+              id: i,
+              src: val.result,
+              alt: '',
+              width: 100+'%'
+          });
+        }
+        photo.appendTo($('#file-holder'));
+      });
+    }
+
+    return{
+      restrict:'A',
+      scope: { 
+        filedata: '@filedata',
+        files: '='
+      },
+      link: link
+    }
+});
 
 app.factory("fileReader", function($q, $log) {
   var onLoad = function(reader, deferred, scope) {

@@ -23,7 +23,7 @@
           <br />
           <br />
         </div>
-         <ng-include src="'views/popup_post_modal.html'" ng-if="posting"></ng-include>
+        <ng-include src="'views/popup_post_modal.html'" style="display: none;" id="pop-up-post-modal"></ng-include>
 
 
 

@@ -1,0 +1,84 @@
+<!-- <div class="pop-up-post-backdrop">test</div> -->
+<modal-directive class="pop-up-post" style="overflow: auto;">
+	<div class="container">
+	  <div class="row pop-up-body">
+	  	<div class="col-md-3"></div>
+	  	<div class="col-md-6">
+		    <div class="bounce create-post-card">
+		    	<h6>Create Post</h6>
+		    	<hr style="margin-top: .7pc; margin-bottom: .5pc;">
+		    	<div class="create-post-header">
+		    		<button class="popup-close-btn" ng-click="closePosting()"><i class="fa fa-times-circle"></i></button>
+			    	<div class="create-post-image">
+			          <img src="uploads/dane.jpg">
+			        </div>
+			        <div class="create-post-username">
+			        	<p>Dane Vincent Painaga</p>
+			        	<p>
+				        	<select ng-model="privacy_status">
+				        		<option ng-repeat="p in privacy" value="{{p}}" >{{ p }}</option>
+				        	</select>
+			        	</p>
+			        </div>
+		    	</div>
+		    	<div class="create-post-body">
+		    		<textarea placeholder="Whats on your mind?" ng-model="post_description"></textarea>
+		    	</div>
+		    	<div class="images" style="display: flex;width: 100%;overflow: auto;">
+		    		<div class="uploaded-images" style="display: block;width: 100%;">
+		    			<div style="display: block; width: 100%;" id="file-holder" files="uploadedImage" filedata="{{uploadedImage}}"></div>
+		    		</div>
+		    	</div>
+		    	<!-- <input type="file" id="file" name="file" ng-files="getTheFiles($files)" multiple/> -->
+		    	<!-- <div class="button" ngf-select="upload($file)">Upload</div> -->
+			      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
+			      <div class="buttons">
+			        <a href="" class="button" ngf-select="getTheFiles($files)" multiple="multiple">
+			          <img src="images/shield.svg">
+			          Photo/Video
+			        </a>
+			        <a href="" >
+			          <img src="images/calendar.svg">
+			          Tag Friend
+			        </a>
+			        <a href="">
+			          <img src="images/add.svg">
+			          Feeling/Activity
+			        </a>
+			      </div>
+			      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
+			      <div class="post-button">
+			      	<button ng-click="uploadPost()">Post</button>
+			      </div>
+		    </div>
+	  	</div>
+	    <div class="col-md-3"></div>
+	  </div>	
+	</div>
+</modal-directive>
+
+
+<!-- Upload on form submit or button click
+<form ng-app="fileUpload" >
+  Single Image with validations
+  <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+    ngf-resize="{width: 100, height: 100}">Select</div>
+  Multiple files
+  <div class="button" ngf-select ng-model="files" ngf-multiple="true">Select</div>
+  Drop files: <div ngf-drop ng-model="files" class="drop-box">Drop</div>
+  <button type="submit" ng-click="submit()">submit</button>
+</form>
+
+Upload right away after file selection:
+<div class="button" ngf-select="upload($file)">Upload on file select</div>
+<div class="button" ngf-select="uploadFiles($files)" multiple="multiple">Upload on file select</div>
+  Drop File:
+<div ngf-drop="uploadFiles($files)" class="drop-box"
+  ngf-drag-over-class="'dragover'" ngf-multiple="true"
+  ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
+<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+
+Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+Audio preview: <audio controls ngf-src="file"></audio>
+Video preview: <video controls ngf-src="file"></video> -->

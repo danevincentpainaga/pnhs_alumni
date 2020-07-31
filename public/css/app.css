@@ -9944,6 +9944,7 @@ h3 {
     border-color: #dee2e6;
   }
 }
+/*$box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
 /*$box-shadow: none;*/
 * {
   box-sizing: border-box;
@@ -10055,7 +10056,7 @@ body {
   padding: 12px 5px;
   list-style-type: none;
   border: 1px solid #ede9e9;
-  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
 }
 .left-menu::before {
   content: "";
@@ -10129,7 +10130,7 @@ body {
   background: #fff;
   border: 1px solid #ede9e9;
   border-radius: 2px;
-  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
 }
 .widget .widget-title {
   border-bottom: 1px solid #e6ecf5;
@@ -10215,7 +10216,7 @@ body {
   background-color: #fff;
   border-radius: 7px;
   border: 1px solid #e4e4e4;
-  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
 }
 .post-section .post-new .post-new-body {
   display: flex;
@@ -10259,16 +10260,114 @@ body {
   margin-right: 7px;
 }
 
-.pop-up-post-backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  display: block;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 100%;
+/*.pop-up-post-backdrop{
+    background: rgba(0, 0, 0, 0.5);
+    display: block; 
+    position: fixed;
+    top:0px; 
+    width: 100%; 
+    height: 100%;
+}*/
+/*.pop-up-post{
+    background: rgba(0, 0, 0, 0.5);
+    display: block; 
+    position: fixed;
+    top:0px; 
+    width: 100%; 
+    height: 100%;
+    .pop-up-body{
+        position: relative;
+        top:75px;
+        padding: 15px;
+        .create-post-card{
+            @include custom-card;
+            .create-post-header{
+                display: flex;
+                width: 100%;
+                .popup-close-btn{
+                    border-radius: 100%;
+                    position: absolute;
+                    height: 30px;
+                    width: 30px;
+                    top: -10px;
+                    right: 5px;
+                    border: 1px solid white;
+                    color: #ffffff;
+                    background: #41c3ad;
+                    i{
+                        justify-content: center;
+                        align-content: center;
+                        vertical-align: middle;
+                        display: flex;
+                    }
+                }
+                .create-post-image{
+                    @include post-image-size;
+                }
+                .create-post-username{
+                    width: 100%;
+                    display: block;
+                    p{
+                        &:first-child{
+                            margin-bottom: 0px;
+                        }
+                        &:nth-child(2){
+                            select{
+                                width: 20%;
+                                background: whitesmoke;
+                                border: none;
+                                height: 30px;
+                                border-radius: 10px;
+                                padding: 5px;   
+                                outline: none;
+                            }
+                        } 
+                    }
+                }
+            }
+            .create-post-body{
+                display: block;
+                width: 100%;
+                textarea{
+                    height: 90px;
+                    color: #535165;
+                    font-size: 13px;
+                    border: medium none;
+                    resize: none;
+                    display: block;
+                    width: 100%;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    padding: 0.375rem 0.75rem;
+                    outline: none;
+                    font-size: 17px;
+                }
+            }
+            .buttons{
+                @include post-button-style;
+            }
+            .post-button{
+                display: flex;
+                button{
+                    display: flex;
+                    background: #e9ebec;
+                    border-radius: 10px;
+                    width: 100%;
+                    outline: navajowhite;
+                    border: 1px solid white;
+                    padding: 10px;
+                    color: #757a95;
+                    justify-content: center;
+                }
+            }
+        }
+    }
 }
-
+*/
 .pop-up-post {
+  overflow: auto;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
   display: block;
   position: fixed;
   top: 0px;
@@ -10277,55 +10376,51 @@ body {
 }
 .pop-up-post .pop-up-body {
   position: relative;
-  top: 75px;
-  padding: 15px;
-}
-.pop-up-post .pop-up-body .create-post-card {
+  top: 20%;
   display: block;
-  width: 100%;
   padding: 15px 15px 10px;
   background-color: #fff;
   border-radius: 7px;
   border: 1px solid #e4e4e4;
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header {
+.pop-up-post .pop-up-body .create-post-header {
   display: flex;
   width: 100%;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .popup-close-btn {
+.pop-up-post .pop-up-body .create-post-header .popup-close-btn {
   border-radius: 100%;
   position: absolute;
   height: 30px;
   width: 30px;
   top: -10px;
-  right: 5px;
+  right: -10px;
   border: 1px solid white;
   color: #ffffff;
   background: #41c3ad;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .popup-close-btn i {
+.pop-up-post .pop-up-body .create-post-header .popup-close-btn i {
   justify-content: center;
   align-content: center;
   vertical-align: middle;
   display: flex;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .create-post-image {
+.pop-up-post .pop-up-body .create-post-header .create-post-image {
   width: 8%;
   margin-right: 15px;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .create-post-image img {
+.pop-up-post .pop-up-body .create-post-header .create-post-image img {
   width: 0.416666667in;
   border-radius: 50%;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .create-post-username {
+.pop-up-post .pop-up-body .create-post-header .create-post-username {
   width: 100%;
   display: block;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .create-post-username p:first-child {
+.pop-up-post .pop-up-body .create-post-header .create-post-username p:first-child {
   margin-bottom: 0px;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-header .create-post-username p:nth-child(2) select {
+.pop-up-post .pop-up-body .create-post-header .create-post-username p:nth-child(2) select {
   width: 20%;
   background: whitesmoke;
   border: none;
@@ -10334,12 +10429,12 @@ body {
   padding: 5px;
   outline: none;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-body {
+.pop-up-post .pop-up-body .create-post-body {
   display: block;
   width: 100%;
 }
-.pop-up-post .pop-up-body .create-post-card .create-post-body textarea {
-  height: 100px;
+.pop-up-post .pop-up-body .create-post-body textarea {
+  height: 85px;
   color: #535165;
   font-size: 13px;
   border: medium none;
@@ -10352,28 +10447,28 @@ body {
   outline: none;
   font-size: 17px;
 }
-.pop-up-post .pop-up-body .create-post-card .buttons {
+.pop-up-post .pop-up-body .buttons {
   display: flex;
   align-items: center;
 }
-.pop-up-post .pop-up-body .create-post-card .buttons a {
+.pop-up-post .pop-up-body .buttons a {
   color: #3e416d;
   text-decoration: none;
   border-radius: 0.052083333in;
   padding: 7px;
   flex: 1;
 }
-.pop-up-post .pop-up-body .create-post-card .buttons a:hover {
+.pop-up-post .pop-up-body .buttons a:hover {
   background-color: whitesmoke;
 }
-.pop-up-post .pop-up-body .create-post-card .buttons a img {
+.pop-up-post .pop-up-body .buttons a img {
   width: 20px;
   margin-right: 7px;
 }
-.pop-up-post .pop-up-body .create-post-card .post-button {
+.pop-up-post .pop-up-body .post-button {
   display: flex;
 }
-.pop-up-post .pop-up-body .create-post-card .post-button button {
+.pop-up-post .pop-up-body .post-button button {
   display: flex;
   background: #e9ebec;
   border-radius: 10px;
@@ -10394,7 +10489,7 @@ body {
   border: 1px solid #ede9e9;
   border-radius: 2px;
   box-shadow: none;
-  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
   position: -webkit-sticky;
   position: sticky;
   top: 85px;
@@ -10500,7 +10595,7 @@ body {
   border: 1px solid #ede9e9;
   border-radius: 2px;
   box-shadow: none;
-  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
 }
 .alumni-officers .alumni-officers-title {
   border-bottom: 1px solid #e6ecf5;
