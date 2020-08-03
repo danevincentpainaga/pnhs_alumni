@@ -1,0 +1,56 @@
+<div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <br />
+    <div class="wrap">
+      <div class="loading">
+        <div class="bounceball"></div>
+        <div class="text">Redirecting to Business login...</div>
+      </div>
+    </div>
+    <div class="card login-effect">
+      <div class="card-header" style="background-color: #339ff5 !important;height: 150px;">
+        <div class="row">
+          <div class="col center">
+            <h4 class="white top_1em">Welcome!</h4>
+            <p class="white">SIGN IN TO YOUR BUSINESS ACCOUNT</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-md-9">
+            <p class="center">
+              <i class="fa fa-user-circle font-75" style="color:whitesmoke;margin-top: -51px;"></i>
+            </p>
+             <form >
+              <div class="form-group login">
+                <input type="email" class="form-control" ng-model="lg.email" style="border-radius: 2em; background-color: ghostwhite;border: 1px solid whitesmoke;" placeholder="email" required>
+                <br />
+                <input type="password" class="form-control" ng-model="lg.password" style="border-radius: 2em;background-color: ghostwhite; border: 1px solid whitesmoke;" placeholder="password" required>
+              </div>
+              <button class="btn btn-info col-md-12 verdana" ng-click="lg.login()" ng-disabled="lg.loginBtn" style="color: white;border-radius: 20px;">
+                {{ lg.buttonMessage }}
+              </button> 
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+        <br />
+      </div>
+      <br />
+    </div>
+    <br />
+    <div class="card login-effect2">
+      <div class="card-body">
+        <div class="row">
+          <div class="col center">
+            <span>&copySCIMS 2019</span>
+            <p>Senior Citizen Information Management System.</p>
+            <p style="margin-bottom: 0px;"><button class="btn btn-outline-primary btn-sm" ng-click="navigate('/admin_login')" admin-login >Sign In to Admin Account</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="col-sm-4"></div>

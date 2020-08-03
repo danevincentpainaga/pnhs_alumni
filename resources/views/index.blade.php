@@ -12,6 +12,7 @@
         <link href="{{ asset('node_modules/fontawesome/css/all.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('node_modules/grid-gallery/css/grid-gallery.min.css') }}" rel="stylesheet">
+        <link href="{{asset('node_modules/grid/src/images-grid.css')}}" rel="stylesheet">
         
 
     </head>
@@ -23,9 +24,8 @@
           <br />
           <br />
         </div>
-        <ng-include src="'views/popup_post_modal.html'" style="display: none;" id="pop-up-post-modal"></ng-include>
-
-
+        <modal-directive style="display: none;" class="pop-up-post"  id="pop-up-post-modal"></modal-directive>
+        
 
         <script src="{{asset('node_modules/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/app.js')}}" type="text/javascript" ></script>
@@ -40,7 +40,8 @@
         <script src="{{asset('node_modules/socket.io-client/dist/socket.io.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/grid-gallery/js/grid-gallery.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('node_modules/ng-file-upload/dist/ng-file-upload.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/ng-file-upload/dist/ng-file-upload-all.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/grid/src/images-grid.js')}}" type="text/javascript"></script>
 
         <script>var baseUrl = "{{url('/')}}/";</script>
         <script src="{{asset('controller/bundleCtrl.js')}}" type="text/javascript" ></script>

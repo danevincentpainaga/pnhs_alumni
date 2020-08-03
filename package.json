@@ -41,6 +41,7 @@
     "dependencies": {
         "@ecodev/natural-gallery-js": "^6.0.1",
         "@fortawesome/fontawesome-free": "^5.13.0",
+        "@mikepol/ng-photo-grid": "^1.0.3",
         "angularjs-lightbox": "^1.1.0",
         "ng-file-upload": "^12.2.13",
         "sweetalert2": "^9.10.7"

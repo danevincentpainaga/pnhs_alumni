@@ -30,6 +30,12 @@ angular
       url: '/',
       templateUrl: 'views/home.html',
     })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'views/login.html',
+      controller: 'loginCtrl',
+      controllerAs: 'lg'
+    })
     .state('timeline', {
       url: '/timeline',
       templateUrl: 'views/timeline.html',
@@ -37,11 +43,22 @@ angular
 
   $urlRouterProvider.otherwise('/');
 })
-.run(['$transitions', function($transitions) {
+.run(['$transitions', '$rootScope', 'apiService', '$cookies', '$timeout', '$stateParams', function($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {
  
   $transitions.onStart({}, function(transitions, err) {
+
+    var auth = $cookies.getObject('auth');
+    
     var $state = transitions.router.stateService;  
-    console.log(transitions.to().name);
+    
+    if (!apiService.AuthenticatedUser()) {
+        $state.go('login');
+        console.log(transitions.to().name);
+    }
+    else{
+      $rootScope.token = auth.success.token;
+      console.log(auth);
+    }
     
   });
 

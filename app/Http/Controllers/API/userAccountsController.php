@@ -25,7 +25,7 @@ use App\post_photo;
 
 class userAccountsController extends Controller
 {
-	public $successStatus = 200;
+    public $successStatus = 200;
 
     public function getUserAccounts()
     {
@@ -99,7 +99,7 @@ class userAccountsController extends Controller
 
     public function saveEducation(Request $request)
     {
-    	$request["e_uid"] = Auth::user()->id;
+        $request["e_uid"] = Auth::user()->id;
         return response()->json(education::create($request->all()));  
     }
 
@@ -111,13 +111,13 @@ class userAccountsController extends Controller
 
     public function getWorkExperience()
     {
-    	$we = work_experience::where('w_uid', Auth::user()->id)->orderBy('work_experience_id', 'desc')->get();
-    	return response()->json($we, $this->successStatus);  
+        $we = work_experience::where('w_uid', Auth::user()->id)->orderBy('work_experience_id', 'desc')->get();
+        return response()->json($we, $this->successStatus);  
     }
 
     public function saveWorkExperience(Request $request)
     {
-    	$request['w_uid'] = Auth::user()->id;
+        $request['w_uid'] = Auth::user()->id;
         return response()->json(work_experience::create($request->all()));
     }
 
@@ -209,52 +209,86 @@ class userAccountsController extends Controller
     protected function saveFile(UploadedFile $file, $request)
     {
         $fileName = $this->createFilename($file);
-        // Group files by mime type
+        // // Group files by mime type
         $mime = str_replace('/', '-', $file->getMimeType());
-        // Group files by the date (week
+        // // Group files by the date (week
         $dateFolder = date("Y-m-W");
 
-        // Build the file path
+        // // Build the file path
         $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path("app/public/".$filePath);
+        // $finalPath = storage_path("app/".$filePath);
 
         // // move the file name
-        $file->move($finalPath, $fileName);
+        // $file->move($finalPath, $fileName);
+        
 
-        $photo = new post_photo();
-        $photo->photo_post_id = $request->post['post_id'];
-        $photo->image_name = $filePath.$fileName;
-        $photo->save();
-
+        // return response()->json([
+        //     'path' => $filePath,
+        //     'name' => $fileName,
+        //     'mime_type' => $mime
+        // ]);
 
         return response()->json([
-            'path' => $request->post['post_id'],
             'name' => $fileName,
-            'mime_type' => $mime
+            'mime_type' => $mime,
+            'filePath' => $filePath
         ]);
+
     }
 
     protected function createFilename(UploadedFile $file)
     {
-        $extension = $file->getClientOriginalExtension();
-        $filename = str_replace(".".$extension, "", $file->getClientOriginalName()); // Filename without extension
-
         // Add timestamp hash to name of the file
-        $filename .= "1_" . md5(time()) . "." . $extension;
-
+        $extension = $file->getClientOriginalExtension();
+        $filename = str_replace(".".$extension, "", $file->getClientOriginalName().Auth::user()->id."_uploadKey"); 
+        // $filename = $file->getClientOriginalName().Auth::user()->id."_uploadKey";
+        $filename .= "_" . md5(time()) . "." . $extension;
         return $filename;
     }
 
     public function savePost(Request $request){
+        $fileName = $request->filePath.$this->createNewFilename($request->name);
+
         $post = new post();
         $post->description = $request->description;
         $post->privacy = $request->privacy;
-        $post->p_userid  = $request->id;
         $post->save();
+
+        $photo = new post_photo();
+        $photo->photo_post_id = $post->post_id;
+        $photo->image_name = $fileName;
+        $photo->save();
 
         return response()->json([
             'post_id' => $post->post_id
         ]);
+    }
+
+    protected function createNewFilename($name)
+    {
+
+        $extension = substr($name, strlen($name) -3);
+        $filename = substr($name, 0, strlen($name) -3);
+        // Add timestamp hash to name of the file
+        $filename .= "_" . md5(time()) . "." . $extension;
+
+        return $filename;
+    }
+
+    public function checkChunk($filename){
+        $file_name = $filename.'2';//Auth::user()->id;
+        $files = array();
+        $files['size'] = 0;
+        foreach (scandir(storage_path("app/chunks/")) as $file) {
+            if ($file !== '.' && $file !== '..') {
+                if ($file_name == substr($file, 0, strpos($file,"_uploadKey"))) {
+                    $files['file'] = $file;
+                    $files['size'] = filesize('../storage/app/chunks/'.$file);
+                }
+            }
+        }
+        return $files;
+
     }
 
 }
