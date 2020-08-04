@@ -307,7 +307,7 @@ var app = angular.module('pnhsApp')
       var upload = Upload.upload({
   			url: 'api/uploadProfilePic',
   			data: { file: Upload.rename(file, final_file_name) },
-  			resumeSizeUrl: baseUrl+'api/checkChunk/'+final_file_name,
+  			resumeSizeUrl: baseUrl+'api/checkChunk/'+newFileName+'_pnhsKey',
   			headers: {
   				Authorization : 'Bearer '+ $rootScope.token
   			},
@@ -340,6 +340,7 @@ var app = angular.module('pnhsApp')
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
+
 
     }
 

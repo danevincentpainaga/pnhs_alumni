@@ -85,5 +85,15 @@ class AuthController extends Controller
       }
     }
 
+
+	 public function registerTest(Request $request) {  
+
+			 $input = $request->all();  
+			 $input['password'] = bcrypt($input['password']);
+			 $user = User::create($input); 
+			 $success['token'] =  $user->createToken('pnhs')->accessToken;
+			 return response()->json(['success'=>$success], $this->successStatus);
+	}
+
 }
 

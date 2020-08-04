@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login', 'API\AuthController@login');
-Route::post('register', 'API\AuthController@register');
+// Route::post('register', 'API\AuthController@register');
+Route::post('registerTest', 'API\AuthController@register');
 
 Route::group(['middleware'=>'auth:api'], function(){
 
 	Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');
 	Route::post('savePost', 'API\userAccountsController@savePost');
 	Route::get('checkChunk/{filename}', 'API\userAccountsController@checkChunk');
-
+	Route::get('getUser', 'API\AuthController@getUser');
+	
 	// Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');
 
 	// Route::get('getUserAccounts', 'API\userAccountsController@getUserAccounts');
