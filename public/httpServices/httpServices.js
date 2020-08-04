@@ -135,7 +135,17 @@ app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $
           Authorization: 'Bearer ' + $rootScope.token
         }
       });
-    }
+    } // checkChunk: function(file){
+    //   return $http({
+    //     method:'GET',
+    //     url: baseUrl+'api/checkChunk/'+file,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization : 'Bearer '+ $rootScope.token
+    //     }
+    //   });
+    // },
+
   };
 }]);
 

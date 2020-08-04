@@ -185,10 +185,17 @@ class userAccountsController extends Controller
         // receive the file
         $save = $receiver->receive();
 
+
+
+        // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
-            return $this->saveFile($save->getFile());
+            // save the file and return any response you need, current example uses `move` function. If you are
+            // not using move, you need to manually delete the file by unlink($save->getFile()->getPathname())
+            return $this->saveFile($save->getFile(), $request);
         }
 
+        // we are in chunk mode, lets send the current progress
+        /** @var AbstractHandler $handler */
         $handler = $save->handler();
 
         return response()->json([
@@ -199,7 +206,7 @@ class userAccountsController extends Controller
     }
 
 
-    protected function saveFile(UploadedFile $file)
+    protected function saveFile(UploadedFile $file, $request)
     {
         $fileName = $this->createFilename($file);
         // // Group files by mime type
@@ -209,7 +216,7 @@ class userAccountsController extends Controller
 
         // // Build the file path
         $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path("app/".$filePath);
+        // $finalPath = storage_path("app/".$filePath);
 
         // // move the file name
         $file->move($finalPath, $fileName);
@@ -217,7 +224,6 @@ class userAccountsController extends Controller
 
         return response()->json([
             'path' => $filePath,
-            'name' => $fileName,
             'mime_type' => $mime
         ]);
 
@@ -225,40 +231,48 @@ class userAccountsController extends Controller
 
     protected function createFilename(UploadedFile $file)
     {
-        $extension = $file->getClientOriginalExtension();
-        $filename = str_replace(".".$extension, "", $file->getClientOriginalName()); 
-
         // Add timestamp hash to name of the file
-        $filename .= "_" . md5(time()) . "." . $extension;
-
+        $extension = $file->getClientOriginalExtension();
+        $filename = str_replace(".".$extension, "", $file->getClientOriginalName());
         return $filename;
     }
 
     public function savePost(Request $request){
-        
-        //save post and its images
-        $post = new post();
-        $post->description = $request->uploaded['post']['description'];
-        $post->privacy = $request->uploaded['post']['privacy'];
-        $post->p_userid = Auth::user()->id;
-        $post->save();
 
+        $file = $this->scanChunkToMove($request->uploaded[0]['name']);
+        // if($file != false){
+        //     $fileName = $this->createNewFilename($file, $request->uploaded[0]['extension']);
+        //     $finalPath = storage_path("app/".$request->path);
+        //     Storage::move('/chunks/'.$file, $request->path.$fileName);
+        // }
+            
+        // $fileName = $this->createNewFilename(
+        //     $request->uploaded[0]['name'],
+        //     $request->uploaded[0]['path'],
+        //     $request->uploaded[0]['extension']
+        // );
 
-        foreach ($request->uploaded['files'] as $key => $value) {
+        // $post = new post();
+        // $post->description = $request->description;
+        // $post->privacy = $request->privacy;
+        // $post->save();
 
-            $new_image_name = $value['path'] . $value['name'];
-
-            $photo = new post_image();
-            $photo->image_post_id  = $post->post_id;
-            $photo->image_name = $new_image_name;
-            $photo->image_description = $value['description'];
-            $photo->save();
-
-        }
+        // $photo = new post_image();
+        // $photo->photo_post_id = $post->post_id;
+        // $photo->image_name = $fileName;
+        // $photo->save();
 
         return response()->json([
-            'fileName' => $post->post_id
+            'bool' => $file,
+            'uploaded' => $request->uploaded
         ]);
+    }
+
+    protected function createNewFilename($file, $extension)
+    {
+        $filename = substr($file, 0, strpos($file,"_uploadKey"));//substr($name, 0, strlen($name) -10);
+        $filename .= "_" . md5(time()) . "." . $extension;
+        return $filename;
     }
 
     public function checkChunk($filename){
@@ -266,13 +280,24 @@ class userAccountsController extends Controller
         $files['size'] = 0;
         foreach (scandir(storage_path("app/chunks/")) as $file) {
             if ($file !== '.' && $file !== '..') {
-                if ($filename == substr($file, 0, strpos($file,"_pnhsKey"))) {
+                if ($filename == substr($file, 0, strpos($file,"_uploadKey"))) {
                     $files['file'] = $file;
                     $files['size'] = filesize('../storage/app/chunks/'.$file);
                 }
             }
         }
         return $files;
+    }
+
+    public function scanChunkToMove($filename){
+        foreach (scandir(storage_path("app/chunks/")) as $file) {
+            if ($file !== '.' && $file !== '..') {
+                if (substr($filename, 0, strpos($filename,"_uploadKey")) == substr($file, 0, strpos($file,"_uploadKey"))) {
+                    return $file;
+                }
+            }
+        }
+        return false;
     }
 
 }

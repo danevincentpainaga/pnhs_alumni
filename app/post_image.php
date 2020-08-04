@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class post_photo extends Model
+class post_image extends Model
 {
-    protected $primaryKey = 'post_photos_id';
+    protected $primaryKey = 'image_id';
     public $timestamps = false;
 
     protected $fillable = [
-        'photo_post_id ', 'image_name'
+        'image_post_id ', 'image_name'
     ];
 }

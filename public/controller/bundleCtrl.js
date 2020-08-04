@@ -273,12 +273,6 @@ var app = angular.module('pnhsApp')
     p.uploadPost = function() {
 
       loopFiles(p.file);
-      // $q.all([apiService.savePost(user_post)]).then(function(response){
-      //   console.log(response[0].data);
-      //   loopFiles(p.file, response[0].data);
-      // }, function(err){
-      //   console.log(err);
-      // });
 
     };
 
@@ -305,41 +299,56 @@ var app = angular.module('pnhsApp')
     }
 
     function uploadFileToServer(file){
-    	let newFileName = file.name+'_'+file.lastModified+'_'+file.size
-		Upload.upload({
-			url: 'api/uploadProfilePic',
-			data: { file: Upload.rename(file, newFileName) },
-			resumeSizeUrl: baseUrl+'api/checkChunk/'+file.name,
-			headers: {
-				Authorization : 'Bearer '+ $rootScope.token
-			},
-			resumeChunkSize: 100000,
-		}).then(function (resp) {
-          console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data);
-          files_to_upload.push({ 
-              name: resp.data.name, 
-              mime_type: resp.data.mime_type, 
-              privacy: p.privacy_status,
-              description: p.post_description,
-          });
-          if (files_to_upload.length == p.file.length) {
-            console.log(files_to_upload);
-          }
-      }, function (resp) {
-          console.log('Error status: ' + resp.status);
-      }, function (evt) {
-          var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-          console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-      });
+
+      let newFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
+      let extension = file.name.slice(file.name.lastIndexOf(".")+1);
+      let final_file_name = newFileName+'_pnhsKey.'+extension;
+  		
+      var upload = Upload.upload({
+  			url: 'api/uploadProfilePic',
+  			data: { file: Upload.rename(file, final_file_name) },
+  			resumeSizeUrl: baseUrl+'api/checkChunk/'+final_file_name,
+  			headers: {
+  				Authorization : 'Bearer '+ $rootScope.token
+  			},
+  			resumeChunkSize: 100000,
+  		})
+
+      upload.then(function (resp) {
+            console.log(resp.data);
+            files_to_upload.push({ 
+                name: resp.data.name,
+                path: resp.data.path, 
+                mime_type: resp.data.mime_type,
+                description: p.post_description,
+            });
+
+            if (files_to_upload.length == p.file.length) {
+                var user_post = {
+                  files: files_to_upload,
+                  post: {
+                    privacy: p.privacy_status,
+                    description: p.post_description
+                  }
+                };
+                savePost(user_post);
+            }
+            
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
 
     }
 
-
-    function savePost(){
-      apiService.savePost(files_to_upload).then(function(response){
-
+    function savePost(posting){
+      console.log(posting);
+      apiService.savePost({uploaded: posting}).then(function(response){
+        console.log(response.data);
       }, function(err){
-
+        console.log(err);
       });
     }
 
