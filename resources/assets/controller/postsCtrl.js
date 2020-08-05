@@ -8,16 +8,16 @@
  */
 
 var app = angular.module('pnhsApp')
-	app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
-    	function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
+  app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
+      function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
-	var p = this;
+  var p = this;
 
     p.uploadedImage = [];
 
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
-    p.filesize = 10000;
+    p.filesize = 100000;
     var files_to_upload = [];
 
     // upload later on form submit
@@ -38,35 +38,35 @@ var app = angular.module('pnhsApp')
             console.log(err);
           });
       });
-      console.log(p.file);
+      // console.log(p.file);
     };
 
     function loopFiles(files){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          uploadFileToServer(files[i]);
+          uploadFileToServer(files[i], i);
         }
       }
     }
 
-    function uploadFileToServer(file){
+    function uploadFileToServer(file, i){
 
-      let newFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
+      let modifiedFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
       let extension = file.name.slice(file.name.lastIndexOf(".")+1);
-      let final_file_name = newFileName+'_pnhsKey.'+extension;
-  		
+      let final_file_name = modifiedFileName+'_pnhsKey.'+extension;
+      
       var upload = Upload.upload({
-  			url: 'api/uploadProfilePic',
-  			data: { file: Upload.rename(file, final_file_name) },
-  			resumeSizeUrl: baseUrl+'api/checkChunk/'+newFileName+'_pnhsKey',
-  			headers: {
-  				Authorization : 'Bearer '+ $rootScope.token
-  			},
-  			resumeChunkSize: 100000,
-  		})
+        url: 'api/uploadProfilePic',
+        data: { file: Upload.rename(file, final_file_name) },
+        resumeSizeUrl: baseUrl+'api/checkChunk/'+modifiedFileName+'_pnhsKey',
+        headers: {
+          Authorization : 'Bearer '+ $rootScope.token
+        },
+        resumeChunkSize: 500000,
+      })
 
       upload.then(function (resp) {
-            console.log(resp.data);
+            // console.log(resp.data);
             files_to_upload.push({ 
                 name: resp.data.name,
                 path: resp.data.path, 
@@ -84,12 +84,15 @@ var app = angular.module('pnhsApp')
                 };
                 savePost(user_post);
             }
-            
-        }, function (resp) {
+
+       }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            $scope.$emit('progressPercentage', progressPercentage);
+            $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            
         });
 
 
@@ -99,6 +102,7 @@ var app = angular.module('pnhsApp')
       console.log(posting);
       apiService.savePost({uploaded: posting}).then(function(response){
         console.log(response.data);
+        $scope.$emit('upload_finished', false);
       }, function(err){
         console.log(err);
       });

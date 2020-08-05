@@ -58,7 +58,17 @@ var app = angular.module('pnhsApp')
   app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
+    $scope.$on('upload_finished', function(v, bool){
+      $scope.$broadcast('finished', bool);
+    });
+    
+    $scope.$on('uploaded_file', function(v, file){
+      $scope.$broadcast('uploadedfile', file);
+    });
 
+    $scope.$on('progressPercentage', function(v, percentage){
+      $scope.$broadcast('percentage', percentage);
+    });
 
 }]);
 
@@ -73,15 +83,15 @@ app.directive('menuDirective', function(){
   }
 });
 
-app.directive('postsDirective', function(){
+app.directive('newsFeedDirective', function(){
   return{
     restrict: 'E',
     scope:{
 
     },
-    templateUrl: 'views/posts_directive.html',
-    controller: 'postsCtrl',
-    controllerAs: 'p'
+    templateUrl: 'views/newsfeed_directive.html',
+    controller: 'newsfeedCtrl',
+    controllerAs: 'nf'
   }
 });
 
@@ -91,7 +101,7 @@ app.directive('rightColumnDirective', function(){
     scope:{
 
     },
-    templateUrl: 'views/officers_friends_-directive.html',
+    templateUrl: 'views/officers_friends_directive.html',
   }
 });
 
@@ -247,6 +257,63 @@ app.directive('gallery', function(){
 });
 
 
+app.directive('uploadProgressDirective', function(){
+  return{
+    restrict:'E',
+    scope:{
+      total_percentage: '@',
+      percent: '@',
+      fileuploaded: '='
+    },
+    templateUrl: 'views/uploading_progress_directive.html',
+    controller: 'uploadingProgressCtrl',
+    controllerAs: 'up',
+    link: function(scope, elem, attrs){
+      attrs.$observe('totalPercentage', function(n, o) {
+        $('.total-progress').css({'width': n + '%'});
+      });
+    }
+  }
+});
+
+
+'use strict';
+/**
+ * @ngdoc function
+ * @name pnhs_alumni.controller:newsfeedCtrl
+ * @description
+ * # newsfeedCtrl
+ * Controller of the pnhs_alumni
+ */
+
+var app = angular.module('pnhsApp')
+  app.controller('newsfeedCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
+    function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
+
+    var nf = this;
+
+    nf.uploading = false;
+
+    $scope.$on('finished', function(v, bool){
+		nf.uploading = bool;
+    });
+
+    $scope.$on('uploadedfile', function(v, file){
+    	nf.uploading = true;
+		nf.uploadedfile = file;
+    });
+
+    $scope.$on('percentage', function(v, percentage){
+		nf.percentage = percentage;
+		nf.uploading = true;
+		console.log(nf.uploading);
+    });
+
+
+
+}]);
+
+
 'use strict';
 /**
  * @ngdoc function
@@ -257,16 +324,16 @@ app.directive('gallery', function(){
  */
 
 var app = angular.module('pnhsApp')
-	app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
-    	function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
+  app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
+      function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
-	var p = this;
+  var p = this;
 
     p.uploadedImage = [];
 
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
-    p.filesize = 10000;
+    p.filesize = 100000;
     var files_to_upload = [];
 
     // upload later on form submit
@@ -287,35 +354,35 @@ var app = angular.module('pnhsApp')
             console.log(err);
           });
       });
-      console.log(p.file);
+      // console.log(p.file);
     };
 
     function loopFiles(files){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          uploadFileToServer(files[i]);
+          uploadFileToServer(files[i], i);
         }
       }
     }
 
-    function uploadFileToServer(file){
+    function uploadFileToServer(file, i){
 
-      let newFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
+      let modifiedFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
       let extension = file.name.slice(file.name.lastIndexOf(".")+1);
-      let final_file_name = newFileName+'_pnhsKey.'+extension;
-  		
+      let final_file_name = modifiedFileName+'_pnhsKey.'+extension;
+      
       var upload = Upload.upload({
-  			url: 'api/uploadProfilePic',
-  			data: { file: Upload.rename(file, final_file_name) },
-  			resumeSizeUrl: baseUrl+'api/checkChunk/'+newFileName+'_pnhsKey',
-  			headers: {
-  				Authorization : 'Bearer '+ $rootScope.token
-  			},
-  			resumeChunkSize: 100000,
-  		})
+        url: 'api/uploadProfilePic',
+        data: { file: Upload.rename(file, final_file_name) },
+        resumeSizeUrl: baseUrl+'api/checkChunk/'+modifiedFileName+'_pnhsKey',
+        headers: {
+          Authorization : 'Bearer '+ $rootScope.token
+        },
+        resumeChunkSize: 500000,
+      })
 
       upload.then(function (resp) {
-            console.log(resp.data);
+            // console.log(resp.data);
             files_to_upload.push({ 
                 name: resp.data.name,
                 path: resp.data.path, 
@@ -333,12 +400,15 @@ var app = angular.module('pnhsApp')
                 };
                 savePost(user_post);
             }
-            
-        }, function (resp) {
+
+       }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            $scope.$emit('progressPercentage', progressPercentage);
+            $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            
         });
 
 
@@ -348,6 +418,7 @@ var app = angular.module('pnhsApp')
       console.log(posting);
       apiService.savePost({uploaded: posting}).then(function(response){
         console.log(response.data);
+        $scope.$emit('upload_finished', false);
       }, function(err){
         console.log(err);
       });
@@ -407,3 +478,22 @@ app.factory("fileReader", function($q, $log) {
     readAsDataUrl: readAsDataURL
   };
 });
+'use strict';
+/**
+ * @ngdoc function
+ * @name pnhs_alumni.controller:uploadingProgressCtrl
+ * @description
+ * # uploadingProgressCtrl
+ * Controller of the pnhs_alumni
+ */
+
+var app = angular.module('pnhsApp')
+  app.controller('uploadingProgressCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
+    function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
+
+    var up = this;
+
+
+
+}]);
+

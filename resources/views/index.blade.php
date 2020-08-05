@@ -27,11 +27,10 @@
         <modal-directive style="display: none;" class="pop-up-post"  id="pop-up-post-modal"></modal-directive>
         
 
-        <script src="{{asset('node_modules/jquery/dist/jquery.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/jquery/dist/jquery.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/app.js')}}" type="text/javascript" ></script>
 
         <script src="{{asset('node_modules/@uirouter/angularjs/release/angular-ui-router.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('node_modules/angular-animate/angular-animate.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/angular-cookies/angular-cookies.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/angular-sanitize/angular-sanitize.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/angular-touch/angular-touch.min.js')}}" type="text/javascript"></script>

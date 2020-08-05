@@ -15,7 +15,6 @@ require('./bootstrap');
 
 angular
 .module('pnhsApp', [
-  'ngAnimate',
   'ngCookies',
   'ngResource',
   'ui.router',

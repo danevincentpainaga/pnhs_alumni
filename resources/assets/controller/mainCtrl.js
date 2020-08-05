@@ -11,7 +11,17 @@ var app = angular.module('pnhsApp')
   app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
+    $scope.$on('upload_finished', function(v, bool){
+      $scope.$broadcast('finished', bool);
+    });
+    
+    $scope.$on('uploaded_file', function(v, file){
+      $scope.$broadcast('uploadedfile', file);
+    });
 
+    $scope.$on('progressPercentage', function(v, percentage){
+      $scope.$broadcast('percentage', percentage);
+    });
 
 }]);
 
@@ -26,15 +36,15 @@ app.directive('menuDirective', function(){
   }
 });
 
-app.directive('postsDirective', function(){
+app.directive('newsFeedDirective', function(){
   return{
     restrict: 'E',
     scope:{
 
     },
-    templateUrl: 'views/posts_directive.html',
-    controller: 'postsCtrl',
-    controllerAs: 'p'
+    templateUrl: 'views/newsfeed_directive.html',
+    controller: 'newsfeedCtrl',
+    controllerAs: 'nf'
   }
 });
 
@@ -44,7 +54,7 @@ app.directive('rightColumnDirective', function(){
     scope:{
 
     },
-    templateUrl: 'views/officers_friends_-directive.html',
+    templateUrl: 'views/officers_friends_directive.html',
   }
 });
 
@@ -194,6 +204,26 @@ app.directive('gallery', function(){
         // returns text for "view all images" link if images more than five
         getViewAllText: function() {},
 
+      });
+    }
+  }
+});
+
+
+app.directive('uploadProgressDirective', function(){
+  return{
+    restrict:'E',
+    scope:{
+      total_percentage: '@',
+      percent: '@',
+      fileuploaded: '='
+    },
+    templateUrl: 'views/uploading_progress_directive.html',
+    controller: 'uploadingProgressCtrl',
+    controllerAs: 'up',
+    link: function(scope, elem, attrs){
+      attrs.$observe('totalPercentage', function(n, o) {
+        $('.total-progress').css({'width': n + '%'});
       });
     }
   }

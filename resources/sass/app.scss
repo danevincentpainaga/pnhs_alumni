@@ -735,6 +735,10 @@ body{
     }
 }
 
+.uploading-status{
+    padding: 9px !important;
+    @include custom-card;
+}
 
 .bounce{
     animation: bounce 1s;
