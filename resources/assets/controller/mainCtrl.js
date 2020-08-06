@@ -11,8 +11,8 @@ var app = angular.module('pnhsApp')
   app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
-    $scope.$on('upload_finished', function(v, bool){
-      $scope.$broadcast('finished', bool);
+    $scope.$on('upload_finished', function(v, obj){
+      $scope.$broadcast('finished', obj);
     });
     
     $scope.$on('uploaded_file', function(v, file){
@@ -140,71 +140,35 @@ app.directive('files', function(){
 });
 
 
-app.directive('gallery', function(){
+app.directive('postImages', function(){
   return{
     restrict:'A',
+    scope:{
+      postfiles: '@',
+      postImages: '='
+    },
     link: function(scope, elem, attrs){
-      $(elem).imagesGrid({
-        images: [
-          {
-            src: 'images/dane.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'images/dane.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/zoe.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/zoe.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/pic1.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/pic1.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/dane.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/dane.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/user.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/user.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/zoevid.mp4',       // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/zoevid.mp4',  // thumbnail image url
-          },
-        ],
-        // algin images with different sizes
-        align: false,
+      attrs.$observe('postfiles', function(n, o) {
+        console.log(n+" postfiles");
+        if (n) {
+          $(elem).imagesGrid({
+            images: JSON.parse(n),
 
-        // max grid cells (1-6)
-        cells: 5, 
+            cells: 5, 
 
-        // goto next image on click
-        nextOnClick: true,
+            // goto next image on click
+            nextOnClick: true,
 
-        // text for show more
-        showViewAll: 'more',
+            // text for show more
+            showViewAll: 'more',
 
-        // returns text for "view all images" link if images more than five
-        getViewAllText: function() {},
+            // returns text for "view all images" link if images more than five
+            getViewAllText: function() {},
 
+          });
+        }
       });
+
     }
   }
 });

@@ -12,22 +12,24 @@ var app = angular.module('pnhsApp')
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
     var nf = this;
-
+    
     nf.uploading = false;
 
-    $scope.$on('finished', function(v, bool){
-		nf.uploading = bool;
+    $scope.$on('finished', function(v, obj){
+		nf.uploading = obj.bool;
+        nf.uploadedFiles = obj.post_images;
     });
 
     $scope.$on('uploadedfile', function(v, file){
-    	nf.uploading = true;
+        if (!nf.uploading) {
+    	   nf.uploading = true;
+           console.log(nf.uploading);
+        }
 		nf.uploadedfile = file;
     });
 
     $scope.$on('percentage', function(v, percentage){
 		nf.percentage = percentage;
-		nf.uploading = true;
-		console.log(nf.uploading);
     });
 
 

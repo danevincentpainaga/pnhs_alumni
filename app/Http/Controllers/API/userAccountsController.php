@@ -209,7 +209,7 @@ class userAccountsController extends Controller
 
         // // Build the file path
         $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path("app/".$filePath);
+        $finalPath = storage_path("app/public/".$filePath);
 
         // // move the file name
         $file->move($finalPath, $fileName);

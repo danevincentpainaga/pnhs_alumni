@@ -17,8 +17,9 @@ var app = angular.module('pnhsApp')
 
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
-    p.filesize = 100000;
+    p.filesize = 700000;
     var files_to_upload = [];
+    var post_images = [];
 
     // upload later on form submit
     p.uploadPost = function() {
@@ -62,7 +63,7 @@ var app = angular.module('pnhsApp')
         headers: {
           Authorization : 'Bearer '+ $rootScope.token
         },
-        resumeChunkSize: 500000,
+        resumeChunkSize: p.filesize,
       })
 
       upload.then(function (resp) {
@@ -74,6 +75,8 @@ var app = angular.module('pnhsApp')
                 description: p.post_description,
             });
 
+            post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+
             if (files_to_upload.length == p.file.length) {
                 var user_post = {
                   files: files_to_upload,
@@ -82,17 +85,20 @@ var app = angular.module('pnhsApp')
                     description: p.post_description
                   }
                 };
-                savePost(user_post);
+                // savePost(user_post, post_files);
+                $scope.$emit('upload_finished', { bool: false, post_images });
             }
+            console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
 
        }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
+          $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
+          $timeout(function(){
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.$emit('progressPercentage', progressPercentage);
-            $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-            
+          }, 100);
         });
 
 

@@ -42,11 +42,28 @@
       <hr style="margin-top: .7pc; margin-bottom: .5pc;">
       <p style="padding-top: 5px;color: #6d6d6d;font-size: 14.5px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim laoreet dolore magna aliquam erat volutpat</p>
     </div>
-    <!-- <div class="post-images" style="width: 100%; height: 500px; overflow: hidden;position: relative;"> -->
-      <!-- <img src="images/dane.jpg" style="width: 100%;min-width: 100%; max-width: 100%;height: auto;box-sizing: border-box;position: absolute;"> -->
-      <div gallery>test</div>
+    <div class="image-grid-3">
+      <div class="post-images" ng-repeat="img in nf.uploadedFiles">
+        <img ng-src="{{ img.src }}">
+      </div>
+<!--       <div class="post-images">
+        <img src="uploads/zoe.jpg">
+      </div>
+      <div class="post-images">
+        <img src="uploads/dane.jpg">
+      </div>
+      <div class="post-images">
+        <img src="uploads/pic1.jpg">
 
+      </div>
+      <div class="post-images">
+        <img src="uploads/pic2.jpg">
+      </div> -->
     </div>
-  </div>
 
+    <!-- <div post-images="nf.uploadedFiles" postfiles="{{ nf.uploadedFiles }}">test</div> -->
+  </div>
 </div>
+
+
+

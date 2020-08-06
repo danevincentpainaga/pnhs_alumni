@@ -58,8 +58,8 @@ var app = angular.module('pnhsApp')
   app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
-    $scope.$on('upload_finished', function(v, bool){
-      $scope.$broadcast('finished', bool);
+    $scope.$on('upload_finished', function(v, obj){
+      $scope.$broadcast('finished', obj);
     });
     
     $scope.$on('uploaded_file', function(v, file){
@@ -187,71 +187,35 @@ app.directive('files', function(){
 });
 
 
-app.directive('gallery', function(){
+app.directive('postImages', function(){
   return{
     restrict:'A',
+    scope:{
+      postfiles: '@',
+      postImages: '='
+    },
     link: function(scope, elem, attrs){
-      $(elem).imagesGrid({
-        images: [
-          {
-            src: 'images/dane.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'images/dane.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/zoe.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/zoe.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/pic1.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/pic1.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/dane.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/dane.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/user.jpg',      // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/user.jpg' // thumbnail image url
-          },
-          {
-            src: 'uploads/zoevid.mp4',       // url
-            alt: 'Car',          // alternative text
-            title: 'Car',        // title
-            caption: 'Supercar',  // modal caption
-            thumbnail: 'uploads/zoevid.mp4',  // thumbnail image url
-          },
-        ],
-        // algin images with different sizes
-        align: false,
+      attrs.$observe('postfiles', function(n, o) {
+        console.log(n+" postfiles");
+        if (n) {
+          $(elem).imagesGrid({
+            images: JSON.parse(n),
 
-        // max grid cells (1-6)
-        cells: 5, 
+            cells: 5, 
 
-        // goto next image on click
-        nextOnClick: true,
+            // goto next image on click
+            nextOnClick: true,
 
-        // text for show more
-        showViewAll: 'more',
+            // text for show more
+            showViewAll: 'more',
 
-        // returns text for "view all images" link if images more than five
-        getViewAllText: function() {},
+            // returns text for "view all images" link if images more than five
+            getViewAllText: function() {},
 
+          });
+        }
       });
+
     }
   }
 });
@@ -291,22 +255,24 @@ var app = angular.module('pnhsApp')
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
     var nf = this;
-
+    
     nf.uploading = false;
 
-    $scope.$on('finished', function(v, bool){
-		nf.uploading = bool;
+    $scope.$on('finished', function(v, obj){
+		nf.uploading = obj.bool;
+        nf.uploadedFiles = obj.post_images;
     });
 
     $scope.$on('uploadedfile', function(v, file){
-    	nf.uploading = true;
+        if (!nf.uploading) {
+    	   nf.uploading = true;
+           console.log(nf.uploading);
+        }
 		nf.uploadedfile = file;
     });
 
     $scope.$on('percentage', function(v, percentage){
 		nf.percentage = percentage;
-		nf.uploading = true;
-		console.log(nf.uploading);
     });
 
 
@@ -333,8 +299,9 @@ var app = angular.module('pnhsApp')
 
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
-    p.filesize = 100000;
+    p.filesize = 700000;
     var files_to_upload = [];
+    var post_images = [];
 
     // upload later on form submit
     p.uploadPost = function() {
@@ -378,7 +345,7 @@ var app = angular.module('pnhsApp')
         headers: {
           Authorization : 'Bearer '+ $rootScope.token
         },
-        resumeChunkSize: 500000,
+        resumeChunkSize: p.filesize,
       })
 
       upload.then(function (resp) {
@@ -390,6 +357,8 @@ var app = angular.module('pnhsApp')
                 description: p.post_description,
             });
 
+            post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+
             if (files_to_upload.length == p.file.length) {
                 var user_post = {
                   files: files_to_upload,
@@ -398,17 +367,20 @@ var app = angular.module('pnhsApp')
                     description: p.post_description
                   }
                 };
-                savePost(user_post);
+                // savePost(user_post, post_files);
+                $scope.$emit('upload_finished', { bool: false, post_images });
             }
+            console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
 
        }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
+          $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
+          $timeout(function(){
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.$emit('progressPercentage', progressPercentage);
-            $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-            
+          }, 100);
         });
 
 
