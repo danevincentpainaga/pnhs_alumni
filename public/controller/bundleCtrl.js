@@ -58,6 +58,11 @@ var app = angular.module('pnhsApp')
   app.controller('mainCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
+    $scope.$on('load_start',function(v, value){
+      $scope.$broadcast('loading_value', value);
+    });
+
+
     $scope.$on('upload_finished', function(v, obj){
       $scope.$broadcast('finished', obj);
     });
@@ -66,9 +71,9 @@ var app = angular.module('pnhsApp')
       $scope.$broadcast('uploadedfile', file);
     });
 
-    $scope.$on('progressPercentage', function(v, percentage){
-      $scope.$broadcast('percentage', percentage);
-    });
+    // $scope.$on('progressPercentage', function(v, percentage){
+    //   $scope.$broadcast('percentage', percentage);
+    // });
 
 }]);
 
@@ -222,24 +227,74 @@ app.directive('postImages', function(){
 
 
 app.directive('uploadProgressDirective', function(){
+
+  var start = 0;
+  var percent_arr;
+  var copy = -1;
+
+  function link(scope, elem, attrs){
+    attrs.$observe('percentage', function(newval, o) {
+      percent_arr = [newval];
+      let val = parseInt(newval);
+      if (start > 0) {
+        getIncPercentage(val, start);
+      }
+      else{
+        getIncPercentage(val, 0);
+        start = val;
+      }
+
+    });
+  }
+
+  function getIncPercentage(percentage, currentPercentage){
+    if (parseInt(copy) < percentage ) {
+      if(currentPercentage == 100){
+        $('#percentage').text('99%');
+        $('.total-progress').css({'width': currentPercentage + '%'});
+      }
+      else if (currentPercentage <= percentage) {
+        $('.total-progress').css({'width': currentPercentage + '%'});
+        $('#percentage').text(currentPercentage+'%');
+        getIncPercentage(percentage, ++currentPercentage); 
+      }
+      percentage > 0 ? copy = [...percent_arr]: null ;
+    }
+    // console.log("copy "+ copy, "percentage "+ percentage);
+    // console.log(percentage, currentPercentage, start );
+  }
+
   return{
     restrict:'E',
     scope:{
-      total_percentage: '@',
-      percent: '@',
+      percentage: '@',
       fileuploaded: '='
     },
     templateUrl: 'views/uploading_progress_directive.html',
     controller: 'uploadingProgressCtrl',
     controllerAs: 'up',
-    link: function(scope, elem, attrs){
-      attrs.$observe('totalPercentage', function(n, o) {
-        $('.total-progress').css({'width': n + '%'});
-      });
-    }
+    link: link
   }
 });
 
+// app.directive('uploadProgressDirective', function(){
+//   return{
+//     restrict:'E',
+//     scope:{
+//       total_percentage: '@',
+//       percent: '@',
+//       fileuploaded: '='
+//     },
+//     templateUrl: 'views/uploading_progress_directive.html',
+//     controller: 'uploadingProgressCtrl',
+//     controllerAs: 'up',
+//     link: function(scope, elem, attrs){
+//       attrs.$observe('totalPercentage', function(n, o) {
+//         $('.total-progress').css({'width': n + '%'});
+//       });
+//     }
+//   }
+// });
 
 'use strict';
 /**
@@ -258,6 +313,11 @@ var app = angular.module('pnhsApp')
     
     nf.uploading = false;
 
+    $scope.$on('loading_value', function(v, value){
+        nf.percentage = value;
+        nf.uploading = true;
+    });
+
     $scope.$on('finished', function(v, obj){
 		nf.uploading = obj.bool;
         nf.uploadedFiles = obj.post_images;
@@ -271,9 +331,9 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
-    $scope.$on('percentage', function(v, percentage){
-		nf.percentage = percentage;
-    });
+  //   $scope.$on('percentage', function(v, percentage){
+		// nf.percentage = percentage;
+  //   });
 
 
 
@@ -306,7 +366,7 @@ var app = angular.module('pnhsApp')
     // upload later on form submit
     p.uploadPost = function() {
 
-      loopFiles(p.file);
+      prepareFiles(p.file);
 
     };
 
@@ -324,21 +384,34 @@ var app = angular.module('pnhsApp')
       // console.log(p.file);
     };
 
+    function prepareFiles(files){
+      if (files.length > 1) {
+        loopFiles(files);
+      }
+      else if(files.length == 1){
+        uploadOneFile(checkChunkBeforeUpload(files[0]));
+      }
+      else{
+
+      }
+    }
+
+
     function loopFiles(files){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          uploadFileToServer(files[i], i);
+          uploadMultipleFilesToServer(checkChunkBeforeUpload(files[i]));
         }
       }
     }
 
-    function uploadFileToServer(file, i){
+    function checkChunkBeforeUpload(file){
 
-      let modifiedFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
+     let modifiedFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
       let extension = file.name.slice(file.name.lastIndexOf(".")+1);
       let final_file_name = modifiedFileName+'_pnhsKey.'+extension;
       
-      var upload = Upload.upload({
+      let upload = Upload.upload({
         url: 'api/uploadProfilePic',
         data: { file: Upload.rename(file, final_file_name) },
         resumeSizeUrl: baseUrl+'api/checkChunk/'+modifiedFileName+'_pnhsKey',
@@ -346,51 +419,85 @@ var app = angular.module('pnhsApp')
           Authorization : 'Bearer '+ $rootScope.token
         },
         resumeChunkSize: p.filesize,
-      })
+      });
+
+      return upload;
+    }
+
+    function uploadOneFile(upload){
 
       upload.then(function (resp) {
-            // console.log(resp.data);
-            files_to_upload.push({ 
-                name: resp.data.name,
-                path: resp.data.path, 
-                mime_type: resp.data.mime_type,
-                description: p.post_description,
-            });
+        var user_post = {
+          files: [{
+                    name: resp.data.name,
+                    path: resp.data.path, 
+                    mime_type: resp.data.mime_type,
+                    description: p.post_description,
+                  }],
+          post: {
+            privacy: p.privacy_status,
+            description: p.post_description
+          }
+        };
 
-            post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+        savePost(user_post, { bool: false, post_images: [{ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name }] });
 
-            if (files_to_upload.length == p.file.length) {
-                var user_post = {
-                  files: files_to_upload,
-                  post: {
-                    privacy: p.privacy_status,
-                    description: p.post_description
-                  }
-                };
-                // savePost(user_post, post_files);
-                $scope.$emit('upload_finished', { bool: false, post_images });
-            }
-            console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
-
-       }, function (resp) {
-            console.log('Error status: ' + resp.status);
-        }, function (evt) {
-          $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
-          $timeout(function(){
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            $scope.$emit('progressPercentage', progressPercentage);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-          }, 100);
-        });
-
+      }, function (resp) {
+          console.log('Error status: ' + resp.status);
+      }, function (evt) {
+        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        $scope.$emit('load_start', progressPercentage);
+        $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
+        console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+      });
 
     }
 
-    function savePost(posting){
+    function uploadMultipleFilesToServer(upload){
+
+      $scope.$emit('load_start', 0);
+
+      upload.then(function (resp) {
+        files_to_upload.push({ 
+            name: resp.data.name,
+            path: resp.data.path, 
+            mime_type: resp.data.mime_type,
+            description: p.post_description,
+        });
+
+        post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+        
+        if (files_to_upload.length == p.file.length) {
+            var user_post = {
+              files: files_to_upload,
+              post: {
+                privacy: p.privacy_status,
+                description: p.post_description
+              }
+            };
+
+            savePost(user_post, { bool: false, post_images });
+            
+        }
+
+        console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
+
+      }, function (resp) {
+            console.log('Error status: ' + resp.status);
+      }, function (evt) {
+        $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
+        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        $scope.$emit('load_start', progressPercentage);
+      });
+
+    }
+
+
+    function savePost(posting, uploadedImages){
       console.log(posting);
       apiService.savePost({uploaded: posting}).then(function(response){
         console.log(response.data);
-        $scope.$emit('upload_finished', false);
+        $scope.$emit('upload_finished', uploadedImages);
       }, function(err){
         console.log(err);
       });

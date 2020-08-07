@@ -15,6 +15,11 @@ var app = angular.module('pnhsApp')
     
     nf.uploading = false;
 
+    $scope.$on('loading_value', function(v, value){
+        nf.percentage = value;
+        nf.uploading = true;
+    });
+
     $scope.$on('finished', function(v, obj){
 		nf.uploading = obj.bool;
         nf.uploadedFiles = obj.post_images;
@@ -28,9 +33,9 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
-    $scope.$on('percentage', function(v, percentage){
-		nf.percentage = percentage;
-    });
+  //   $scope.$on('percentage', function(v, percentage){
+		// nf.percentage = percentage;
+  //   });
 
 
 

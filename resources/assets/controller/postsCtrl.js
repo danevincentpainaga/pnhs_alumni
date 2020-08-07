@@ -24,7 +24,7 @@ var app = angular.module('pnhsApp')
     // upload later on form submit
     p.uploadPost = function() {
 
-      loopFiles(p.file);
+      prepareFiles(p.file);
 
     };
 
@@ -42,21 +42,34 @@ var app = angular.module('pnhsApp')
       // console.log(p.file);
     };
 
+    function prepareFiles(files){
+      if (files.length > 1) {
+        loopFiles(files);
+      }
+      else if(files.length == 1){
+        uploadOneFile(checkChunkBeforeUpload(files[0]));
+      }
+      else{
+
+      }
+    }
+
+
     function loopFiles(files){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          uploadFileToServer(files[i], i);
+          uploadMultipleFilesToServer(checkChunkBeforeUpload(files[i]));
         }
       }
     }
 
-    function uploadFileToServer(file, i){
+    function checkChunkBeforeUpload(file){
 
-      let modifiedFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
+     let modifiedFileName = file.lastModified+'_'+file.size+'_'+file.name.slice(0, file.name.lastIndexOf("."));
       let extension = file.name.slice(file.name.lastIndexOf(".")+1);
       let final_file_name = modifiedFileName+'_pnhsKey.'+extension;
       
-      var upload = Upload.upload({
+      let upload = Upload.upload({
         url: 'api/uploadProfilePic',
         data: { file: Upload.rename(file, final_file_name) },
         resumeSizeUrl: baseUrl+'api/checkChunk/'+modifiedFileName+'_pnhsKey',
@@ -64,51 +77,85 @@ var app = angular.module('pnhsApp')
           Authorization : 'Bearer '+ $rootScope.token
         },
         resumeChunkSize: p.filesize,
-      })
+      });
+
+      return upload;
+    }
+
+    function uploadOneFile(upload){
 
       upload.then(function (resp) {
-            // console.log(resp.data);
-            files_to_upload.push({ 
-                name: resp.data.name,
-                path: resp.data.path, 
-                mime_type: resp.data.mime_type,
-                description: p.post_description,
-            });
+        var user_post = {
+          files: [{
+                    name: resp.data.name,
+                    path: resp.data.path, 
+                    mime_type: resp.data.mime_type,
+                    description: p.post_description,
+                  }],
+          post: {
+            privacy: p.privacy_status,
+            description: p.post_description
+          }
+        };
 
-            post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+        savePost(user_post, { bool: false, post_images: [{ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name }] });
 
-            if (files_to_upload.length == p.file.length) {
-                var user_post = {
-                  files: files_to_upload,
-                  post: {
-                    privacy: p.privacy_status,
-                    description: p.post_description
-                  }
-                };
-                // savePost(user_post, post_files);
-                $scope.$emit('upload_finished', { bool: false, post_images });
-            }
-            console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
-
-       }, function (resp) {
-            console.log('Error status: ' + resp.status);
-        }, function (evt) {
-          $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
-          $timeout(function(){
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            $scope.$emit('progressPercentage', progressPercentage);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-          }, 100);
-        });
-
+      }, function (resp) {
+          console.log('Error status: ' + resp.status);
+      }, function (evt) {
+        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        $scope.$emit('load_start', progressPercentage);
+        $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
+        console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+      });
 
     }
 
-    function savePost(posting){
+    function uploadMultipleFilesToServer(upload){
+
+      $scope.$emit('load_start', 0);
+
+      upload.then(function (resp) {
+        files_to_upload.push({ 
+            name: resp.data.name,
+            path: resp.data.path, 
+            mime_type: resp.data.mime_type,
+            description: p.post_description,
+        });
+
+        post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+        
+        if (files_to_upload.length == p.file.length) {
+            var user_post = {
+              files: files_to_upload,
+              post: {
+                privacy: p.privacy_status,
+                description: p.post_description
+              }
+            };
+
+            savePost(user_post, { bool: false, post_images });
+            
+        }
+
+        console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
+
+      }, function (resp) {
+            console.log('Error status: ' + resp.status);
+      }, function (evt) {
+        $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
+        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        $scope.$emit('load_start', progressPercentage);
+      });
+
+    }
+
+
+    function savePost(posting, uploadedImages){
       console.log(posting);
       apiService.savePost({uploaded: posting}).then(function(response){
         console.log(response.data);
-        $scope.$emit('upload_finished', false);
+        $scope.$emit('upload_finished', uploadedImages);
       }, function(err){
         console.log(err);
       });

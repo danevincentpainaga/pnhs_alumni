@@ -26,7 +26,8 @@
       </div>
     </div>
   </div>
-  <upload-progress-directive total_percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" totalPercentage="{{ nf.percentage  }}" percent="{{ nf.percent }}" ng-if="nf.uploading"></upload-progress-directive>
+  <upload-progress-directive percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" ng-if="nf.uploading"></upload-progress-directive>
+<!-- <upload-progress-directive total_percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" totalPercentage="{{ nf.percentage  }}" percent="{{ nf.percent }}" ng-if="nf.uploading"></upload-progress-directive> -->
   <div class="row posts-body" style="border: 1px solid #e4e4e4;margin-top: .7em;">
     <div class="posts-header" style="display: flex; background-color: #fff;width: 100%;padding: 15pt .15625in 0px .15625in;border-top-left-radius: 7px;border-top-right-radius: 7px;">
       <div class="post-image" style="width: 11%;">
