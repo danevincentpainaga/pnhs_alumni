@@ -10376,11 +10376,14 @@ body {
   position: fixed;
   top: 0px;
   width: 100%;
-  height: 100%;
+  height: 110%;
 }
 .pop-up-post .pop-up-body {
-  position: relative;
-  top: 20%;
+  width: 100%;
+  height: 100%;
+  /*position: relative;*/
+  /*top: 20%;*/
+  top: 0px;
   display: block;
   padding: 15px 15px 10px;
   background-color: #fff;
@@ -10663,6 +10666,97 @@ body {
   color: #aeaeae;
 }
 
+#tagged {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  display: block;
+  padding: 15px 15px 10px;
+  background-color: #fff;
+  border-radius: 7px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+}
+#tagged .search-friends {
+  display: flex;
+}
+#tagged .search-friends input {
+  background: #f9f9f9;
+  padding: 13px 20px;
+  color: #535165;
+  font-size: 14px;
+  height: 27pt;
+  border: medium none;
+  border-radius: 30px;
+  outline: none;
+  margin-bottom: 0.7em;
+}
+
+.suggestions {
+  overflow-y: auto;
+  max-height: 395px !important;
+}
+.suggestions ul {
+  padding: 0px;
+}
+.suggestions ul li {
+  list-style: outside none none;
+  margin-top: 0.5em;
+}
+.suggestions ul li figure {
+  display: inline-block;
+  margin-bottom: 0;
+  max-width: 40px;
+  min-width: 40px;
+  vertical-align: middle;
+  width: 40px;
+}
+.suggestions ul li figure a img {
+  border-radius: 100%;
+  width: 100%;
+  border: 2px solid #ebf0f3;
+  height: 100%;
+}
+.suggestions ul li .friends {
+  display: inline-block;
+  padding-left: 3px;
+  vertical-align: middle;
+  width: 80%;
+}
+.suggestions ul li .friends span {
+  font-size: 13px;
+  color: #535165;
+}
+.suggestions ul li .friends span a {
+  text-decoration: none;
+  color: #757a95;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  max-height: 510px !important;
+}
+
+/*.slide {
+    background: blue;
+    -webkit-animation: slide 0.3 forwards;
+    animation: slide 0.3s forwards;
+}
+
+@-webkit-keyframes slide {
+    100% { right: 0 }
+}
+
+@keyframes slide {
+    100% { right: 0; }
+}
+
+*/
 .image-grid-2 {
   display: flex;
   flex-wrap: wrap;

@@ -1,111 +1,50 @@
 <div style="max-width: 530px;margin: 5.75rem auto;">
-	<div class="bounce pop-up-body">
-    	<h6>Create Post</h6>
-    	<hr style="margin-top: .7pc; margin-bottom: .5pc;">
-    	<div class="create-post-header">
-    		<button class="close-post-modal popup-close-btn"><i class="fa fa-times-circle close-post-modal"></i></button>
-	    	<div class="create-post-image">
-	          <img src="uploads/dane.jpg">
-	        </div>
-	        <div class="create-post-username">
-	        	<p>Dane Vincent Painaga</p>
-	        	<p>
-		        	<select ng-model="p.privacy_status">
-		        		<option ng-repeat="p in p.privacy" value="{{p}}" >{{ p }}</option>
-		        	</select>
-	        	</p>
-	        </div>
-    	</div>
-    	<div class="create-post-body">
-    		<textarea placeholder="Whats on your mind?" ng-model="p.post_description"></textarea>
-    	</div>
-    	<div class="images" style="display: flex;width: 100%;overflow: auto;">
-    		<div class="uploaded-images" style="display: block;width: 100%;max-height: 290px;">
-    			<div style="display: block; width: 100%;" id="file-holder" files="p.uploadedImage" filedata="{{p.uploadedImage}}"></div>
-    		</div>
-    	</div>
-		<hr style="margin-top: .7pc; margin-bottom: .5pc;">
-		<div class="buttons">
-			<a href="" class="button" ngf-select="p.getTheFiles($files)" multiple="multiple">
-			  <img src="images/shield.svg">
-			  Photo/Video
-			</a>
-			<a href="" >
-			  <img src="images/calendar.svg">
-			  Tag Friend
-			</a>
-			<a href="">
-			  <img src="images/add.svg">
-			  Feeling/Activity
-			</a>
-		</div>
-		<hr style="margin-top: .7pc; margin-bottom: .5pc;">
-		<div class="post-button">
-			<button ng-click="p.uploadPost()">Post</button>
-		</div>
-	</div>
-<!-- 	<div class="bounce pop-up-body">
-    	<h6 class="text-center">Tag Friends</h6>
-    	<hr style="margin-top: .7pc; margin-bottom: .5pc;">
-    	<div style="display: flex;">
-	     	<input type="text" class="form-control form-control " placeholder="Search for friends" style="background: #f9f9f9;
-		    padding: 13px 20px;
-		    color: #535165;
-		    font-size: 14px;
-		    height: 27pt;
-		    border: medium none;
-		    border-radius: 30px;
-		    outline: none; margin-bottom: .7em;">
-    	</div>
-			<div class="" >
-			  <ul style="padding: 0px;">
-			    <li style="list-style: outside none none;margin-top: 0.5em;">
-			      <figure style="display: inline-block;
-    margin-bottom: 0;
-    max-width: 40px;
-    min-width: 40px;
-    vertical-align: middle;
-    width: 40px;
-}">
-			        <a href="#" title=""><img src="uploads/dane.jpg" alt="" style="    border-radius: 100%;
-    width: 100%;
-    border: 2px solid #ebf0f3;
-    height: 100%;"></a>
-			      </figure>
-			      <div class="people-content" style="display: inline-block;
-    padding-left: 3px;
-    vertical-align: middle;
-    width: 80%;">
-			        <span style="font-size: 13px;color: #535165;"><a href="time-line.html" title="" style="text-decoration: none;
-    color: #757a95;
-    font-weight: 600;
-    font-size: .9375rem;;">Dane Vincent Painaga</a></span>
-			      </div>
-			    </li>
-			    <li style="list-style: outside none none;margin-top: 0.5em;">
-			      <figure style="display: inline-block;
-    margin-bottom: 0;
-    max-width: 40px;
-    min-width: 40px;
-    vertical-align: middle;
-    width: 40px;
-}">
-			        <a href="#" title=""><img src="uploads/zoe.jpg" alt="" style="    border-radius: 100%;
-    width: 100%;
-    border: 2px solid #ebf0f3;
-    height: 100%;"></a>
-			      </figure>
-			      <div class="people-content" style="display: inline-block;
-    padding-left: 3px;
-    vertical-align: middle;
-    width: 80%;">
-			        <span style="font-size: 13px;color: #535165;"><a href="time-line.html" title="" style="text-decoration: none;
-    color: #757a95;
-    font-weight: 600;
-    font-size: .9375rem;;">Sophia Elizabeth</a></span>
-			      </div>
-			    </li>
-			  </ul>
+	<div class="bounce wrapper">
+		<div class="pop-up-body" >
+	    	<h6>Create Post</h6>
+	    	<hr style="margin-top: .7pc; margin-bottom: .5pc;">
+	    	<div class="create-post-header">
+	    		<!-- <button class="close-post-modal popup-close-btn"><i class="fa fa-times-circle close-post-modal"></i></button> -->
+		    	<div class="create-post-image">
+		          <img src="uploads/dane.jpg">
+		        </div>
+		        <div class="create-post-username">
+		        	<p>Dane Vincent Painaga</p>
+		        	<p>
+			        	<select ng-model="p.privacy_status">
+			        		<option ng-repeat="p in p.privacy" value="{{p}}" >{{ p }}</option>
+			        	</select>
+		        	</p>
+		        </div>
+	    	</div>
+	    	<div class="create-post-body">
+	    		<textarea placeholder="Whats on your mind?" ng-model="p.post_description"></textarea>
+	    	</div>
+	    	<div class="images" style="display: flex;width: 100%;overflow: auto;">
+	    		<div class="uploaded-images" style="display: block;width: 100%;max-height: 290px;">
+	    			<div style="display: block; width: 100%;" id="file-holder" files="p.uploadedImage" filedata="{{p.uploadedImage}}"></div>
+	    		</div>
+	    	</div>
+			<hr style="margin-top: .7pc; margin-bottom: .5pc;">
+			<div class="buttons">
+				<a href="" class="button" ngf-select="p.getTheFiles($files)" multiple="multiple">
+				  <img src="images/shield.svg">
+				  Photo/Video
+				</a>
+				<a href="" ng-click="p.tagFriends()">
+				  <img src="images/calendar.svg">
+				  Tag Friend
+				</a>
+				<a href="">
+				  <img src="images/add.svg">
+				  Feeling/Activity
+				</a>
 			</div>
-	</div>	 -->
+			<hr style="margin-top: .7pc; margin-bottom: .5pc;">
+			<div class="post-button">
+				<button ng-click="p.uploadPost()">Post</button>
+			</div>
+		</div>
+		<tag-friends-suggestions status="{{ p.show_suggestions }}"  ></tag-friends-suggestions>
+	</div>
 </div>

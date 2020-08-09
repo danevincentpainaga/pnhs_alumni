@@ -19,6 +19,13 @@ var app = angular.module('pnhsApp')
     var files_to_upload = [];
     var post_images = [];
 
+    p.back = function(){
+      p.show_suggestions = false;
+    }
+
+    p.tagFriends = function(){
+      p.show_suggestions = true;
+    }
 
     // upload later on form submit
     p.uploadPost = function() {

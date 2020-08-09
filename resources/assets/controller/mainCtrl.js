@@ -59,16 +59,39 @@ app.directive('rightColumnDirective', function(){
   }
 });
 
-app.directive('file', function(){
+app.directive('tagFriendsSuggestions', function(){
   return{
-    restrict:'A',
+    restrict: 'E',
+    templateUrl: 'views/tag_friends_suggesstions.html',
     link: function(scope, elem, attrs){
-      elem.on('click', function(){
-        console.log(attrs.file);
+      attrs.$observe('status', function(n, o) {
+        let h = parseInt($('.tagged-body').height() + 40);
+        if (n == 'true') {
+          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 210);
+          setTimeout(()=>{
+            $('.wrapper').css({ 'height': h + 'px'});
+          }, 130);
+        }
+        else if(n == 'false'){
+          $('.wrapper').css({'height': '100%'});
+          $('#tagged').animate({'position': 'absolute', 'right': -530 + 'px'}, 150);
+        }
       });
     }
   }
 });
+
+
+// app.directive('file', function(){
+//   return{
+//     restrict:'A',
+//     link: function(scope, elem, attrs){
+//       elem.on('click', function(){
+//         console.log(attrs.file);
+//       });
+//     }
+//   }
+// });
 
 
 app.directive('openModal', function(){
