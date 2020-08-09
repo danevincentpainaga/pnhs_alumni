@@ -65,15 +65,15 @@ app.directive('tagFriendsSuggestions', function(){
     templateUrl: 'views/tag_friends_suggesstions.html',
     link: function(scope, elem, attrs){
       attrs.$observe('status', function(n, o) {
-        let h = parseInt($('.tagged-body').height() + 40);
+        console.log($(window).height())
         if (n == 'true') {
           $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 210);
           setTimeout(()=>{
-            $('.wrapper').css({ 'height': h + 'px'});
+            $('.wrapper').css({ 'height': $(window).height() + 'px'});
           }, 130);
         }
         else if(n == 'false'){
-          $('.wrapper').css({'height': '100%'});
+          $('.wrapper').css({'height': 'auto'});
           $('#tagged').animate({'position': 'absolute', 'right': -530 + 'px'}, 150);
         }
       });
