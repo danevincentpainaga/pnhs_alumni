@@ -46,21 +46,18 @@
     <div class="image-grid-3">
       <div class="post-images" ng-repeat="img in nf.uploadedFiles">
         <img ng-src="{{ img.src }}">
+        <video controls>
+          <source ng-src="{{ img.src }}" type="video/mp4"/>
+        </video>
       </div>
-<!--       <div class="post-images">
-        <img src="uploads/zoe.jpg">
-      </div>
-      <div class="post-images">
-        <img src="uploads/dane.jpg">
-      </div>
-      <div class="post-images">
-        <img src="uploads/pic1.jpg">
-
-      </div>
-      <div class="post-images">
-        <img src="uploads/pic2.jpg">
-      </div> -->
     </div>
+<!--     <div class="image-grid-5">
+      <div class="post-images" ng-repeat="img in nf.uploadedFiles">
+        <div class="post-images" ng-repeat="img in nf.uploadedFiles">
+          <img ng-src="{{ img.src }}">
+        </div>
+      </div>
+    </div> -->
 
     <!-- <div post-images="nf.uploadedFiles" postfiles="{{ nf.uploadedFiles }}">test</div> -->
   </div>

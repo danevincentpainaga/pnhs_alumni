@@ -33,11 +33,5 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
-  //   $scope.$on('percentage', function(v, percentage){
-		// nf.percentage = percentage;
-  //   });
-
-
-
 }]);
 

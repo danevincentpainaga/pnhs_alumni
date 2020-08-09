@@ -269,6 +269,7 @@ class userAccountsController extends Controller
                 if ($filename == substr($file, 0, strpos($file,"_pnhsKey"))) {
                     $files['file'] = $file;
                     $files['size'] = filesize('../storage/app/chunks/'.$file);
+                    $files['passed_file'] = $filename;
                 }
             }
         }

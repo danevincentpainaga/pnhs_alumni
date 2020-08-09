@@ -24,10 +24,6 @@ var app = angular.module('pnhsApp')
       $scope.$broadcast('uploadedfile', file);
     });
 
-    // $scope.$on('progressPercentage', function(v, percentage){
-    //   $scope.$broadcast('percentage', percentage);
-    // });
-
 }]);
 
 
@@ -107,7 +103,9 @@ app.directive('modalDirective', function(){
 app.directive('files', function(){
     function link(scope, element, attrss){
         scope.$watch('filedata', function(n, o){
-          displayFiles(JSON.parse(n));
+          if (n) {
+            displayFiles(JSON.parse(n));
+          }
         });
     }
 
@@ -181,40 +179,28 @@ app.directive('postImages', function(){
 
 app.directive('uploadProgressDirective', function(){
 
-  var start = 0;
-  var percent_arr;
   var copy = -1;
 
   function link(scope, elem, attrs){
     attrs.$observe('percentage', function(newval, o) {
-      percent_arr = [newval];
       let val = parseInt(newval);
-      if (start > 0) {
-        getIncPercentage(val, start);
-      }
-      else{
-        getIncPercentage(val, 0);
-        start = val;
-      }
-
+      getIncPercentage(val);
     });
+
   }
 
-  function getIncPercentage(percentage, currentPercentage){
-    if (parseInt(copy) < percentage ) {
-      if(currentPercentage == 100){
-        $('#percentage').text('99%');
-        $('.total-progress').css({'width': currentPercentage + '%'});
+  function getIncPercentage(percentage){
+    if (copy < percentage ) {
+      if(percentage == 100){
+        $('.total-progress').css({'width': percentage + '%'});
+        $('#message').text('Finishing...');
       }
-      else if (currentPercentage <= percentage) {
-        $('.total-progress').css({'width': currentPercentage + '%'});
-        $('#percentage').text(currentPercentage+'%');
-        getIncPercentage(percentage, ++currentPercentage); 
+      else {
+        $('.total-progress').css({'width': percentage + '%'});
+        $('#message').text('Uploading '+percentage+'%');
       }
-      percentage > 0 ? copy = [...percent_arr]: null ;
+      copy = [...[percentage]];
     }
-    // console.log("copy "+ copy, "percentage "+ percentage);
-    // console.log(percentage, currentPercentage, start );
   }
 
   return{
@@ -229,22 +215,3 @@ app.directive('uploadProgressDirective', function(){
     link: link
   }
 });
-
-// app.directive('uploadProgressDirective', function(){
-//   return{
-//     restrict:'E',
-//     scope:{
-//       total_percentage: '@',
-//       percent: '@',
-//       fileuploaded: '='
-//     },
-//     templateUrl: 'views/uploading_progress_directive.html',
-//     controller: 'uploadingProgressCtrl',
-//     controllerAs: 'up',
-//     link: function(scope, elem, attrs){
-//       attrs.$observe('totalPercentage', function(n, o) {
-//         $('.total-progress').css({'width': n + '%'});
-//       });
-//     }
-//   }
-// });

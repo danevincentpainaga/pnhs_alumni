@@ -1,6 +1,10 @@
 @import '~bootstrap/scss/bootstrap';
 @import '_variable';
 
+.progress-bar{
+    transition: unset !important;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -520,7 +524,7 @@ body{
                 textarea{
                     height: 85px;
                     color: #535165;
-                    font-size: 13px;
+                    font-size: 17px;
                     border: medium none;
                     resize: none;
                     display: block;
@@ -529,7 +533,6 @@ body{
                     line-height: 1.5;
                     padding: 0.375rem 0.75rem;
                     outline: none;
-                    font-size: 17px;
                 }
             }
             .buttons{

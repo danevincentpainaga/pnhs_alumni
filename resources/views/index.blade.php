@@ -13,7 +13,6 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('node_modules/grid-gallery/css/grid-gallery.min.css') }}" rel="stylesheet">
         <link href="{{asset('node_modules/grid/src/images-grid.css')}}" rel="stylesheet">
-        
 
     </head>
     <body ng-cloak ng-controller="mainCtrl">

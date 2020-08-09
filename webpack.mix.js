@@ -50,3 +50,4 @@ mix.copyDirectory('node_modules/angular-route', 'public/node_modules/angular-rou
 mix.copyDirectory('node_modules/sweetalert2', 'public/node_modules/sweetalert2');
 mix.copyDirectory('node_modules/socket.io-client', 'public/node_modules/socket.io-client');
 mix.copyDirectory('node_modules/jquery', 'public/node_modules/jquery');
+mix.copyDirectory('node_modules/@mikepol', 'public/node_modules/@mikepol');
