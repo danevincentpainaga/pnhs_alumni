@@ -13,9 +13,10 @@ var app = angular.module('pnhsApp')
 
   var p = this;
 
+    p.post_status = 'Post';
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
-    p.filesize = 1000000;
+    p.filesize = 2000000;
     var files_to_upload = [];
     var post_images = [];
 
@@ -30,6 +31,7 @@ var app = angular.module('pnhsApp')
     // upload later on form submit
     p.uploadPost = function() {
 
+      p.post_status = 'Posting';
       p.positingInProgress = true;
       loopFiles(p.file);
 

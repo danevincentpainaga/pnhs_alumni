@@ -44,12 +44,34 @@
       <p style="padding-top: 5px;color: #6d6d6d;font-size: 14.5px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim laoreet dolore magna aliquam erat volutpat</p>
     </div>
     <div class="image-grid-3">
-      <div class="post-images" ng-repeat="img in nf.uploadedFiles">
-        <img ng-src="{{ img.src }}">
-        <video controls>
+      <div class="post-images" ng-repeat="img in nf.uploadedFiles" style="height: 100% !important">
+        <!-- <img ng-src="{{ img.src }}"> -->
+        <video controls style="width: 100%; background-color: black;">
           <source ng-src="{{ img.src }}" type="video/mp4"/>
         </video>
       </div>
+    </div>
+    <div class="comment-section" style="display: flex;
+    align-items: center;
+    width: 100%;padding: 7px;background-color: #fff; border-top: 1px solid rgba(0, 0, 0, 0.1);">
+      <a href="" style="color: #3e416d;
+    text-decoration: none;
+    border-radius: 0.052083333in;
+    padding: 7px;
+    flex: 1;
+    text-align: center;">
+        <i class="fa fa-thumbs-up"></i>
+        Like
+      </a>
+      <a href="" style="color: #3e416d;
+    text-decoration: none;
+    border-radius: 0.052083333in;
+    padding: 7px;
+    flex: 1;
+    text-align: center;background-color: whitesmoke;">
+    <i class="fa fa-paper-plane"></i>
+        Comment
+      </a>
     </div>
 <!--     <div class="image-grid-5">
       <div class="post-images" ng-repeat="img in nf.uploadedFiles">
