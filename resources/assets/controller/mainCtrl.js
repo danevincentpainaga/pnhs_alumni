@@ -65,7 +65,6 @@ app.directive('tagFriendsSuggestions', function(){
     templateUrl: 'views/tag_friends_suggesstions.html',
     link: function(scope, elem, attrs){
       attrs.$observe('status', function(n, o) {
-        console.log($(window).height())
         if (n == 'true') {
           $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 210);
           setTimeout(()=>{
@@ -206,16 +205,23 @@ app.directive('uploadProgressDirective', function(){
 
   function link(scope, elem, attrs){
     attrs.$observe('percentage', function(newval, o) {
+
+      setTimeout(() => { 
+        $('body').css({'overflow':'auto'});
+        $('#pop-up-post-modal').css({'display': 'none'}) 
+      }, 700);
+
       let val = parseInt(newval);
       getIncPercentage(val);
+
     });
 
   }
 
   function getIncPercentage(percentage){
-    if (copy < percentage ) {
-      if(percentage == 100){
-        $('.total-progress').css({'width': percentage + '%'});
+    if (copy <= percentage ) {
+      if(percentage > 99 ){
+        $('.total-progress').css({'width': '99%'});
         $('#message').text('Finishing...');
       }
       else {

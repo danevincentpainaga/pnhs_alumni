@@ -23,7 +23,7 @@
           <br />
           <br />
         </div>
-        <modal-directive style="display: none;" class="pop-up-post"  id="pop-up-post-modal"></modal-directive>
+        <modal-directive class="pop-up-post"  id="pop-up-post-modal" ></modal-directive>
         
 
         <script src="{{asset('node_modules/jquery/dist/jquery.min.js')}}" type="text/javascript"></script>

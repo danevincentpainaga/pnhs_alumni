@@ -4,7 +4,7 @@
 	    	<h6>Create Post</h6>
 	    	<hr style="margin-top: .7pc; margin-bottom: .5pc;">
 	    	<div class="create-post-header">
-	    		<!-- <button class="close-post-modal popup-close-btn"><i class="fa fa-times-circle close-post-modal"></i></button> -->
+	    		<button class="close-post-modal popup-close-btn"><i class="fa fa-times-circle close-post-modal"></i></button>
 		    	<div class="create-post-image">
 		          <img src="uploads/dane.jpg">
 		        </div>
@@ -45,6 +45,9 @@
 				<button ng-click="p.uploadPost()">Post</button>
 			</div>
 		</div>
+		<div class="posting-message" ng-if="p.positingInProgress">
+    		Posting...
+		</div>		
 		<tag-friends-suggestions status="{{ p.show_suggestions }}"  ></tag-friends-suggestions>
 	</div>
 </div>

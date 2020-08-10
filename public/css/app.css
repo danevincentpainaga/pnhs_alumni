@@ -10486,6 +10486,10 @@ body {
   justify-content: center;
 }
 
+#pop-up-post-modal {
+  display: none;
+}
+
 .people {
   display: inline-block;
   position: relative;
@@ -10667,6 +10671,8 @@ body {
 }
 
 #tagged {
+  position: absolute;
+  right: -530px;
   width: 100%;
   height: 100%;
   top: 0px;
@@ -10742,6 +10748,22 @@ body {
   max-height: 510px !important;
 }
 
+.posting-message {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  padding: 15px 15px 10px;
+  background-color: #fff;
+  border-radius: 7px;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249, 249, 249, 0.67);
+  font-weight: 500;
+}
+
 /*.slide {
     background: blue;
     -webkit-animation: slide 0.3 forwards;
@@ -10749,12 +10771,14 @@ body {
 }
 
 @-webkit-keyframes slide {
-    100% { right: 0 }
+    100% { right: 0;}
 }
 
 @keyframes slide {
     100% { right: 0; }
 }
+
+
 
 */
 .image-grid-2 {
