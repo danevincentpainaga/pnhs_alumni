@@ -140,6 +140,18 @@ var app = angular.module('pnhsApp')
 }]);
 
 
+
+app.directive('file', function(){
+  return{
+    restrict:'A',
+    link: function(scope, elem, attrs){
+      elem.on('click', function(){
+        console.log(attrs.file);
+      });
+    }
+  }
+});
+
 app.factory("fileReader", function($q, $log) {
   var onLoad = function(reader, deferred, scope) {
     return function() {

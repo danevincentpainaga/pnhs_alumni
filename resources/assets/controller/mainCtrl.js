@@ -66,9 +66,9 @@ app.directive('tagFriendsSuggestions', function(){
     link: function(scope, elem, attrs){
       attrs.$observe('status', function(n, o) {
         if (n == 'true') {
-          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 210);
+          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 200);
           setTimeout(()=>{
-            $('.wrapper').css({ 'height': $(window).height() + 'px'});
+            $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
           }, 130);
         }
         else if(n == 'false'){
@@ -79,18 +79,6 @@ app.directive('tagFriendsSuggestions', function(){
     }
   }
 });
-
-
-// app.directive('file', function(){
-//   return{
-//     restrict:'A',
-//     link: function(scope, elem, attrs){
-//       elem.on('click', function(){
-//         console.log(attrs.file);
-//       });
-//     }
-//   }
-// });
 
 
 app.directive('openModal', function(){

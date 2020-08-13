@@ -17,11 +17,13 @@
 		        </div>
 	    	</div>
 	    	<div class="create-post-body">
-	    		<textarea placeholder="Whats on your mind?" ng-model="p.post_description"></textarea>
-	    	</div>
-	    	<div class="images" style="display: flex;width: 100%;overflow: auto;max-height: 164px;">
-	    		<div class="uploaded-images" style="display: block;width: 100%;max-height: 290px;">
-	    			<div style="display: block; width: 100%;" id="file-holder" files="p.uploadedImage" filedata="{{p.uploadedImage}}"></div>
+	    		<div class="upload-holder" style="width: 100%">
+	    			<textarea placeholder="Whats on your mind?" ng-model="p.post_description"></textarea>
+			    	<div class="images" style="display: flex;width: 100%;">
+			    		<div class="uploaded-images" style="display: block;width: 100%;max-height: 290px;">
+			    			<div style="display: block; width: 100%;" id="file-holder" files="p.uploadedImage" filedata="{{p.uploadedImage}}"></div>
+			    		</div>
+			    	</div>
 	    		</div>
 	    	</div>
 			<hr style="margin-top: .7pc; margin-bottom: .5pc;">
@@ -45,7 +47,7 @@
 			</div>
 		</div>
 		<div class="posting-message" ng-if="p.positingInProgress">
-    		Posting...
+    		<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 		</div>		
 		<tag-friends-suggestions status="{{ p.show_suggestions }}"  ></tag-friends-suggestions>
 	</div>
