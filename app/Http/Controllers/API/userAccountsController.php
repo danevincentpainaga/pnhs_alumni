@@ -20,8 +20,6 @@ use App\education;
 use App\work_experience;
 use App\skill;
 use App\business;
-use App\post;
-use App\post_image;
 
 class userAccountsController extends Controller
 {
@@ -63,7 +61,8 @@ class userAccountsController extends Controller
 
     }
 
-    public function getSkills(){
+    public function getSkills()
+    {
         return skill::where('s_uid', Auth::user()->id)->orderBy('skills', 'asc')->get();
     }
 
@@ -136,7 +135,6 @@ class userAccountsController extends Controller
         $user->end_date = $request->input('end_date');
         $user->save();
         return response()->json(['message'=>'Successfully Updated'], $this->successStatus);  
-
     }
 
     public function removeSkills(Request $request)
@@ -145,7 +143,8 @@ class userAccountsController extends Controller
         return response()->json(['message'=>'Skill deleted'], $this->successStatus);
     }
 
-    public function getUserLoggedBusinesses(){
+    public function getUserLoggedBusinesses()
+    {
         return business::where('b_uid', Auth::user()->id)->orderBy('business_name', 'asc')->get();
     }
 
@@ -171,102 +170,6 @@ class userAccountsController extends Controller
     {
         business::destroy($request->business_id);
         return response()->json(['message'=>'Business deleted'], $this->successStatus);
-    }
-
-    public function uploadProfilePic(Request $request)
-    {
-        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
-
-        if ($receiver->isUploaded() === false) {
-            throw new UploadMissingFileException();
-        }
-
-        $save = $receiver->receive();
-
-        if ($save->isFinished()) {
-            return $this->saveFile($save->getFile());
-        }
-
-        $handler = $save->handler();
-
-        return response()->json([
-            "done" => $handler->getPercentageDone(),
-            'status' => true
-        ]);
-
-    }
-
-
-    protected function saveFile(UploadedFile $file)
-    {
-        $fileName = $this->createFilename($file);
-        $mime = str_replace('/', '-', $file->getMimeType());
-        $dateFolder = date("Y-m-W");
-
-        $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path("app/public/".$filePath);
-
-        $file->move($finalPath, $fileName);
-        
-
-        return response()->json([
-            'path' => $filePath,
-            'name' => $fileName,
-            'mime_type' => $mime
-        ]);
-
-    }
-
-    protected function createFilename(UploadedFile $file)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $filename = str_replace(".".$extension, "", $file->getClientOriginalName()); 
-        $filename .= "_" . md5(time()) . "." . $extension;
-
-        return $filename;
-    }
-
-    public function savePost(Request $request)
-    {
-        //save post and its images
-        $post = new post();
-        $post->description = $request->uploaded['post']['description'];
-        $post->privacy = $request->uploaded['post']['privacy'];
-        $post->p_userid = Auth::user()->id;
-        $post->save();
-
-
-        foreach ($request->uploaded['files'] as $key => $value) {
-
-            $new_image_name = $value['path'] . $value['name'];
-
-            $photo = new post_image();
-            $photo->image_post_id  = $post->post_id;
-            $photo->image_name = $new_image_name;
-            $photo->image_description = $value['description'];
-            $photo->save();
-
-        }
-
-        return response()->json([
-            'fileName' => $post->post_id
-        ]);
-    }
-
-    public function checkChunk($filename)
-    {
-        $files = array();
-        $files['size'] = 0;
-        foreach (scandir(storage_path("app/chunks/")) as $file) {
-            if ($file !== '.' && $file !== '..') {
-                if ($filename == substr($file, 0, strpos($file,"_pnhsKey"))) {
-                    $files['file'] = $file;
-                    $files['size'] = filesize('../storage/app/chunks/'.$file);
-                    $files['passed_file'] = $filename;
-                }
-            }
-        }
-        return $files;
     }
 
 }

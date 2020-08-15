@@ -9945,6 +9945,8 @@ h3 {
   }
 }
 /*$box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
+/*$box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
+$header-box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
 /*$box-shadow: none;*/
 .progress-bar {
   transition: unset !important;
@@ -10060,17 +10062,7 @@ body {
   padding: 12px 5px;
   list-style-type: none;
   border: 1px solid #ede9e9;
-  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
-}
-.left-menu::before {
-  content: "";
-  height: 20px;
-  left: 9px;
-  position: absolute;
-  top: 27.7%;
-  transform: translateY(-50%);
-  width: 2px;
-  background-color: #2db1ef;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 .left-menu li {
   padding: 0px;
@@ -10134,7 +10126,7 @@ body {
   background: #fff;
   border: 1px solid #ede9e9;
   border-radius: 2px;
-  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 .widget .widget-title {
   border-bottom: 1px solid #e6ecf5;
@@ -10220,7 +10212,7 @@ body {
   background-color: #fff;
   border-radius: 7px;
   border: 1px solid #e4e4e4;
-  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 .post-section .post-new .post-new-body {
   display: flex;
@@ -10388,7 +10380,7 @@ body {
   padding: 15px 15px 10px;
   background-color: #fff;
   border-radius: 7px;
-  border: 1px solid #e4e4e4;
+  border: 1px solid #a3a3a3;
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 .pop-up-post .pop-up-body i {
@@ -10506,7 +10498,7 @@ body {
   border: 1px solid #ede9e9;
   border-radius: 2px;
   box-shadow: none;
-  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
   position: -webkit-sticky;
   position: sticky;
   top: 85px;
@@ -10612,7 +10604,7 @@ body {
   border: 1px solid #ede9e9;
   border-radius: 2px;
   box-shadow: none;
-  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 .alumni-officers .alumni-officers-title {
   border-bottom: 1px solid #e6ecf5;
@@ -11018,7 +11010,7 @@ body {
   background-color: #fff;
   border-radius: 7px;
   border: 1px solid #e4e4e4;
-  box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
+  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 
 .bounce {
@@ -11070,4 +11062,93 @@ body {
   .header-menus li:nth-child(1), .header-menus li:nth-child(2), .header-menus li:nth-child(3) {
     display: none !important;
   }
+}
+/*Five landscape*/
+/*
+.parent {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-template-rows: repeat(6, 1fr);
+grid-column-gap: 2px;
+grid-row-gap: 2px;
+width: 100%;
+}
+
+.div1 { grid-area: 1 / 1 / 4 / 3; }
+.div2 { grid-area: 4 / 1 / 7 / 3; }
+.div3 { grid-area: 1 / 3 / 3 / 5; }
+.div4 { grid-area: 3 / 3 / 5 / 5; }
+.div5 { grid-area: 5 / 3 / 7 / 5; }*/
+/*four*/
+/*.parent {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-template-rows: repeat(2, 1fr);
+grid-column-gap: 2px;
+grid-row-gap: 2px;
+}
+
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div3 { grid-area: 2 / 1 / 3 / 2; }
+.div4 { grid-area: 2 / 2 / 3 / 3; }*/
+/*Five*/
+.parent {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 2px;
+  grid-row-gap: 2px;
+}
+
+.div1 {
+  grid-area: 1/1/4/4;
+}
+
+.div2 {
+  grid-area: 1/4/4/7;
+}
+
+.div3 {
+  grid-area: 4/1/6/3;
+}
+
+.div4 {
+  grid-area: 4/3/6/5;
+}
+
+.div5 {
+  grid-area: 4/5/6/7;
+}
+
+.video-wrap figure {
+  background: transparent;
+  height: 100%;
+  display: -ms-flex;
+  display: flex;
+  position: absolute;
+  width: 100%;
+}
+.video-wrap figure button[name=play] {
+  width: 50px;
+  height: 50px;
+  background: #00000029;
+  border: 2px solid #fff;
+  border-radius: 100%;
+  margin: auto;
+}
+.video-wrap figure button[name=play]:focus {
+  outline: 0;
+  border: 1px solid #82b0de;
+  box-shadow: 0 0 0 3px rgba(62, 145, 229, 0.5);
+}
+.video-wrap figure button[name=play]::after {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  left: 3px;
+  border-style: solid;
+  border-width: 10px 0 10px 20px;
+  border-color: transparent transparent transparent white;
 }

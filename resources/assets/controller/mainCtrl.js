@@ -194,13 +194,20 @@ app.directive('uploadProgressDirective', function(){
   function link(scope, elem, attrs){
     attrs.$observe('percentage', function(newval, o) {
 
-      setTimeout(() => { 
+      let val = scope.$eval(newval);
+
+      if (val == -1) {
         $('body').css({'overflow':'auto'});
         $('#pop-up-post-modal').css({'display': 'none'}) 
-      }, 700);
-
-      let val = parseInt(newval);
-      getIncPercentage(val);
+        incrementPercentage(0);
+      }
+      else{
+        setTimeout(() => { 
+          $('body').css({'overflow':'auto'});
+          $('#pop-up-post-modal').css({'display': 'none'}) 
+        }, 700);
+        getIncPercentage(val);
+      }
 
     });
 
@@ -220,6 +227,19 @@ app.directive('uploadProgressDirective', function(){
     }
   }
 
+  function incrementPercentage(percentage){
+      if(percentage < 100){
+        percentage +=1;
+        $('.total-progress').css({'width': percentage + '%'});
+        $('#message').text('Uploading '+percentage+'%');
+        setTimeout(() => { incrementPercentage(percentage) }, 20);
+      }
+      else {
+        $('.total-progress').css({'width': '100%'});
+        $('#message').text('Finishing...');
+      }
+  }
+
   return{
     restrict:'E',
     scope:{
@@ -230,5 +250,24 @@ app.directive('uploadProgressDirective', function(){
     controller: 'uploadingProgressCtrl',
     controllerAs: 'up',
     link: link
+  }
+});
+
+
+app.filter('checkImage', function(){
+  return function(type){
+    if (type == 'image/jpg') {
+      return true;
+    }
+    return false;
+  }
+});
+
+app.filter('checkVideo', function(){
+  return function(type){
+    if (type == 'video/mp4') {
+      return true;
+    }
+    return false;
   }
 });

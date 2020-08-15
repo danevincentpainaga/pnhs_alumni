@@ -18,9 +18,13 @@ Route::post('registerTest', 'API\AuthController@register');
 
 Route::group(['middleware'=>'auth:api'], function(){
 
-	Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');
-	Route::post('savePost', 'API\userAccountsController@savePost');
-	Route::get('checkChunk/{filename}', 'API\userAccountsController@checkChunk');
+	Route::post('uploadProfilePic', 'API\PostController@uploadProfilePic');
+	Route::post('savePostDescriptionOnly', 'API\PostController@savePostDescriptionOnly');
+	Route::post('savePostFilesOnly', 'API\PostController@savePostFilesOnly');
+	Route::post('savePostDescriptionWithFiles', 'API\PostController@savePostDescriptionWithFiles');
+	Route::post('savePost', 'API\PostController@savePost');
+	Route::get('checkChunk/{filename}', 'API\PostController@checkChunk');
+	
 	Route::get('getUser', 'API\AuthController@getUser');
 	
 	// Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');

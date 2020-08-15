@@ -29,10 +29,32 @@ app.factory('apiService', ['$http', '$cookies', '$rootScope', function($http, $c
         }
       });
     },
-    savePost: function(post){
+    savePostDescriptionOnly: function(post_description){
       return $http({
         method:'POST',
-        url: baseUrl+'api/savePost',
+        url: baseUrl+'api/savePostDescriptionOnly',
+        data: post_description,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    savePostFilesOnly: function(post_files){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/savePostFilesOnly',
+        data: post_files,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    savePostDescriptionWithFiles: function(post){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/savePostDescriptionWithFiles',
         data: post,
         headers: {
           "Content-Type": "application/json",

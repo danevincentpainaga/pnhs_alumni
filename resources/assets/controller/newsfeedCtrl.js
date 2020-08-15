@@ -33,5 +33,34 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
+    nf.post = [
+        {
+            user_id: 1,
+            photo: "uploads/dane.jpg",
+            name: 'Dane Vincent painaga',
+            description: "testing",
+            files:[
+                {file: "images/dane.jpg", type: "image/jpg"},
+                {file: "uploads/zoe.jpg", type: "image/jpg"},
+                {file: "uploads/dane.jpg", type: "image/jpg"},
+                {file: "uploads/pic1.jpg", type: "image/jpg"},
+                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+            ],
+        },
+        {
+            user_id: 2,
+            photo: "uploads/zoe.jpg",
+            name: 'Sophia Elizabeth painaga',
+            description: "Lorem ipsum the maze",
+            files:[
+                {file: "images/dane.jpg", type: "image/jpg"},
+                {file: "uploads/zoe.jpg", type: "image/jpg"},
+                {file: "uploads/dane.jpg", type: "image/jpg"},
+                {file: "uploads/pic1.jpg", type: "image/jpg"},
+                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+            ],
+        },
+    ];
+
 }]);
 

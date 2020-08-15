@@ -241,13 +241,20 @@ app.directive('uploadProgressDirective', function(){
   function link(scope, elem, attrs){
     attrs.$observe('percentage', function(newval, o) {
 
-      setTimeout(() => { 
+      let val = scope.$eval(newval);
+
+      if (val == -1) {
         $('body').css({'overflow':'auto'});
         $('#pop-up-post-modal').css({'display': 'none'}) 
-      }, 700);
-
-      let val = parseInt(newval);
-      getIncPercentage(val);
+        incrementPercentage(0);
+      }
+      else{
+        setTimeout(() => { 
+          $('body').css({'overflow':'auto'});
+          $('#pop-up-post-modal').css({'display': 'none'}) 
+        }, 700);
+        getIncPercentage(val);
+      }
 
     });
 
@@ -267,6 +274,19 @@ app.directive('uploadProgressDirective', function(){
     }
   }
 
+  function incrementPercentage(percentage){
+      if(percentage < 100){
+        percentage +=1;
+        $('.total-progress').css({'width': percentage + '%'});
+        $('#message').text('Uploading '+percentage+'%');
+        setTimeout(() => { incrementPercentage(percentage) }, 20);
+      }
+      else {
+        $('.total-progress').css({'width': '100%'});
+        $('#message').text('Finishing...');
+      }
+  }
+
   return{
     restrict:'E',
     scope:{
@@ -280,6 +300,24 @@ app.directive('uploadProgressDirective', function(){
   }
 });
 
+
+app.filter('checkImage', function(){
+  return function(type){
+    if (type == 'image/jpg') {
+      return true;
+    }
+    return false;
+  }
+});
+
+app.filter('checkVideo', function(){
+  return function(type){
+    if (type == 'video/mp4') {
+      return true;
+    }
+    return false;
+  }
+});
 'use strict';
 /**
  * @ngdoc function
@@ -315,6 +353,35 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
+    nf.post = [
+        {
+            user_id: 1,
+            photo: "uploads/dane.jpg",
+            name: 'Dane Vincent painaga',
+            description: "testing",
+            files:[
+                {file: "images/dane.jpg", type: "image/jpg"},
+                {file: "uploads/zoe.jpg", type: "image/jpg"},
+                {file: "uploads/dane.jpg", type: "image/jpg"},
+                {file: "uploads/pic1.jpg", type: "image/jpg"},
+                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+            ],
+        },
+        {
+            user_id: 2,
+            photo: "uploads/zoe.jpg",
+            name: 'Sophia Elizabeth painaga',
+            description: "Lorem ipsum the maze",
+            files:[
+                {file: "images/dane.jpg", type: "image/jpg"},
+                {file: "uploads/zoe.jpg", type: "image/jpg"},
+                {file: "uploads/dane.jpg", type: "image/jpg"},
+                {file: "uploads/pic1.jpg", type: "image/jpg"},
+                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+            ],
+        },
+    ];
+
 }]);
 
 
@@ -348,13 +415,14 @@ var app = angular.module('pnhsApp')
       p.show_suggestions = true;
     }
 
-    // upload later on form submit
+    /* upload later on form submit */
     p.uploadPost = function() {
-
-      p.post_status = 'Posting';
-      p.positingInProgress = true;
-      loopFiles(p.file);
-
+      if (validate(p.file, p.post_description) === false){
+        console.log("Not Valid");
+      }else{
+        p.post_status = 'Posting';
+        p.positingInProgress = true;
+      }
     };
 
     p.getTheFiles = function (file) {
@@ -362,6 +430,21 @@ var app = angular.module('pnhsApp')
       getAllFilesForDisplay(file);
     };
 
+
+    function validate(file, post_description){
+      if (!file && post_description) {
+        return savePostDescriptionOnly({ post_description: p.post_description, privacy: p.privacy_status });
+      }
+      else if (!post_description && file) {
+        return loopFiles(p.file, savePostFilesOnly);
+      }
+      else if(file && post_description){
+        return loopFiles(p.file, savePostDescriptionWithFiles);
+      }
+      else{
+        return false;
+      }
+    }
 
     function getAllFilesForDisplay(file){
       let images = [];
@@ -376,11 +459,10 @@ var app = angular.module('pnhsApp')
       });
     }
 
-
-    function loopFiles(files){
+    function loopFiles(files, callback){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          uploadFilesToServer(checkChunkBeforeUpload(files[i]));
+          uploadFilesToServer(checkChunkBeforeUpload(files[i]), callback);
         }
       }
     }
@@ -405,7 +487,7 @@ var app = angular.module('pnhsApp')
     }
 
 
-    function uploadFilesToServer(upload){
+    function uploadFilesToServer(upload, save){
 
       $scope.$emit('load_start', 2);
 
@@ -414,7 +496,7 @@ var app = angular.module('pnhsApp')
             name: resp.data.name,
             path: resp.data.path, 
             mime_type: resp.data.mime_type,
-            description: p.post_description,
+            description: "No description",
         });
 
         post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
@@ -428,8 +510,8 @@ var app = angular.module('pnhsApp')
               }
             };
 
-            // Save post after file completely uploaded on server
-            savePost(user_post, { bool: false, post_images });
+            /* Save post after file completely uploaded on server */
+            save();
             
         }
 
@@ -448,14 +530,46 @@ var app = angular.module('pnhsApp')
     }
 
 
-    function savePost(posting, uploadedImages){
-      apiService.savePost({uploaded: posting}).then(function(response){
+    function savePostDescriptionOnly(postDetails){
+      $scope.$emit('load_start', -1);
+      apiService.savePostDescriptionOnly({post: postDetails}).then(function(response){
         console.log(response.data);
-        $scope.$emit('upload_finished', uploadedImages);
+        $timeout(()=> {$scope.$emit('upload_finished', { bool: false, post_images:[] }); }, 2000);
       }, function(err){
         console.log(err);
       });
     }
+
+    function savePostFilesOnly(){
+      let user_post = {
+        files: files_to_upload,
+        privacy: p.privacy_status,
+      };
+      apiService.savePostFilesOnly({post: user_post}).then(function(response){
+        console.log(response.data);
+        $scope.$emit('upload_finished', { bool: false, post_images });
+      }, function(err){
+        console.log(err);
+      });
+    }
+
+    function savePostDescriptionWithFiles(){
+      let user_post = {
+        files: files_to_upload,
+        post: {
+          privacy: p.privacy_status,
+          description: p.post_description
+        }
+      };
+
+      apiService.savePostDescriptionWithFiles({post: user_post}).then(function(response){
+        console.log(response.data);
+        $scope.$emit('upload_finished', { bool: false, post_images });
+      }, function(err){
+        console.log(err);
+      });
+    }
+
 
 }]);
 

@@ -1,0 +1,177 @@
+<div class="container">
+  <div class="row post-section">
+    <div class="post-new">
+      <div class="post-new-body">
+        <div class="post-new-image">
+          <img src="uploads/dane.jpg">
+        </div>
+        <div class="post-new-content">
+          <input type="text" class="form-control form-control post-new-input" placeholder="Whats on your mind?" open-modal>
+        </div>
+      </div>
+      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
+      <div class="button-type">
+        <a href="">
+          <img src="images/shield.svg">
+          Photo/Video
+        </a>
+        <a href="" >
+          <img src="images/calendar.svg">
+          Tag Friend
+        </a>
+        <a href="">
+          <img src="images/add.svg">
+          Feeling/Activity
+        </a>
+      </div>
+    </div>
+  </div>
+  <upload-progress-directive percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" ng-if="nf.uploading"></upload-progress-directive>
+<!-- <upload-progress-directive total_percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" totalPercentage="{{ nf.percentage  }}" percent="{{ nf.percent }}" ng-if="nf.uploading"></upload-progress-directive> -->
+  <div class="row posts-body" style="border: 1px solid #e4e4e4;margin-top: .7em;">
+    <div class="posts-header" style="display: flex; background-color: #fff;width: 100%;padding: 15pt .15625in 0px .15625in;border-top-left-radius: 7px;border-top-right-radius: 7px;">
+      <div class="post-image" style="width: 11%;">
+        <img src="images/dane.jpg" style="width: 50px;border-radius: 100%;border:3px solid whitesmoke;">
+      </div>
+      <div class="post-title" style="width: 89%;display: block;margin-left: .4375pc;">
+        <i class="fa fa-ellipsis-h" style="float: right;color:#757a95;padding-top: 5px;"></i>
+        <p style="margin-bottom: 0px;color: #545454;">Stella Johnson</p>
+        <p style="margin-bottom: 0px;color: #6d6d6d;font-size: 13px;">5hrs</p>
+      </div>
+    </div>
+    <div class="posts-description" style="background-color: #fff;width: 100%;padding: 0px .15625in 0px .15625in;">
+      <hr style="margin-top: .7pc; margin-bottom: .5pc;">
+      <p style="padding-top: 5px;color: #6d6d6d;font-size: 14.5px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim laoreet dolore magna aliquam erat volutpat</p>
+    </div>
+<!--     <div class="image-grid-3">
+      <div class="post-images" ng-repeat="img in nf.uploadedFiles" style="height: 100% !important">
+        <img ng-src="{{ img.src }}">
+        <video controls style="width: 100%; background-color: black;">
+          <source ng-src="{{ img.src }}" type="video/mp4"/>
+        </video>
+      </div>
+    </div> -->
+
+
+<!--     <div class="image-grid-3">
+      <div class="post-images" style="width: 50%;overflow: hidden;">
+        <img ng-src="images/9.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;">
+      </div>
+      <div class="post-images" style="width: 50%;overflow: hidden;">
+        <img ng-src="uploads/dane.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;">
+      </div>
+      <div class="post-images" style="width: 33.333333333333336%;overflow: hidden;">
+        <img ng-src="uploads/dane.jpg" style="max-height: 163px;object-fit: cover;object-position: top;">
+      </div>
+      <div class="post-images" style="width: 33.333333333333336%;overflow: hidden;">
+        <img ng-src="uploads/dane.jpg" style="max-height: 163px;object-fit: cover;object-position: top;">
+      </div>
+      <div class="post-images" style="width: 33.333333333333336%;overflow: hidden;">
+        <img ng-src="uploads/dane.jpg" style="max-height: 163px;object-fit: cover;object-position: top;">
+      </div>
+    </div>
+ -->
+
+<!--     <div class="image-grid-3">
+      <div class="post-images" style="width: 100%;overflow: hidden;">
+        <img ng-src="images/9.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;">
+      </div>
+      <div class="post-images" style="width: 50%;overflow: hidden;">
+        <img ng-src="uploads/dane.jpg" style="max-height: 245px;object-fit: cover;object-position: top;">
+      </div>
+      <div class="post-images" style="width: 50%;overflow: hidden;">
+        <video controls style="width: 100%; background-color: black;max-height: 245px;min-height: 245px;object-fit: cover;">
+          <source ng-src="uploads/zoevid.mp4" type="video/mp4"/>
+        </video>
+      </div>
+    </div>
+ -->
+
+<div class="image-grid-3">
+  <div class="parent">
+    <div class="div1" style="width: 100%;overflow: hidden;">
+      <img ng-src="images/9.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div2" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/dane.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div3" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/zoe.jpg" style="max-height: 163px;min-height: 163px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div4" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/pic1.jpg" style="max-height: 163px;min-height: 163px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div5" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/pic2.jpg" style="max-height: 163px;min-height: 163px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+  </div>
+</div>
+
+<!-- <div class="parent">
+    <div class="div1" style="width: 100%;overflow: hidden;">
+      <img ng-src="images/9.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div2" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/dane.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div3" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/zoe.jpg" style="max-height: 163px;min-height: 163px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div4" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/pic1.jpg" style="max-height: 163px;min-height: 163px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div5" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/pic2.jpg" style="max-height: 163px;min-height: 163px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+</div>
+ -->
+
+
+
+<!-- <div class="parent">
+    <div class="div1" style="width: 100%;overflow: hidden;">
+      <img ng-src="images/9.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div2" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/dane.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div3" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/zoe.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+    <div class="div4" style="width: 100%;overflow: hidden;">
+      <img ng-src="uploads/pic1.jpg" style="max-height: 245px;min-height: 245px;object-fit: cover;object-position: top;min-width: 100%;max-width: 100%;">
+    </div>
+</div>
+ -->
+
+
+
+    <div class="comment-section" style="display: flex;
+    align-items: center;
+    width: 100%;padding: 7px;background-color: #fff; border-top: 1px solid rgba(0, 0, 0, 0.1);">
+      <a href="" style="color: #3e416d;
+    text-decoration: none;
+    border-radius: 0.052083333in;
+    padding: 7px;
+    flex: 1;
+    text-align: center;">
+        <i class="fa fa-thumbs-up"></i>
+        Like
+      </a>
+      <a href="" style="color: #3e416d;
+    text-decoration: none;
+    border-radius: 0.052083333in;
+    padding: 7px;
+    flex: 1;
+    text-align: center;background-color: whitesmoke;">
+    <i class="fa fa-paper-plane"></i>
+        Comment
+      </a>
+    </div>
+  </div>
+
+
+</div>
+
+
+
