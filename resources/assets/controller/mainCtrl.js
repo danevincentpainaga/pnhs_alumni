@@ -271,3 +271,99 @@ app.filter('checkVideo', function(){
     return false;
   }
 });
+
+
+
+app.directive('postGridWrapper', function(){
+
+  function link(scope, elem, attrs){
+
+    scope.$watch('postfiles', function(files, o){
+      if (files.length > 0) {
+        console.log(files);
+        scope.preLoadFiles(files);
+      }
+    });
+
+    scope.preLoadFiles = function(files){
+      let count = 0;
+      let arr = [ {value: 0, name: 'landscape'}, {value: 0, name: 'portrait'}, {value: 0, name: 'even'}   ]
+
+      angular.forEach(files, function(f){
+         
+        let img = new Image();
+        img.onload = function(loaded){
+
+            count++;
+
+            if (img.naturalWidth > img.naturalHeight) {
+              arr[0].value += 1;
+              
+            }
+            else if(img.naturalWidth < img.naturalHeight){
+              arr[1].value += 1;
+            }
+            else if(img.naturalWidth == img.naturalHeight){
+              arr[2].value+= 1;            
+            }
+
+            if (files.length == count) {
+              switch(scope.checkDimension(arr)){
+                case 'even':
+                      scope.ngClass = 'post-photo-grid-wrapper';
+                      scope.$apply(scope.ngClass);
+                      break;
+                case 'portrait':
+                      scope.ngClass = 'post-photo-grid-wrapper';
+                      scope.$apply(scope.ngClass);
+                      break;
+                case 'landscape':
+                      scope.ngClass = 'post-photo-grid-wrapper-landscape';
+                      scope.$apply(scope.ngClass);
+                      break;
+              }
+              scope.pf = files;
+              scope.$apply(scope.pf);
+              console.log(scope.ngClass);
+            }
+
+        }
+
+        img.src = f.file;
+
+
+      });
+    }
+
+    scope.checkDimension = function(arr){
+      for(i = 0; i < arr.length; i++){
+        if (arr[0].value < arr[i].value) {
+          arr[0] = arr[i+1];
+        }
+      }
+      return arr[0].name;
+    }
+
+  }
+
+
+
+  return{
+    restrict:'A',
+    template:'<div ng-class="ngClass"><div ng-repeat="f in pf">'+
+                '<img ng-src="{{ f.file }}" ng-if="f.type | checkImage">'+
+                '<div class="video-wrap" ng-if="f.type | checkVideo" >'+
+                  '<video>'+
+                    '<source ng-src="{{ f.file }}" type="video/mp4"/>'+
+                  '</video>'+
+                 ' <figure>'+
+                    '<button name="play"></button>'+
+                  '</figure> '+
+                '</div>'+
+              '</div></div>',
+    scope:{
+      postfiles: '=',
+    },
+    link: link
+  }
+});

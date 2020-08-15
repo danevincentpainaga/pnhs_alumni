@@ -4,5 +4,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/controller/bundleCtrl.js": "/controller/bundleCtrl.js",
-    "/node_modules/socket.io-client": "/node_modules/socket.io-client"
+    "/node_modules/socket.io-client": "/node_modules/socket.io-client",
+    "/node_modules/video.js": "/node_modules/video.js"
 }

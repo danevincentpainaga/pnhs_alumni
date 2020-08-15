@@ -318,6 +318,102 @@ app.filter('checkVideo', function(){
     return false;
   }
 });
+
+
+
+app.directive('postGridWrapper', function(){
+
+  function link(scope, elem, attrs){
+
+    scope.$watch('postfiles', function(files, o){
+      if (files.length > 0) {
+        console.log(files);
+        scope.preLoadFiles(files);
+      }
+    });
+
+    scope.preLoadFiles = function(files){
+      let count = 0;
+      let arr = [ {value: 0, name: 'landscape'}, {value: 0, name: 'portrait'}, {value: 0, name: 'even'}   ]
+
+      angular.forEach(files, function(f){
+         
+        let img = new Image();
+        img.onload = function(loaded){
+
+            count++;
+
+            if (img.naturalWidth > img.naturalHeight) {
+              arr[0].value += 1;
+              
+            }
+            else if(img.naturalWidth < img.naturalHeight){
+              arr[1].value += 1;
+            }
+            else if(img.naturalWidth == img.naturalHeight){
+              arr[2].value+= 1;            
+            }
+
+            if (files.length == count) {
+              switch(scope.checkDimension(arr)){
+                case 'even':
+                      scope.ngClass = 'post-photo-grid-wrapper';
+                      scope.$apply(scope.ngClass);
+                      break;
+                case 'portrait':
+                      scope.ngClass = 'post-photo-grid-wrapper';
+                      scope.$apply(scope.ngClass);
+                      break;
+                case 'landscape':
+                      scope.ngClass = 'post-photo-grid-wrapper-landscape';
+                      scope.$apply(scope.ngClass);
+                      break;
+              }
+              scope.pf = files;
+              scope.$apply(scope.pf);
+              console.log(scope.ngClass);
+            }
+
+        }
+
+        img.src = f.file;
+
+
+      });
+    }
+
+    scope.checkDimension = function(arr){
+      for(i = 0; i < arr.length; i++){
+        if (arr[0].value < arr[i].value) {
+          arr[0] = arr[i+1];
+        }
+      }
+      return arr[0].name;
+    }
+
+  }
+
+
+
+  return{
+    restrict:'A',
+    template:'<div ng-class="ngClass"><div ng-repeat="f in pf">'+
+                '<img ng-src="{{ f.file }}" ng-if="f.type | checkImage">'+
+                '<div class="video-wrap" ng-if="f.type | checkVideo" >'+
+                  '<video>'+
+                    '<source ng-src="{{ f.file }}" type="video/mp4"/>'+
+                  '</video>'+
+                 ' <figure>'+
+                    '<button name="play"></button>'+
+                  '</figure> '+
+                '</div>'+
+              '</div></div>',
+    scope:{
+      postfiles: '=',
+    },
+    link: link
+  }
+});
 'use strict';
 /**
  * @ngdoc function
@@ -334,6 +430,8 @@ var app = angular.module('pnhsApp')
     var nf = this;
     
     nf.uploading = false;
+    nf.wrapperclass = 'post-photo-grid-wrapper';
+
 
     $scope.$on('loading_value', function(v, value){
         nf.percentage = value;
@@ -360,11 +458,11 @@ var app = angular.module('pnhsApp')
             name: 'Dane Vincent painaga',
             description: "testing",
             files:[
-                {file: "images/dane.jpg", type: "image/jpg"},
-                {file: "uploads/zoe.jpg", type: "image/jpg"},
-                {file: "uploads/dane.jpg", type: "image/jpg"},
-                {file: "uploads/pic1.jpg", type: "image/jpg"},
-                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+                {id: 1, file: "images/2.jpg", type: "image/jpg"},
+                {id: 2, file: "images/9.jpg", type: "image/jpg"},
+                {id: 3, file: "images/1.jpg", type: "image/jpg"},
+                {id: 4, file: "uploads/pic1.jpg", type: "image/jpg"},
+                {id: 5, file: "uploads/pic2.jpg", type: "image/jpg"},
             ],
         },
         {
@@ -377,10 +475,11 @@ var app = angular.module('pnhsApp')
                 {file: "uploads/zoe.jpg", type: "image/jpg"},
                 {file: "uploads/dane.jpg", type: "image/jpg"},
                 {file: "uploads/pic1.jpg", type: "image/jpg"},
-                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+                {file: "images/3.jpg", type: "image/jpg"},
             ],
         },
     ];
+
 
 }]);
 
@@ -435,15 +534,13 @@ var app = angular.module('pnhsApp')
       if (!file && post_description) {
         return savePostDescriptionOnly({ post_description: p.post_description, privacy: p.privacy_status });
       }
-      else if (!post_description && file) {
+      if (!post_description && file) {
         return loopFiles(p.file, savePostFilesOnly);
       }
-      else if(file && post_description){
+      if(file && post_description){
         return loopFiles(p.file, savePostDescriptionWithFiles);
       }
-      else{
-        return false;
-      }
+      return false;
     }
 
     function getAllFilesForDisplay(file){

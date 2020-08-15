@@ -48,15 +48,13 @@ var app = angular.module('pnhsApp')
       if (!file && post_description) {
         return savePostDescriptionOnly({ post_description: p.post_description, privacy: p.privacy_status });
       }
-      else if (!post_description && file) {
+      if (!post_description && file) {
         return loopFiles(p.file, savePostFilesOnly);
       }
-      else if(file && post_description){
+      if(file && post_description){
         return loopFiles(p.file, savePostDescriptionWithFiles);
       }
-      else{
-        return false;
-      }
+      return false;
     }
 
     function getAllFilesForDisplay(file){

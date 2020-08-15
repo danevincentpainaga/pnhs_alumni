@@ -14,6 +14,8 @@ var app = angular.module('pnhsApp')
     var nf = this;
     
     nf.uploading = false;
+    nf.wrapperclass = 'post-photo-grid-wrapper';
+
 
     $scope.$on('loading_value', function(v, value){
         nf.percentage = value;
@@ -40,11 +42,11 @@ var app = angular.module('pnhsApp')
             name: 'Dane Vincent painaga',
             description: "testing",
             files:[
-                {file: "images/dane.jpg", type: "image/jpg"},
-                {file: "uploads/zoe.jpg", type: "image/jpg"},
-                {file: "uploads/dane.jpg", type: "image/jpg"},
-                {file: "uploads/pic1.jpg", type: "image/jpg"},
-                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+                {id: 1, file: "images/2.jpg", type: "image/jpg"},
+                {id: 2, file: "images/9.jpg", type: "image/jpg"},
+                {id: 3, file: "images/1.jpg", type: "image/jpg"},
+                {id: 4, file: "uploads/pic1.jpg", type: "image/jpg"},
+                {id: 5, file: "uploads/pic2.jpg", type: "image/jpg"},
             ],
         },
         {
@@ -57,10 +59,11 @@ var app = angular.module('pnhsApp')
                 {file: "uploads/zoe.jpg", type: "image/jpg"},
                 {file: "uploads/dane.jpg", type: "image/jpg"},
                 {file: "uploads/pic1.jpg", type: "image/jpg"},
-                {file: "uploads/zoevid.mp4", type: "video/mp4"},
+                {file: "images/3.jpg", type: "image/jpg"},
             ],
         },
     ];
+
 
 }]);
 
