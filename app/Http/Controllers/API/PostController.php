@@ -80,9 +80,7 @@ class PostController extends Controller
         foreach (scandir(storage_path("app/chunks/")) as $file) {
             if ($file !== '.' && $file !== '..') {
                 if ($filename == substr($file, 0, strpos($file,"_pnhsKey"))) {
-                    $files['file'] = $file;
                     $files['size'] = filesize('../storage/app/chunks/'.$file);
-                    $files['passed_file'] = $filename;
                 }
             }
         }

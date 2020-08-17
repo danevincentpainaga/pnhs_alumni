@@ -200,40 +200,6 @@ app.directive('files', function(){
 });
 
 
-app.directive('postImages', function(){
-  return{
-    restrict:'A',
-    scope:{
-      postfiles: '@',
-      postImages: '='
-    },
-    link: function(scope, elem, attrs){
-      attrs.$observe('postfiles', function(n, o) {
-        console.log(n+" postfiles");
-        if (n) {
-          $(elem).imagesGrid({
-            images: JSON.parse(n),
-
-            cells: 5, 
-
-            // goto next image on click
-            nextOnClick: true,
-
-            // text for show more
-            showViewAll: 'more',
-
-            // returns text for "view all images" link if images more than five
-            getViewAllText: function() {},
-
-          });
-        }
-      });
-
-    }
-  }
-});
-
-
 app.directive('uploadProgressDirective', function(){
 
   var copy = -1;
@@ -326,7 +292,7 @@ app.directive('postGridWrapper', function(){
   function link(scope, elem, attrs){
 
     scope.$watch('postfiles', function(files, o){
-      if (files.length > 0) {
+      if (files) {
         console.log(files);
         scope.preLoadFiles(files);
       }
@@ -497,14 +463,14 @@ var app = angular.module('pnhsApp')
   app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
       function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
-  var p = this;
+    var p = this;
 
+    var files_to_upload = [];
+    var post_images = [];
     p.post_status = 'Post';
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
     p.filesize = 2000000;
-    var files_to_upload = [];
-    var post_images = [];
 
     p.back = function(){
       p.show_suggestions = false;
@@ -532,13 +498,13 @@ var app = angular.module('pnhsApp')
 
     function validate(file, post_description){
       if (!file && post_description) {
-        return savePostDescriptionOnly({ post_description: p.post_description, privacy: p.privacy_status });
+        return savePost(apiService.savePostDescriptionOnly, { post_description: p.post_description, privacy: p.privacy_status });
       }
       if (!post_description && file) {
-        return loopFiles(p.file, savePostFilesOnly);
+        return loopFiles(p.file, apiService.savePostFilesOnly, { files: files_to_upload, privacy: p.privacy_status });
       }
       if(file && post_description){
-        return loopFiles(p.file, savePostDescriptionWithFiles);
+        return loopFiles(p.file, apiService.savePostDescriptionWithFiles, { files: files_to_upload, post: { privacy: p.privacy_status, description: p.post_description } });
       }
       return false;
     }
@@ -556,10 +522,10 @@ var app = angular.module('pnhsApp')
       });
     }
 
-    function loopFiles(files, callback){
+    function loopFiles(files, callback, objToPass){
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-          uploadFilesToServer(checkChunkBeforeUpload(files[i]), callback);
+          uploadFilesToServer(checkChunkBeforeUpload(files[i]), callback, objToPass);
         }
       }
     }
@@ -584,7 +550,7 @@ var app = angular.module('pnhsApp')
     }
 
 
-    function uploadFilesToServer(upload, save){
+    function uploadFilesToServer(upload, methodName, objToPass){
 
       $scope.$emit('load_start', 2);
 
@@ -608,8 +574,7 @@ var app = angular.module('pnhsApp')
             };
 
             /* Save post after file completely uploaded on server */
-            save();
-            
+            savePost(methodName, objToPass);
         }
 
         console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
@@ -626,42 +591,12 @@ var app = angular.module('pnhsApp')
 
     }
 
-
-    function savePostDescriptionOnly(postDetails){
-      $scope.$emit('load_start', -1);
-      apiService.savePostDescriptionOnly({post: postDetails}).then(function(response){
+    function savePost(fn, user_post){
+      let timer;
+      if (fn.name == "savePostDescriptionOnly") { $scope.$emit('load_start', -1);  timer = 2000; }
+      fn({post: user_post}).then(function(response){
         console.log(response.data);
-        $timeout(()=> {$scope.$emit('upload_finished', { bool: false, post_images:[] }); }, 2000);
-      }, function(err){
-        console.log(err);
-      });
-    }
-
-    function savePostFilesOnly(){
-      let user_post = {
-        files: files_to_upload,
-        privacy: p.privacy_status,
-      };
-      apiService.savePostFilesOnly({post: user_post}).then(function(response){
-        console.log(response.data);
-        $scope.$emit('upload_finished', { bool: false, post_images });
-      }, function(err){
-        console.log(err);
-      });
-    }
-
-    function savePostDescriptionWithFiles(){
-      let user_post = {
-        files: files_to_upload,
-        post: {
-          privacy: p.privacy_status,
-          description: p.post_description
-        }
-      };
-
-      apiService.savePostDescriptionWithFiles({post: user_post}).then(function(response){
-        console.log(response.data);
-        $scope.$emit('upload_finished', { bool: false, post_images });
+        $timeout(()=> {$scope.$emit('upload_finished', { bool: false, post_images }); }, timer);
       }, function(err){
         console.log(err);
       });

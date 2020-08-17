@@ -153,40 +153,6 @@ app.directive('files', function(){
 });
 
 
-app.directive('postImages', function(){
-  return{
-    restrict:'A',
-    scope:{
-      postfiles: '@',
-      postImages: '='
-    },
-    link: function(scope, elem, attrs){
-      attrs.$observe('postfiles', function(n, o) {
-        console.log(n+" postfiles");
-        if (n) {
-          $(elem).imagesGrid({
-            images: JSON.parse(n),
-
-            cells: 5, 
-
-            // goto next image on click
-            nextOnClick: true,
-
-            // text for show more
-            showViewAll: 'more',
-
-            // returns text for "view all images" link if images more than five
-            getViewAllText: function() {},
-
-          });
-        }
-      });
-
-    }
-  }
-});
-
-
 app.directive('uploadProgressDirective', function(){
 
   var copy = -1;
@@ -279,7 +245,7 @@ app.directive('postGridWrapper', function(){
   function link(scope, elem, attrs){
 
     scope.$watch('postfiles', function(files, o){
-      if (files.length > 0) {
+      if (files) {
         console.log(files);
         scope.preLoadFiles(files);
       }
