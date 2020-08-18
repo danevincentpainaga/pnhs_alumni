@@ -1,5 +1,5 @@
 <div style="max-width: 530px;margin: 5.75rem auto;">
-	<div class="bounce wrapper">
+	<div class="bounce wrapper" style="min-height: 275px;">
 		<div class="pop-up-body" >
 	    	<h6>Create Post<i class="fa fa-times-circle close-post-modal"></i></h6>
 	    	<hr style="margin-top: .7pc; margin-bottom: .5pc;">
@@ -7,48 +7,46 @@
 		    	<div class="create-post-image">
 		          <img src="uploads/dane.jpg">
 		        </div>
-		        <div class="create-post-username">
-		        	<p>Dane Vincent Painaga</p>
-		        	<p>
-			        	<select ng-model="p.privacy_status">
-			        		<option ng-repeat="p in p.privacy" value="{{p}}" >{{ p }}</option>
-			        	</select>
-		        	</p>
-		        </div>
+		    	<div class="create-post-body">
+		    		<div class="upload-holder">
+		    			<textarea placeholder="Whats on your mind? Dane" ng-model="p.post_description"></textarea>
+		    		</div>
+		    	</div>
 	    	</div>
-	    	<div class="create-post-body">
-	    		<div class="upload-holder" style="width: 100%">
-	    			<textarea placeholder="Whats on your mind?" ng-model="p.post_description"></textarea>
-			    	<div class="images" style="display: flex;width: 100%;">
-			    		<div class="uploaded-images" style="display: block;width: 100%;max-height: 290px;">
-			    			<div style="display: block; width: 100%;" id="file-holder" files="p.uploadedImage" filedata="{{p.uploadedImage}}"></div>
-			    		</div>
-			    	</div>
+	    	<div class="images" style="display: flex;width: 100%;max-height: 325px;overflow: auto;">
+	    		<div class="uploaded-images" style="display: block;width: 100%;max-height: 290px;">
+	    			<div style="display: block; width: 100%;" id="file-holder" files="p.uploadedImage" filedata="{{p.uploadedImage}}"></div>
 	    		</div>
 	    	</div>
-			<hr style="margin-top: .7pc; margin-bottom: .5pc;">
-			<div class="buttons">
-				<a href="" class="button" ngf-select="p.getTheFiles($files)" multiple="multiple">
-				  <img src="images/shield.svg">
-				  Photo/Video
+			<div class="post-icons">
+<!-- 				<a href="" ngf-select="p.getTheFiles($files)" multiple="multiple">
+					<i class="fa fa-images"></i>
 				</a>
 				<a href="" ng-click="p.tagFriends()">
-				  <img src="images/calendar.svg">
-				  Tag Friend
+					<i class="fas fa-user-tag"></i>
 				</a>
-				<a href="">
-				  <img src="images/add.svg">
-				  Feeling/Activity
-				</a>
+				<a href="" >
+					<i class="far fa-laugh" ></i>
+				</a> -->
+		        <a href="" ngf-select="p.getTheFiles($files)" multiple="multiple" style="margin-left: 7px;">
+		          <img src="images/image.svg" style="width: 28px;">
+		        </a>
+		        <a href="" ng-click="p.tagFriends()" style="margin-left: 10px;">
+		          <img src="images/tag.svg" style="width: 27px;">
+		        </a>
+		        <a href="" style="margin-left: 15px;">
+		          <img src="images/feeling.svg" style="width: 18px">
+		        </a>
 			</div>
-			<hr style="margin-top: .7pc; margin-bottom: .5pc;">
-			<div class="post-button">
+			<hr style="margin-top: .5pc; margin-bottom: .5pc;">
+			<div class="post-button" >
+				<button>Public</button>
 				<button ng-click="p.uploadPost()">{{ p.post_status }}</button>
 			</div>
 		</div>
 		<div class="posting-message" ng-if="p.positingInProgress">
     		<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 		</div>		
-		<tag-friends-suggestions status="{{ p.show_suggestions }}"  ></tag-friends-suggestions>
+		<tag-friends-suggestions status="p.show_suggestions"  ></tag-friends-suggestions>
 	</div>
 </div>

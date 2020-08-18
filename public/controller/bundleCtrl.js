@@ -109,16 +109,23 @@ app.directive('rightColumnDirective', function(){
 app.directive('tagFriendsSuggestions', function(){
   return{
     restrict: 'E',
+    scope:{
+      status: '='
+    },
     templateUrl: 'views/tag_friends_suggesstions.html',
+    controller: 'taggedUserListCtrl',
+    controllerAs: 'tc',
     link: function(scope, elem, attrs){
-      attrs.$observe('status', function(n, o) {
-        if (n == 'true') {
-          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 200);
+      scope.$watch('status', function(n, o) {
+        if (n) {
+          console.log($(window).height() - 147 );
+          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
           setTimeout(()=>{
-            $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
-          }, 130);
+            // $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
+            $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + 'px'});
+          }, 40);
         }
-        else if(n == 'false'){
+        else{
           $('.wrapper').css({'height': 'auto'});
           $('#tagged').animate({'position': 'absolute', 'right': -530 + 'px'}, 150);
         }
@@ -266,27 +273,6 @@ app.directive('uploadProgressDirective', function(){
   }
 });
 
-
-app.filter('checkImage', function(){
-  return function(type){
-    if (type == 'image/jpg') {
-      return true;
-    }
-    return false;
-  }
-});
-
-app.filter('checkVideo', function(){
-  return function(type){
-    if (type == 'video/mp4') {
-      return true;
-    }
-    return false;
-  }
-});
-
-
-
 app.directive('postGridWrapper', function(){
 
   function link(scope, elem, attrs){
@@ -380,6 +366,35 @@ app.directive('postGridWrapper', function(){
     link: link
   }
 });
+
+
+
+app.filter('checkImage', function(){
+  return function(type){
+    if (type == 'image/jpg') {
+      return true;
+    }
+    return false;
+  }
+});
+
+app.filter('checkVideo', function(){
+  return function(type){
+    if (type == 'video/mp4') {
+      return true;
+    }
+    return false;
+  }
+});
+
+app.filter('checkPhoto', function(){
+  return function(image){
+    if (image) {
+      return image;
+    }
+    return 'images/avatarmale.svg';
+  }
+});
 'use strict';
 /**
  * @ngdoc function
@@ -467,14 +482,14 @@ var app = angular.module('pnhsApp')
 
     var files_to_upload = [];
     var post_images = [];
-    p.post_status = 'Post';
+    p.post_status = 'Share';
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
     p.filesize = 2000000;
 
-    p.back = function(){
-      p.show_suggestions = false;
-    }
+    $scope.$watch('status', function(bool, o){
+      p.show_suggestions = bool;
+    });
 
     p.tagFriends = function(){
       p.show_suggestions = true;
@@ -485,7 +500,7 @@ var app = angular.module('pnhsApp')
       if (validate(p.file, p.post_description) === false){
         console.log("Not Valid");
       }else{
-        p.post_status = 'Posting';
+        p.post_status = 'Sharing';
         p.positingInProgress = true;
       }
     };
@@ -669,6 +684,38 @@ app.factory("fileReader", function($q, $log) {
     readAsDataUrl: readAsDataURL
   };
 });
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name pnhs_alumni.controller:taggedUserListCtrl
+ * @description
+ * # taggedUserListCtrl
+ * Controller of the pnhs_alumni
+ */ 
+var app = angular.module('pnhsApp')
+  app.controller('taggedUserListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'apiService', 'swalert',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert) {
+
+  var tc = this;
+
+  $scope.$watch('status', function(bool, o){      
+    if (bool) {
+      apiService.getAlumni().then(function(response){
+        console.log(response);
+        tc.suggestions = response.data
+      }, function(err){
+        console.log(err);
+      });
+    }
+  });
+
+  tc.back = function(){
+    $scope.status = false;
+  }
+
+}]);
+
 'use strict';
 /**
  * @ngdoc function

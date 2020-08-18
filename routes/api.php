@@ -26,6 +26,7 @@ Route::group(['middleware'=>'auth:api'], function(){
 	Route::get('checkChunk/{filename}', 'API\PostController@checkChunk');
 	
 	Route::get('getUser', 'API\AuthController@getUser');
+	Route::get('getAlumni', 'API\AlumniController@getAlumni');
 	
 	// Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');
 

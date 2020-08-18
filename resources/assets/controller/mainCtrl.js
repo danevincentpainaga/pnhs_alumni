@@ -62,16 +62,23 @@ app.directive('rightColumnDirective', function(){
 app.directive('tagFriendsSuggestions', function(){
   return{
     restrict: 'E',
+    scope:{
+      status: '='
+    },
     templateUrl: 'views/tag_friends_suggesstions.html',
+    controller: 'taggedUserListCtrl',
+    controllerAs: 'tc',
     link: function(scope, elem, attrs){
-      attrs.$observe('status', function(n, o) {
-        if (n == 'true') {
-          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 200);
+      scope.$watch('status', function(n, o) {
+        if (n) {
+          console.log($(window).height() - 147 );
+          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
           setTimeout(()=>{
-            $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
-          }, 130);
+            // $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
+            $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + 'px'});
+          }, 40);
         }
-        else if(n == 'false'){
+        else{
           $('.wrapper').css({'height': 'auto'});
           $('#tagged').animate({'position': 'absolute', 'right': -530 + 'px'}, 150);
         }
@@ -219,27 +226,6 @@ app.directive('uploadProgressDirective', function(){
   }
 });
 
-
-app.filter('checkImage', function(){
-  return function(type){
-    if (type == 'image/jpg') {
-      return true;
-    }
-    return false;
-  }
-});
-
-app.filter('checkVideo', function(){
-  return function(type){
-    if (type == 'video/mp4') {
-      return true;
-    }
-    return false;
-  }
-});
-
-
-
 app.directive('postGridWrapper', function(){
 
   function link(scope, elem, attrs){
@@ -331,5 +317,34 @@ app.directive('postGridWrapper', function(){
       postfiles: '=',
     },
     link: link
+  }
+});
+
+
+
+app.filter('checkImage', function(){
+  return function(type){
+    if (type == 'image/jpg') {
+      return true;
+    }
+    return false;
+  }
+});
+
+app.filter('checkVideo', function(){
+  return function(type){
+    if (type == 'video/mp4') {
+      return true;
+    }
+    return false;
+  }
+});
+
+app.filter('checkPhoto', function(){
+  return function(image){
+    if (image) {
+      return image;
+    }
+    return 'images/avatarmale.svg';
   }
 });

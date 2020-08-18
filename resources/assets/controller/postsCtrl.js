@@ -15,14 +15,14 @@ var app = angular.module('pnhsApp')
 
     var files_to_upload = [];
     var post_images = [];
-    p.post_status = 'Post';
+    p.post_status = 'Share';
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
     p.filesize = 2000000;
 
-    p.back = function(){
-      p.show_suggestions = false;
-    }
+    $scope.$watch('status', function(bool, o){
+      p.show_suggestions = bool;
+    });
 
     p.tagFriends = function(){
       p.show_suggestions = true;
@@ -33,7 +33,7 @@ var app = angular.module('pnhsApp')
       if (validate(p.file, p.post_description) === false){
         console.log("Not Valid");
       }else{
-        p.post_status = 'Posting';
+        p.post_status = 'Sharing';
         p.positingInProgress = true;
       }
     };

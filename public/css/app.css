@@ -10059,10 +10059,10 @@ body {
 
 .left-menu {
   background-color: #fff;
-  padding: 12px 5px;
+  padding: 12px 5px 0px;
   list-style-type: none;
-  border: 1px solid #ede9e9;
-  box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
+  /*border: 1px solid #ede9e9;*/
+  /*box-shadow: $box-shadow;*/
 }
 .left-menu li {
   padding: 0px;
@@ -10206,6 +10206,7 @@ body {
 }
 
 .post-section .post-new {
+  padding: 15px 15px 7px !important;
   display: block;
   width: 100%;
   padding: 15px 15px 10px;
@@ -10373,8 +10374,6 @@ body {
 .pop-up-post .pop-up-body {
   width: 100%;
   height: 100%;
-  /*position: relative;*/
-  /*top: 20%;*/
   top: 0px;
   display: block;
   padding: 15px 15px 10px;
@@ -10390,6 +10389,7 @@ body {
 .pop-up-post .pop-up-body .create-post-header {
   display: flex;
   width: 100%;
+  margin-bottom: 0.416666667in;
 }
 .pop-up-post .pop-up-body .create-post-header .popup-close-btn {
   border-radius: 100%;
@@ -10409,6 +10409,7 @@ body {
   display: flex;
 }
 .pop-up-post .pop-up-body .create-post-header .create-post-image {
+  margin-right: 7px !important;
   width: 8%;
   margin-right: 15px;
 }
@@ -10416,33 +10417,40 @@ body {
   width: 0.416666667in;
   border-radius: 50%;
 }
-.pop-up-post .pop-up-body .create-post-header .create-post-username {
-  width: 100%;
-  display: block;
+.pop-up-post .pop-up-body .post-icons {
+  display: flex;
+  height: 40px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 0.5pc;
 }
-.pop-up-post .pop-up-body .create-post-header .create-post-username p:first-child {
-  margin-bottom: 0px;
+.pop-up-post .pop-up-body .post-icons a {
+  margin-left: 10px;
 }
-.pop-up-post .pop-up-body .create-post-header .create-post-username p:nth-child(2) select {
-  width: 20%;
-  background: whitesmoke;
-  border: none;
-  height: 30px;
-  border-radius: 10px;
-  padding: 5px;
-  outline: none;
+.pop-up-post .pop-up-body .post-icons a:not(:nth-child(1)) {
+  margin-left: 20px;
+}
+.pop-up-post .pop-up-body .post-icons a i {
+  font-size: 120%;
+  color: #929292;
+}
+.pop-up-post .pop-up-body .post-icons a:hover {
+  transform: scale(1.3);
+  transition-duration: 0.3s;
 }
 .pop-up-post .pop-up-body .create-post-body {
   display: block;
   width: 100%;
-  max-height: 325px;
   position: relative;
   overflow: auto;
 }
-.pop-up-post .pop-up-body .create-post-body textarea {
+.pop-up-post .pop-up-body .create-post-body .upload-holder {
+  width: 100%;
+}
+.pop-up-post .pop-up-body .create-post-body .upload-holder textarea {
   min-height: 50px;
   color: #535165;
-  font-size: 17px;
+  font-size: 16px;
   border: medium none;
   resize: none;
   display: block;
@@ -10472,16 +10480,27 @@ body {
 }
 .pop-up-post .pop-up-body .post-button {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .pop-up-post .pop-up-body .post-button button {
-  display: flex;
-  background: #e9ebec;
   border-radius: 10px;
-  width: 100%;
+}
+.pop-up-post .pop-up-body .post-button button:nth-child(1) {
+  width: 100px;
+  background-color: transparent;
+  height: 35px;
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+}
+.pop-up-post .pop-up-body .post-button button:nth-child(2) {
+  background: #377dff;
+  color: #fff;
+  width: 110px;
+  display: flex;
   outline: navajowhite;
   border: 1px solid white;
-  padding: 10px;
-  color: #757a95;
+  padding: 8px;
   justify-content: center;
 }
 
@@ -10582,17 +10601,15 @@ body {
 }
 .people ul li .people-content a:not(:nth-child(1)) {
   float: right;
-  font-size: 12px;
   margin-top: 3px;
   position: relative;
   padding-right: 0.5em;
   padding-left: 0.5em;
-  /*border-radius: 10rem;*/
   border-radius: 2px;
-  color: #fff !important;
-  background-color: #31a7df;
-  /*background-color: #a4a7b9;*/
+  background-color: #fff;
+  color: #909090;
   font-size: 11px;
+  border: 1px solid #909090;
 }
 
 .alumni-officers {
