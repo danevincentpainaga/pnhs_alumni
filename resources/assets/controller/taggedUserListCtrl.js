@@ -12,6 +12,8 @@ var app = angular.module('pnhsApp')
     function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert) {
 
   var tc = this;
+  tc.taggedUsers = [];
+  tc.hasTagged = false;
 
   $scope.$watch('status', function(bool, o){
     if (bool && !tc.loaded) {
@@ -27,6 +29,19 @@ var app = angular.module('pnhsApp')
 
   tc.back = function(){
     $scope.status = false;
+  }
+
+  tc.tagged = function(taggedUser){
+    tc.hasTagged = true;
+    $timeout(function() {
+      tc.taggedUsers.push({id: taggedUser.id, fullname: taggedUser.firstname+" "+taggedUser.lastname});
+    }, 10);
+    tc.resize = true;
+  }
+
+  tc.doneTagging = function(){
+    $scope.$emit('taggedUsers', tc.taggedUsers);
+    $timeout(function() { $scope.status = false; });
   }
 
 }]);

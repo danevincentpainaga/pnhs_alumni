@@ -13,6 +13,10 @@
 		          <img src="uploads/dane.jpg">
 		        </div>
 		    	<div class="create-post-body">
+		    		<div class="tagged-users" style="padding: 0px 0px 1px 10px;">
+		    			<span style="font-size: 14px;" ng-if="p.tagged">You tagged -</span>
+		    			<a href="" style="margin-left: 5px;font-size: 14px;" ng-repeat="tag in p.tagged_users" ng-click="p.tagFriends()">{{ tag.fullname }},</a>
+		    		</div>
 		    		<div class="upload-holder">
 		    			<textarea placeholder="Whats on your mind? Dane" ng-model="p.post_description"></textarea>
 		    		</div>
@@ -43,6 +47,6 @@
 		<div class="posting-message" ng-if="p.positingInProgress">
     		<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 		</div>		
-		<tag-friends-suggestions status="p.show_suggestions"  ></tag-friends-suggestions>
+		<tag-friends-suggestions status="p.show_suggestions" ></tag-friends-suggestions>
 	</div>
 </div>

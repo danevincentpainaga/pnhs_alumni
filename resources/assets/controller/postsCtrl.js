@@ -24,6 +24,11 @@ var app = angular.module('pnhsApp')
       p.show_suggestions = bool;
     });
 
+    $scope.$on('taggedUsers', function(v, users){
+      p.tagged_users = users;
+      p.tagged = true;
+    });
+
     p.tagFriends = function(){
       p.show_suggestions = true;
     }

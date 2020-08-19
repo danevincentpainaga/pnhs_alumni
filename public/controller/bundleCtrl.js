@@ -121,7 +121,7 @@ app.directive('tagFriendsSuggestions', function(){
           console.log($(window).height() - 147 );
           $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
           setTimeout(()=>{
-            $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + 'px'});
+            $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + $('.tagged-holder').height() + 'px'});
           }, 40);
         }
         else{
@@ -133,6 +133,22 @@ app.directive('tagFriendsSuggestions', function(){
   }
 });
 
+
+app.directive('resizeWrapper', function(){
+  return{
+    restrict: 'A',
+    scope:{
+      resize: '@'
+    },
+    link: function(scope, elem, attrs){
+      scope.$watch('resize', function(n, o) {
+        if (n) {
+          $('.wrapper').css({ 'height': $('.tagged-body').height() + 25+ 'px'});
+        }
+      });
+    }
+  }
+});
 
 app.directive('openModal', function(){
   return{
@@ -485,6 +501,11 @@ var app = angular.module('pnhsApp')
       p.show_suggestions = bool;
     });
 
+    $scope.$on('taggedUsers', function(v, users){
+      p.tagged_users = users;
+      p.tagged = true;
+    });
+
     p.tagFriends = function(){
       p.show_suggestions = true;
     }
@@ -691,6 +712,8 @@ var app = angular.module('pnhsApp')
     function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert) {
 
   var tc = this;
+  tc.taggedUsers = [];
+  tc.hasTagged = false;
 
   $scope.$watch('status', function(bool, o){
     if (bool && !tc.loaded) {
@@ -706,6 +729,19 @@ var app = angular.module('pnhsApp')
 
   tc.back = function(){
     $scope.status = false;
+  }
+
+  tc.tagged = function(taggedUser){
+    tc.hasTagged = true;
+    $timeout(function() {
+      tc.taggedUsers.push({id: taggedUser.id, fullname: taggedUser.firstname+" "+taggedUser.lastname});
+    }, 10);
+    tc.resize = true;
+  }
+
+  tc.doneTagging = function(){
+    $scope.$emit('taggedUsers', tc.taggedUsers);
+    $timeout(function() { $scope.status = false; });
   }
 
 }]);
