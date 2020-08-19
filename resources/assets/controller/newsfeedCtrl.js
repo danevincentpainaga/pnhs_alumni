@@ -14,8 +14,6 @@ var app = angular.module('pnhsApp')
     var nf = this;
     
     nf.uploading = false;
-    nf.wrapperclass = 'post-photo-grid-wrapper';
-
 
     $scope.$on('loading_value', function(v, value){
         nf.percentage = value;
@@ -30,7 +28,6 @@ var app = angular.module('pnhsApp')
     $scope.$on('uploadedfile', function(v, file){
         if (!nf.uploading) {
     	   nf.uploading = true;
-           console.log(nf.uploading);
         }
 		nf.uploadedfile = file;
     });

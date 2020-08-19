@@ -1,5 +1,6 @@
 @import '~bootstrap/scss/bootstrap';
 @import '_variable';
+@import "./public/node_modules/placeholder-loading/src/scss/placeholder-loading";
 
 .progress-bar{
     transition: unset !important;
@@ -830,6 +831,10 @@ body{
                     }
                 }
             }
+
+            &:hover{
+                background-color: whitesmoke;
+            }
         }
     }
 }
@@ -1436,28 +1441,41 @@ grid-row-gap: 2px;
         width: 100%;
     }
 
-figure button[name="play"] {
-    width: 50px;
-    height: 50px;
-    background: #00000029;
-    border: 2px solid #fff;
-    border-radius: 100%;
-    margin: auto;
-}
-figure button[name="play"]:focus {
-  outline: 0;
-  border: 1px solid hsl(210, 58%, 69%);
-  box-shadow: 0 0 0 3px hsla(210, 76%, 57%, 0.5);
+    figure button[name="play"] {
+        width: 50px;
+        height: 50px;
+        background: #00000029;
+        border: 2px solid #fff;
+        border-radius: 100%;
+        margin: auto;
+    }
+    figure button[name="play"]:focus {
+      outline: 0;
+      border: 1px solid hsl(210, 58%, 69%);
+      box-shadow: 0 0 0 3px hsla(210, 76%, 57%, 0.5);
+    }
+
+    figure button[name="play"]::after {
+      content: '';
+      display: inline-block;
+      position: relative;
+      top: 3px;
+      left: 3px;
+      border-style: solid;
+      border-width: 10px 0 10px 20px;
+      border-color: transparent transparent transparent white;
+    }
 }
 
-figure button[name="play"]::after {
-  content: '';
-  display: inline-block;
-  position: relative;
-  top: 3px;
-  left: 3px;
-  border-style: solid;
-  border-width: 10px 0 10px 20px;
-  border-color: transparent transparent transparent white;
-}
+.ph-item {
+    direction: ltr;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px !important;
+    overflow: hidden;
+    margin-bottom: 30px;
+    background-color: #fff;
+    border: none;
+    border-radius: none;
 }

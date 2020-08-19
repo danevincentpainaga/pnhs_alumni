@@ -63,7 +63,7 @@ var app = angular.module('pnhsApp')
         fileReader.readAsDataUrl(val, $scope)
           .then(function(result){
              images.push({name:val.name, type: val.type, result: result});
-             images.length == file.length ? p.uploadedImage = images: [];
+             images.length == file.length ? p.uploadedImage = images : [];
           }, function(err){
             console.log(err);
           });
@@ -85,7 +85,7 @@ var app = angular.module('pnhsApp')
       let final_file_name = modifiedFileName+'_pnhsKey.'+extension;
 
       let upload = Upload.upload({
-        url: 'api/uploadProfilePic',
+        url: 'api/uploadFiles',
         data: { file: Upload.rename(file, final_file_name) },
         resumeSizeUrl: baseUrl+'api/checkChunk/'+modifiedFileName,
         headers: {
@@ -152,7 +152,6 @@ var app = angular.module('pnhsApp')
 
 
 }]);
-
 
 
 app.directive('file', function(){

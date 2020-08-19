@@ -121,7 +121,6 @@ app.directive('tagFriendsSuggestions', function(){
           console.log($(window).height() - 147 );
           $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
           setTimeout(()=>{
-            // $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
             $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + 'px'});
           }, 40);
         }
@@ -330,7 +329,6 @@ app.directive('postGridWrapper', function(){
 
         img.src = f.file;
 
-
       });
     }
 
@@ -366,7 +364,6 @@ app.directive('postGridWrapper', function(){
     link: link
   }
 });
-
 
 
 app.filter('checkImage', function(){
@@ -411,8 +408,6 @@ var app = angular.module('pnhsApp')
     var nf = this;
     
     nf.uploading = false;
-    nf.wrapperclass = 'post-photo-grid-wrapper';
-
 
     $scope.$on('loading_value', function(v, value){
         nf.percentage = value;
@@ -427,7 +422,6 @@ var app = angular.module('pnhsApp')
     $scope.$on('uploadedfile', function(v, file){
         if (!nf.uploading) {
     	   nf.uploading = true;
-           console.log(nf.uploading);
         }
 		nf.uploadedfile = file;
     });
@@ -530,7 +524,7 @@ var app = angular.module('pnhsApp')
         fileReader.readAsDataUrl(val, $scope)
           .then(function(result){
              images.push({name:val.name, type: val.type, result: result});
-             images.length == file.length ? p.uploadedImage = images: [];
+             images.length == file.length ? p.uploadedImage = images : [];
           }, function(err){
             console.log(err);
           });
@@ -552,7 +546,7 @@ var app = angular.module('pnhsApp')
       let final_file_name = modifiedFileName+'_pnhsKey.'+extension;
 
       let upload = Upload.upload({
-        url: 'api/uploadProfilePic',
+        url: 'api/uploadFiles',
         data: { file: Upload.rename(file, final_file_name) },
         resumeSizeUrl: baseUrl+'api/checkChunk/'+modifiedFileName,
         headers: {
@@ -619,7 +613,6 @@ var app = angular.module('pnhsApp')
 
 
 }]);
-
 
 
 app.directive('file', function(){
@@ -695,15 +688,16 @@ app.factory("fileReader", function($q, $log) {
  */ 
 var app = angular.module('pnhsApp')
   app.controller('taggedUserListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'apiService', 'swalert',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert) {
+    function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert) {
 
   var tc = this;
 
-  $scope.$watch('status', function(bool, o){      
-    if (bool) {
+  $scope.$watch('status', function(bool, o){
+    if (bool && !tc.loaded) {
       apiService.getAlumni().then(function(response){
         console.log(response);
         tc.suggestions = response.data
+        tc.loaded = true;
       }, function(err){
         console.log(err);
       });
@@ -730,7 +724,6 @@ var app = angular.module('pnhsApp')
     function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
 
     var up = this;
-
 
 
 }]);

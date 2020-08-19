@@ -52,3 +52,4 @@ mix.copyDirectory('node_modules/socket.io-client', 'public/node_modules/socket.i
 mix.copyDirectory('node_modules/jquery', 'public/node_modules/jquery');
 mix.copyDirectory('node_modules/@mikepol', 'public/node_modules/@mikepol');
 mix.copyDirectory('node_modules/video.js', 'public/node_modules/video.js');
+mix.copyDirectory('node_modules/placeholder-loading', 'public/node_modules/placeholder-loading');

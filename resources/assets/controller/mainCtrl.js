@@ -74,7 +74,6 @@ app.directive('tagFriendsSuggestions', function(){
           console.log($(window).height() - 147 );
           $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
           setTimeout(()=>{
-            // $('.wrapper').css({ 'height': $(window).height() - 147 + 'px'});
             $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + 'px'});
           }, 40);
         }
@@ -283,7 +282,6 @@ app.directive('postGridWrapper', function(){
 
         img.src = f.file;
 
-
       });
     }
 
@@ -319,7 +317,6 @@ app.directive('postGridWrapper', function(){
     link: link
   }
 });
-
 
 
 app.filter('checkImage', function(){

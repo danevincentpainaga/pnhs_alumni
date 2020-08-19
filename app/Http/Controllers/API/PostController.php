@@ -20,7 +20,7 @@ use App\post_image;
 class PostController extends Controller
 {
 
-    public function uploadProfilePic(Request $request)
+    public function uploadFiles(Request $request)
     {
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
 

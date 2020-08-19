@@ -18,7 +18,7 @@ Route::post('registerTest', 'API\AuthController@register');
 
 Route::group(['middleware'=>'auth:api'], function(){
 
-	Route::post('uploadProfilePic', 'API\PostController@uploadProfilePic');
+	Route::post('uploadFiles', 'API\PostController@uploadFiles');
 	Route::post('savePostDescriptionOnly', 'API\PostController@savePostDescriptionOnly');
 	Route::post('savePostFilesOnly', 'API\PostController@savePostFilesOnly');
 	Route::post('savePostDescriptionWithFiles', 'API\PostController@savePostDescriptionWithFiles');
