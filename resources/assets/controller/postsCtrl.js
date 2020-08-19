@@ -51,13 +51,13 @@ var app = angular.module('pnhsApp')
 
     function validate(file, post_description){
       if (!file && post_description) {
-        return savePost(apiService.savePostDescriptionOnly, { post_description: p.post_description, privacy: p.privacy_status });
+        return savePost(apiService.savePostDescriptionOnly, { post_description: p.post_description, privacy: p.privacy_status, taggedUsers: p.tagged_users });
       }
       if (!post_description && file) {
-        return loopFiles(p.file, apiService.savePostFilesOnly, { files: files_to_upload, privacy: p.privacy_status });
+        return loopFiles(p.file, apiService.savePostFilesOnly, { files: files_to_upload, privacy: p.privacy_status, taggedUsers: p.tagged_users });
       }
       if(file && post_description){
-        return loopFiles(p.file, apiService.savePostDescriptionWithFiles, { files: files_to_upload, post: { privacy: p.privacy_status, description: p.post_description } });
+        return loopFiles(p.file, apiService.savePostDescriptionWithFiles, { files: files_to_upload, post: { privacy: p.privacy_status, description: p.post_description }, taggedUsers: p.tagged_users });
       }
       return false;
     }
@@ -147,7 +147,7 @@ var app = angular.module('pnhsApp')
     function savePost(fn, user_post){
       let timer;
       if (fn.name == "savePostDescriptionOnly") { $scope.$emit('load_start', -1);  timer = 2000; }
-      fn({post: user_post}).then(function(response){
+      fn({post: user_post,}).then(function(response){
         console.log(response.data);
         $timeout(()=> {$scope.$emit('upload_finished', { bool: false, post_images }); }, timer);
       }, function(err){

@@ -74,7 +74,7 @@ app.directive('tagFriendsSuggestions', function(){
           console.log($(window).height() - 147 );
           $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
           setTimeout(()=>{
-            $('.wrapper').css({ 'height': $('.tagged-body').height() + 42 + $('.tagged-holder').height() + 'px'});
+            $('.wrapper').css({ 'height': $('.tagged-body').height() + 20 + 'px'});
           }, 40);
         }
         else{
@@ -91,7 +91,7 @@ app.directive('resizeWrapper', function(){
   return{
     restrict: 'A',
     scope:{
-      resize: '@'
+      resize: '='
     },
     link: function(scope, elem, attrs){
       scope.$watch('resize', function(n, o) {

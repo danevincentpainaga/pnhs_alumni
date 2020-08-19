@@ -16,6 +16,7 @@ use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use App\post;
 use App\post_image;
+use App\tagged_user;
 
 class PostController extends Controller
 {
@@ -96,6 +97,8 @@ class PostController extends Controller
         $post->p_userid = Auth::user()->id;
         $post->save();
 
+        $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+
         return response()->json([
             'post' => $post
         ]);
@@ -120,6 +123,8 @@ class PostController extends Controller
             $photo->save();
 
         }
+
+        $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
 
         return response()->json([
             'post' => $post
@@ -148,9 +153,20 @@ class PostController extends Controller
 
         }
 
+        $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+
         return response()->json([
             'fileName' => $post->post_id
         ]);
+    }
+
+    private function saveTaggedUsers($taggedUsers, $postId){
+        foreach ($taggedUsers as $key => $tag) {
+            $t = new tagged_user();
+            $t->tagged_post_id = $postId;
+            $t->tagged_user_id  = $tag['id'];
+            $t->save();
+        }
     }
 
 }
