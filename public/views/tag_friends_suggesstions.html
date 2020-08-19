@@ -10,7 +10,41 @@
 		<div class="search-friends">
 	     	<input type="text" class="form-control form-control search-friends-btn " placeholder="Search for friends" style="">
 			<a href="">Done</a>
+		</div>
+		<div>
+			<div style="display: flex;width: 100%;padding-bottom: 8px;">
+				<span style="font-weight: 600;font-size: 13px;color: #757a95;">TAGGED</span>
 			</div>
+			<div class="tagged-list" style="display: flex; flex-wrap: wrap; width: 100%;margin-bottom: 7px;border: 1px solid #bcc4cb;padding: 3px;border-radius: 5px; max-height: 130px;overflow-y: auto;">
+				<div style="display: flex;padding: 2px 10px;border-radius: 14px;background-color: #e8fbffc2; margin: 3px;border: 1px solid #bcc4cb;color: #057de0;font-size: 14px;font-weight: 500;align-items: center;">
+					<span>Dane Vincent Painaga</span>
+					<i class="fa fa-times" style="margin-left: 5px;cursor: pointer;"></i>
+				</div>
+				<div style="display: flex;padding: 2px 10px;border-radius: 14px;background-color: #e8fbffc2; margin: 3px;border: 1px solid #bcc4cb;color: #057de0;font-size: 14px;font-weight: 500;align-items: center;">
+					<span>Dane Vincent</span>
+					<i class="fa fa-times" style="margin-left: 5px;cursor: pointer;"></i>
+				</div>
+				<div style="display: flex;padding: 2px 10px;border-radius: 14px;background-color: #e8fbffc2; margin: 3px;border: 1px solid #bcc4cb;color: #057de0;font-size: 14px;font-weight: 500;align-items: center;">
+					<span>Ame Jane - Painaga</span>
+					<i class="fa fa-times" style="margin-left: 5px;cursor: pointer;"></i>
+				</div>
+				<div style="display: flex;padding: 2px 10px;border-radius: 14px;background-color: #e8fbffc2; margin: 3px;border: 1px solid #bcc4cb;color: #057de0;font-size: 14px;font-weight: 500;align-items: center;">
+					<span>John Doe</span>
+					<i class="fa fa-times" style="margin-left: 5px;cursor: pointer;"></i>
+				</div>
+				<div style="display: flex;padding: 2px 10px;border-radius: 14px;background-color: #e8fbffc2; margin: 3px;border: 1px solid #bcc4cb;color: #057de0;font-size: 14px;font-weight: 500;align-items: center;">
+					<span>Sophia Elizabeth Painaga</span>
+					<i class="fa fa-times" style="margin-left: 5px;cursor: pointer;"></i>
+				</div>
+				<div style="display: flex;padding: 2px 10px;border-radius: 14px;background-color: #e8fbffc2; margin: 3px;border: 1px solid #bcc4cb;color: #057de0;font-size: 14px;font-weight: 500;align-items: center;">
+					<span>Luka Doncic</span>
+					<i class="fa fa-times" style="margin-left: 5px;cursor: pointer;"></i>
+				</div>
+			</div>
+		</div>
+		<div style="display: flex;width: 100%;padding: 7px 0px 2px 0px;">
+			<span style="font-weight: 600;font-size: 13px;color: #757a95;">SUGGESTIONS</span>
+		</div>
 		<div class="suggestions">
 		  	<ul>
 			    <li ng-repeat="sug in tc.suggestions" ng-if="tc.loaded">
