@@ -495,6 +495,7 @@ var app = angular.module('pnhsApp')
     p.post_status = 'Share';
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
+    p.show_tagged_limit = 1;
     p.filesize = 2000000;
 
     $scope.$watch('status', function(bool, o){
@@ -505,6 +506,26 @@ var app = angular.module('pnhsApp')
       p.tagged_users = users;
       p.tagged = true;
     });
+
+    $scope.$watch('p.tagged_users', function(n, o){
+      console.log(n);
+      if (n) {
+        if (n.length == p.show_tagged_limit){
+          p.hasOthers = false;
+        }
+        else if (n.length > p.show_tagged_limit) {
+          p.others = n.length - p.show_tagged_limit;
+          p.hasOthers = true;
+        }
+        else{
+          p.hasOthers = false;
+          p.tagged = false;
+        }
+      }
+      else{
+        p.tagged = false;
+      }
+    }, true);
 
     p.tagFriends = function(){
       p.show_suggestions = true;
@@ -632,6 +653,15 @@ var app = angular.module('pnhsApp')
       });
     }
 
+    function trimTagged(taggedLength, limit){
+      let others = taggedLength - limit;
+      if (others > 1) {
+        p.others = others;
+      }
+      else{
+        p.show_tagged_limit += others;
+      }
+    }
 
 }]);
 
@@ -733,18 +763,19 @@ var app = angular.module('pnhsApp')
 
   tc.tagged = function(taggedUser){
     tc.hasTagged = true;
-    $timeout(function() {
-      tc.taggedUsers.push({id: taggedUser.id, fullname: taggedUser.firstname+" "+taggedUser.lastname});
-      $scope.$emit('taggedUsers', tc.taggedUsers);
-      console.log(tc.taggedUsers);
-    }, 10);
-    tc.resize = true;
+    var result = tc.taggedUsers.filter(tag => tag.id == taggedUser.id );
+    if (result == 0) {
+      $timeout(function() {
+        tc.taggedUsers.push({id: taggedUser.id, fullname: taggedUser.firstname+" "+taggedUser.lastname});
+        $scope.$emit('taggedUsers', tc.taggedUsers);
+      }, 10);
+      tc.resize = true;
+    }
   }
 
   tc.removeTagged = function(tagged){
     tc.taggedUsers.length < 2 ? tc.hasTagged = false : undefined;
     tc.taggedUsers.splice(tc.taggedUsers.indexOf(tagged), 1);
-    console.log(tc.taggedUsers);
   }
 
   tc.doneTagging = function(){

@@ -14,8 +14,15 @@
 		        </div>
 		    	<div class="create-post-body">
 		    		<div class="tagged-users" style="padding: 0px 0px 1px 10px;">
-		    			<span style="font-size: 14px;" ng-if="p.tagged">You tagged -</span>
-		    			<a href="" style="margin-left: 5px;font-size: 14px;" ng-repeat="tag in p.tagged_users" ng-click="p.tagFriends()">{{ tag.fullname }},</a>
+		    			<span style="font-size: 14px;color: #757a95;" ng-if="p.tagged">You tagged -</span>
+		    			<a href="" style="margin-left: 5px;font-size: 14px;" ng-repeat="tag in p.tagged_users | limitTo: p.show_tagged_limit" ng-click="p.tagFriends()">{{ tag.fullname }},</a>
+		    			<span style="font-size: 14px;color: #757a95;" ng-if="p.hasOthers">
+		    				<span>and</span>
+		    				<a href="" ng-click="p.tagFriends()">
+		    					<span>{{ p.others }}</span>
+		    					<span>others</span>
+		    				</a>
+		    			</span>
 		    		</div>
 		    		<div class="upload-holder">
 		    			<textarea placeholder="Whats on your mind? Dane" ng-model="p.post_description"></textarea>
@@ -40,7 +47,10 @@
 			</div>
 			<hr style="margin-top: .5pc; margin-bottom: .5pc;">
 			<div class="post-button" >
-				<button>Public</button>
+				<button>
+					<i class="fa fa-globe-asia"></i>
+					<span>Public</span>
+				</button>
 				<button ng-click="p.uploadPost()">{{ p.post_status }}</button>
 			</div>
 		</div>

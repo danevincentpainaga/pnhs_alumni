@@ -33,18 +33,19 @@ var app = angular.module('pnhsApp')
 
   tc.tagged = function(taggedUser){
     tc.hasTagged = true;
-    $timeout(function() {
-      tc.taggedUsers.push({id: taggedUser.id, fullname: taggedUser.firstname+" "+taggedUser.lastname});
-      $scope.$emit('taggedUsers', tc.taggedUsers);
-      console.log(tc.taggedUsers);
-    }, 10);
-    tc.resize = true;
+    var result = tc.taggedUsers.filter(tag => tag.id == taggedUser.id );
+    if (result == 0) {
+      $timeout(function() {
+        tc.taggedUsers.push({id: taggedUser.id, fullname: taggedUser.firstname+" "+taggedUser.lastname});
+        $scope.$emit('taggedUsers', tc.taggedUsers);
+      }, 10);
+      tc.resize = true;
+    }
   }
 
   tc.removeTagged = function(tagged){
     tc.taggedUsers.length < 2 ? tc.hasTagged = false : undefined;
     tc.taggedUsers.splice(tc.taggedUsers.indexOf(tagged), 1);
-    console.log(tc.taggedUsers);
   }
 
   tc.doneTagging = function(){

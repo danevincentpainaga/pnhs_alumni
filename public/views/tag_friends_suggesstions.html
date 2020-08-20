@@ -27,7 +27,7 @@
 		</div>
 		<div class="suggestions">
 		  	<ul>
-			    <li ng-repeat="sug in tc.suggestions" ng-if="tc.loaded">
+			    <li ng-repeat="sug in tc.suggestions track by $index" ng-if="tc.loaded">
 			      <figure>
 			        <a href=""><img ng-src="{{ sug.photo | checkPhoto }}" alt=""></a>
 			      </figure>

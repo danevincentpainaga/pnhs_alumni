@@ -18,6 +18,7 @@ var app = angular.module('pnhsApp')
     p.post_status = 'Share';
     p.privacy = ['public', 'friends'];
     p.privacy_status = 'public';
+    p.show_tagged_limit = 1;
     p.filesize = 2000000;
 
     $scope.$watch('status', function(bool, o){
@@ -28,6 +29,26 @@ var app = angular.module('pnhsApp')
       p.tagged_users = users;
       p.tagged = true;
     });
+
+    $scope.$watch('p.tagged_users', function(n, o){
+      console.log(n);
+      if (n) {
+        if (n.length == p.show_tagged_limit){
+          p.hasOthers = false;
+        }
+        else if (n.length > p.show_tagged_limit) {
+          p.others = n.length - p.show_tagged_limit;
+          p.hasOthers = true;
+        }
+        else{
+          p.hasOthers = false;
+          p.tagged = false;
+        }
+      }
+      else{
+        p.tagged = false;
+      }
+    }, true);
 
     p.tagFriends = function(){
       p.show_suggestions = true;
@@ -155,6 +176,15 @@ var app = angular.module('pnhsApp')
       });
     }
 
+    function trimTagged(taggedLength, limit){
+      let others = taggedLength - limit;
+      if (others > 1) {
+        p.others = others;
+      }
+      else{
+        p.show_tagged_limit += others;
+      }
+    }
 
 }]);
 
