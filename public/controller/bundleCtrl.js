@@ -508,22 +508,14 @@ var app = angular.module('pnhsApp')
     });
 
     $scope.$watch('p.tagged_users', function(n, o){
-      console.log(n);
       if (n) {
-        if (n.length == p.show_tagged_limit){
-          p.hasOthers = false;
+        let limit = trimTagged(n);
+        if (limit == 1) {
+          p.others = n.length - limit;
+          p.tagged = n.length > 0 ? true : false;
         }
-        else if (n.length > p.show_tagged_limit) {
-          p.others = n.length - p.show_tagged_limit;
-          p.hasOthers = true;
-        }
-        else{
-          p.hasOthers = false;
-          p.tagged = false;
-        }
-      }
-      else{
-        p.tagged = false;
+        p.hasOthers = n.length > 2 ? true : false;
+        p.show_tagged_limit = limit;
       }
     }, true);
 
@@ -653,14 +645,11 @@ var app = angular.module('pnhsApp')
       });
     }
 
-    function trimTagged(taggedLength, limit){
-      let others = taggedLength - limit;
-      if (others > 1) {
-        p.others = others;
+    function trimTagged(tagged){
+      if (tagged.length == 2) {
+        return 2;
       }
-      else{
-        p.show_tagged_limit += others;
-      }
+      return 1;
     }
 
 }]);
