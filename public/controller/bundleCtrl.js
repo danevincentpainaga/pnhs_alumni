@@ -359,8 +359,6 @@ app.directive('postGridWrapper', function(){
 
   }
 
-
-
   return{
     restrict:'A',
     template:'<div ng-class="ngClass"><div ng-repeat="f in pf">'+
@@ -380,6 +378,30 @@ app.directive('postGridWrapper', function(){
     link: link
   }
 });
+
+app.directive('emoji',['$sce', function($sce){
+  return{
+    restrict:'A',
+    scope:{
+      description: '='
+    },
+    link: function(scope, elem, attrs){
+      $(elem).emojioneArea({
+        pickerPosition: 'bottom',
+        saveEmojisAs: 'shortname',
+        shortnames: true
+      });
+
+      elem[0].emojioneArea.on("change", function(btn, event) {
+       scope.description =  $sce.trustAsJs( $(elem)[0].emojioneArea.getText() );
+        scope.$apply(scope.description);
+      });
+
+      scope.$watch('description');
+    }
+  }
+}]);
+
 
 
 app.filter('checkImage', function(){
@@ -485,8 +507,8 @@ var app = angular.module('pnhsApp')
  */
 
 var app = angular.module('pnhsApp')
-  app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
-      function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
+  app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload', '$sce',
+      function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload, $sce) {
 
     var p = this;
 
@@ -509,7 +531,7 @@ var app = angular.module('pnhsApp')
 
     $scope.$watch('p.tagged_users', function(n, o){
       if (n) {
-        let limit = trimTagged(n);
+        let limit = limitTagged(n);
         if (limit == 1) {
           p.others = n.length - limit;
           p.tagged = n.length > 0 ? true : false;
@@ -525,7 +547,8 @@ var app = angular.module('pnhsApp')
 
     /* upload later on form submit */
     p.uploadPost = function() {
-      if (validate(p.file, p.post_description) === false){
+      p.desc = $sce.getTrustedJs(p.post_description);
+      if (validate(p.file, p.desc) === false){
         console.log("Not Valid");
       }else{
         p.post_status = 'Sharing';
@@ -541,13 +564,13 @@ var app = angular.module('pnhsApp')
 
     function validate(file, post_description){
       if (!file && post_description) {
-        return savePost(apiService.savePostDescriptionOnly, { post_description: p.post_description, privacy: p.privacy_status, taggedUsers: p.tagged_users });
+        return savePost(apiService.savePostDescriptionOnly, { post_description: p.desc, privacy: p.privacy_status, taggedUsers: p.tagged_users });
       }
       if (!post_description && file) {
         return loopFiles(p.file, apiService.savePostFilesOnly, { files: files_to_upload, privacy: p.privacy_status, taggedUsers: p.tagged_users });
       }
       if(file && post_description){
-        return loopFiles(p.file, apiService.savePostDescriptionWithFiles, { files: files_to_upload, post: { privacy: p.privacy_status, description: p.post_description }, taggedUsers: p.tagged_users });
+        return loopFiles(p.file, apiService.savePostDescriptionWithFiles, { files: files_to_upload, post: { privacy: p.privacy_status, description: p.desc }, taggedUsers: p.tagged_users });
       }
       return false;
     }
@@ -605,14 +628,14 @@ var app = angular.module('pnhsApp')
             description: "No description",
         });
 
-        post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.post_description, thumbnail: 'storage/'+resp.data.path+resp.data.name });
+        post_images.push({ src: 'storage/'+resp.data.path+resp.data.name, alt:'', title: '', caption: p.desc, thumbnail: 'storage/'+resp.data.path+resp.data.name });
         
         if (files_to_upload.length == p.file.length) {
             var user_post = {
               files: files_to_upload,
               post: {
                 privacy: p.privacy_status,
-                description: p.post_description
+                description: p.desc
               }
             };
 
@@ -645,7 +668,7 @@ var app = angular.module('pnhsApp')
       });
     }
 
-    function trimTagged(tagged){
+    function limitTagged(tagged){
       if (tagged.length == 2) {
         return 2;
       }

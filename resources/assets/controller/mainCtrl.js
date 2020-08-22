@@ -312,8 +312,6 @@ app.directive('postGridWrapper', function(){
 
   }
 
-
-
   return{
     restrict:'A',
     template:'<div ng-class="ngClass"><div ng-repeat="f in pf">'+
@@ -333,6 +331,30 @@ app.directive('postGridWrapper', function(){
     link: link
   }
 });
+
+app.directive('emoji',['$sce', function($sce){
+  return{
+    restrict:'A',
+    scope:{
+      description: '='
+    },
+    link: function(scope, elem, attrs){
+      $(elem).emojioneArea({
+        pickerPosition: 'bottom',
+        saveEmojisAs: 'shortname',
+        shortnames: true
+      });
+
+      elem[0].emojioneArea.on("change", function(btn, event) {
+       scope.description =  $sce.trustAsJs( $(elem)[0].emojioneArea.getText() );
+        scope.$apply(scope.description);
+      });
+
+      scope.$watch('description');
+    }
+  }
+}]);
+
 
 
 app.filter('checkImage', function(){

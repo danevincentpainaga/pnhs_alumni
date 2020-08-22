@@ -28,7 +28,7 @@
 		<div class="suggestions">
 		  	<ul>
 			    <li ng-repeat="sug in tc.suggestions track by $index" ng-if="tc.loaded">
-			      <figure>
+			      <figure ng-click="tc.tagged(sug)">
 			        <a href=""><img ng-src="{{ sug.photo | checkPhoto }}" alt=""></a>
 			      </figure>
 			      <div class="friends">

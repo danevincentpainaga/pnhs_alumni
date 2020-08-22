@@ -14,6 +14,7 @@
         <link href="{{ asset('node_modules/grid-gallery/css/grid-gallery.min.css') }}" rel="stylesheet">
         <link href="{{asset('node_modules/grid/src/images-grid.css')}}" rel="stylesheet">
         <link href="{{asset('node_modules/video.js/dist/video-js.css')}}" rel="stylesheet">
+        <link href="{{asset('node_modules/emojionearea/dist/emojionearea.css')}}" rel="stylesheet">
         <!-- <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" /> -->
         
     </head>
@@ -43,7 +44,9 @@
         <script src="{{asset('node_modules/ng-file-upload/dist/ng-file-upload-all.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/grid/src/images-grid.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/video.js/dist/video.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/emojionearea/dist/emojionearea.js')}}" type="text/javascript"></script>
         <!-- <script src="https://vjs.zencdn.net/7.8.4/video.js"></script> -->
+        
 
         <script>var baseUrl = "{{url('/')}}/";</script>
         <script src="{{asset('controller/bundleCtrl.js')}}" type="text/javascript" ></script>
