@@ -386,6 +386,7 @@ app.directive('emoji',['$sce', function($sce){
       description: '='
     },
     link: function(scope, elem, attrs){
+      window.emojioneVersion = "3.1.2";
       $(elem).emojioneArea({
         pickerPosition: 'bottom',
         saveEmojisAs: 'shortname',

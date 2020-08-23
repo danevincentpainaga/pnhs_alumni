@@ -90,18 +90,22 @@ class PostController extends Controller
 
     public function savePostDescriptionOnly(Request $request)
     {
-        /* save post description only */
-        $post = new post();
-        $post->description = $request->post['post_description'];
-        $post->privacy = $request->post['privacy'];
-        $post->p_userid = Auth::user()->id;
-        $post->save();
+        if ($request->has('post')) {
+            /* save post description only */
+            $post = new post();
+            $post->description = $request->post['post_description'];
+            $post->privacy = $request->post['privacy'];
+            $post->p_userid = Auth::user()->id;
+            $post->save();
 
-        $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+            if ($request->has('post.taggedUsers')) {
+                $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+            }
 
-        return response()->json([
-            'post' => $post
-        ]);
+            return response()->json([
+                'post' => $request->post
+            ]);
+        }
     }
 
     public function savePostFilesOnly(Request $request)
