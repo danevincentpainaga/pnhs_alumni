@@ -158,10 +158,11 @@ app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $
         }
       });
     },
-    getAlumni: function getAlumni() {
+    getSearchFriends: function getSearchFriends(keyword) {
       return $http({
-        method: 'GET',
-        url: baseUrl + 'api/getAlumni',
+        method: 'POST',
+        url: baseUrl + 'api/getSearchFriends',
+        data: keyword,
         headers: {
           "Content-Type": "application/json",
           Authorization: 'Bearer ' + $rootScope.token

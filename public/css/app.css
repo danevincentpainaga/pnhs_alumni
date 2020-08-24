@@ -10068,6 +10068,11 @@ $header-box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
   }
 }
 .emojionearea-button {
+  right: 0px !important;
+  top: -10px !important;
+}
+
+.emojionearea-button {
   z-index: 0 !important;
 }
 
@@ -10087,6 +10092,7 @@ $header-box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
 .emojionearea-editor {
   min-height: 50px !important;
   max-height: 10em !important;
+  padding: 7px 10px 7px 12px !important;
 }
 
 .emojionearea.focused {
@@ -10412,7 +10418,7 @@ body {
   margin: 5.75rem auto;
 }
 .pop-up-post .post-container .wrapper {
-  min-height: 300px;
+  min-height: 283px;
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -10456,7 +10462,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  min-height: 102px;
+  min-height: 85px;
   margin-bottom: 0.2in;
 }
 .pop-up-post .post-container .wrapper .pop-up-body .create-post-header .popup-close-btn {
@@ -10551,17 +10557,17 @@ body {
   padding: 2px;
 }
 .pop-up-post .post-container .wrapper .pop-up-body .create-post-body .upload-holder textarea {
-  /*                            min-height: 50px;
-                              color: #535165;
-                              font-size: 16px;
-                              border: medium none;
-                              resize: none;
-                              display: block;
-                              width: 100%;
-                              font-weight: 400;
-                              line-height: 1.5;
-                              padding: 0.375rem 0.75rem;
-                              outline: none;*/
+  min-height: 50px;
+  color: #535165;
+  font-size: 16px;
+  border: medium none;
+  resize: none;
+  display: block;
+  width: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  outline: none;
 }
 .pop-up-post .post-container .wrapper .pop-up-body .post-button {
   display: flex;
@@ -10817,7 +10823,7 @@ body {
 
 .suggestions {
   overflow-y: auto;
-  max-height: 395px !important;
+  max-height: 400px !important;
 }
 .suggestions ul {
   padding: 0px;

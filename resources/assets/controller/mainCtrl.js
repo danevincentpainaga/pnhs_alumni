@@ -59,7 +59,8 @@ app.directive('rightColumnDirective', function(){
   }
 });
 
-app.directive('tagFriendsSuggestions', function(){
+
+app.directive('tagFriendsSuggestions', ['$timeout', function($timeout){
   return{
     restrict: 'E',
     scope:{
@@ -71,37 +72,32 @@ app.directive('tagFriendsSuggestions', function(){
     link: function(scope, elem, attrs){
       scope.$watch('status', function(n, o) {
         if (n) {
-          console.log($(window).height() - 147 );
-          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 110);
-          setTimeout(()=>{
-            $('.wrapper').css({ 'height': $('.tagged-body').height() + 20 + 'px'});
-          }, 40);
+          $('#tagged').animate({'position': 'absolute', 'right': 0 + 'px'}, 40);
+          let w = angular.element('.tagged-body');
+          scope.getWindowDimensions = function () {
+              return {
+                  'h': w.height(),
+              };
+          };
+          scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            $timeout(function() {
+              $('.wrapper').css({ 'min-height': (newValue.h) + 25 + 'px'}); 
+              scope.$apply(scope.getWindowDimensions);
+            }, 40);
+          }, true);
+
+          w.bind('resize', function () {
+              scope.$apply();
+          });
         }
         else{
-          $('.wrapper').css({'height': 'auto'});
+          $('.wrapper').css({ 'min-height': 'auto'});
           $('#tagged').animate({'position': 'absolute', 'right': -530 + 'px'}, 150);
         }
-      });
+      }, true);
     }
   }
-});
-
-
-app.directive('resizeWrapper', function(){
-  return{
-    restrict: 'A',
-    scope:{
-      resize: '='
-    },
-    link: function(scope, elem, attrs){
-      scope.$watch('resize', function(n, o) {
-        if (n) {
-          $('.wrapper').css({ 'height': $('.tagged-body').height() + 25+ 'px'});
-        }
-      });
-    }
-  }
-});
+}]);
 
 app.directive('openModal', function(){
   return{
