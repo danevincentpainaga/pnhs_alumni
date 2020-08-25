@@ -54,8 +54,11 @@
 				<button ng-click="p.uploadPost()">{{ p.post_status }}</button>
 			</div>
 		</div>
-		<div class="posting-message" ng-if="p.positingInProgress">
-    		<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+		<div class="posting-message" ng-if="p.postingInProgress">
+    		<div class="lds-ring">
+    			<span style="font-weight: 300;">Posting</span>
+    			<div></div><div></div><div></div><div></div>
+    		</div>
 		</div>		
 		<tag-friends-suggestions status="p.show_suggestions" ></tag-friends-suggestions>
 	</div>

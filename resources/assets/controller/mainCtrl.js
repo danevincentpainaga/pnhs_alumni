@@ -81,7 +81,7 @@ app.directive('tagFriendsSuggestions', ['$timeout', function($timeout){
           };
           scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             $timeout(function() {
-              $('.wrapper').css({ 'min-height': (newValue.h) + 25 + 'px'}); 
+              $('.wrapper').css({ 'height': (newValue.h) + 25 + 'px'}); 
               scope.$apply(scope.getWindowDimensions);
             }, 40);
           }, true);
@@ -91,7 +91,7 @@ app.directive('tagFriendsSuggestions', ['$timeout', function($timeout){
           });
         }
         else{
-          $('.wrapper').css({ 'min-height': 'auto'});
+          $('.wrapper').css({ 'height': 'auto'});
           $('#tagged').animate({'position': 'absolute', 'right': -530 + 'px'}, 150);
         }
       }, true);

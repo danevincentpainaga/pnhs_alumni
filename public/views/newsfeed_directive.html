@@ -27,7 +27,7 @@
     </div>
   </div>
   <upload-progress-directive percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" ng-if="nf.uploading"></upload-progress-directive>
-  <div class="row posts-body" style="border: 1px solid #e4e4e4;margin-top: .7em;box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;" ng-repeat="post in nf.post">
+  <div class="row posts-body" style="margin-top: .7em;box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;" ng-repeat="post in nf.post">
     <div class="posts-header" style="display: flex; background-color: #fff;width: 100%;padding: 15pt .15625in 0px .15625in;border-top-left-radius: 7px;border-top-right-radius: 7px;">
       <div class="post-image" style="width: 11%;">
         <img ng-src="{{ post.photo }}" style="width: 50px;border-radius: 100%;border:3px solid whitesmoke;">
@@ -60,7 +60,7 @@
       </a>
     </div>
   </div>
-  <div class="row posts-body" style="border: 1px solid #e4e4e4;margin-top: .7em;box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;" >
+  <div class="row posts-body" style="margin-top: .7em;box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;" >
     <div class="posts-header" style="display: flex; background-color: #fff;width: 100%;padding: 15pt .15625in 0px .15625in;border-top-left-radius: 7px;border-top-right-radius: 7px;">
       <div class="post-image" style="width: 11%;">
         <img ng-src="uploads/pic1.jpg" style="width: 50px;border-radius: 100%;border:3px solid whitesmoke;">
@@ -121,6 +121,5 @@
 
   
 </div>
-
 
 

@@ -9947,7 +9947,7 @@ h3 {
 /*$box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
 /*$box-shadow: 0px 0.0625pc 0.2pc -0.1pc #d2d2d2;
 $header-box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
-/*$box-shadow: none;*/
+/*$box-shadow: 0pc 0.010416667in 0.75pc -3px #d2d2d2; new box-shadow*/
 .ph-item {
   direction: ltr;
   position: relative;
@@ -10116,7 +10116,8 @@ $header-box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;*/
 }
 
 body {
-  background: #edf2f6;
+  /*background: #edf2f6;*/
+  background: #fff;
 }
 
 .header-holder {
@@ -10271,7 +10272,7 @@ body {
   width: 100%;
   margin-bottom: 0.7em;
   background: #fff;
-  border: 1px solid #ede9e9;
+  /*border: 1px solid #ede9e9;*/
   border-radius: 2px;
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
@@ -10295,7 +10296,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 3px;
-  background-color: #2db1ef;
+  background-color: #2080e6;
 }
 .widget .widget-title::after {
   content: "";
@@ -10305,7 +10306,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 3px;
-  background-color: #2db1ef;
+  background-color: #2080e6;
 }
 .widget .your-page {
   display: inline-block;
@@ -10358,7 +10359,7 @@ body {
   padding: 15px 15px 10px;
   background-color: #fff;
   border-radius: 7px;
-  border: 1px solid #e4e4e4;
+  /*border: 1px solid #e4e4e4;*/
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 .post-section .post-new .post-new-body {
@@ -10616,7 +10617,7 @@ body {
   width: 100%;
   margin-bottom: 3px;
   background: #fff;
-  border: 1px solid #ede9e9;
+  /*border: 1px solid #ede9e9;*/
   border-radius: 2px;
   box-shadow: none;
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
@@ -10644,7 +10645,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 3px;
-  background-color: #2db1ef;
+  background-color: #2080e6;
 }
 .people .people-title a {
   float: right;
@@ -10711,7 +10712,10 @@ body {
   background-color: #fff;
   color: #909090;
   font-size: 11px;
-  border: 1px solid #909090;
+  border: 1px solid #2080e6;
+  background-color: #2080e6;
+  color: #fff;
+  border-radius: 500px;
 }
 
 .alumni-officers {
@@ -10720,7 +10724,7 @@ body {
   width: 100%;
   margin-bottom: 0.7rem;
   background: #fff;
-  border: 1px solid #ede9e9;
+  /*border: 1px solid #ede9e9;*/
   border-radius: 2px;
   box-shadow: none;
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
@@ -10882,95 +10886,59 @@ body {
   font-weight: 500;
 }
 
-.lds-ellipsis {
-  display: inline-block;
+.lds-ring {
+  align-items: center;
+  justify-content: center;
+  display: flex;
   position: relative;
   width: 80px;
   height: 80px;
 }
 
-.lds-ellipsis div {
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
   position: absolute;
-  top: 33px;
-  width: 10px;
-  height: 10px;
+  width: 50px;
+  height: 50px;
+  margin: 8px;
+  border: 1px solid #fff;
   border-radius: 50%;
-  background: #757a95;
-  -webkit-animation-timing-function: cubic-bezier(0, 1, 1, 0);
-          animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #b4b4b4 transparent transparent transparent;
 }
 
-.lds-ellipsis div:nth-child(1) {
-  left: 8px;
-  -webkit-animation: lds-ellipsis1 0.6s infinite;
-          animation: lds-ellipsis1 0.6s infinite;
+.lds-ring div:nth-child(1) {
+  -webkit-animation-delay: -0.45s;
+          animation-delay: -0.45s;
 }
 
-.lds-ellipsis div:nth-child(2) {
-  left: 8px;
-  -webkit-animation: lds-ellipsis2 0.6s infinite;
-          animation: lds-ellipsis2 0.6s infinite;
+.lds-ring div:nth-child(2) {
+  -webkit-animation-delay: -0.3s;
+          animation-delay: -0.3s;
 }
 
-.lds-ellipsis div:nth-child(3) {
-  left: 32px;
-  -webkit-animation: lds-ellipsis2 0.6s infinite;
-          animation: lds-ellipsis2 0.6s infinite;
+.lds-ring div:nth-child(3) {
+  -webkit-animation-delay: -0.15s;
+          animation-delay: -0.15s;
 }
 
-.lds-ellipsis div:nth-child(4) {
-  left: 56px;
-  -webkit-animation: lds-ellipsis3 0.6s infinite;
-          animation: lds-ellipsis3 0.6s infinite;
-}
-
-@-webkit-keyframes lds-ellipsis1 {
+@-webkit-keyframes lds-ring {
   0% {
-    transform: scale(0);
+    transform: rotate(0deg);
   }
   100% {
-    transform: scale(1);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes lds-ellipsis1 {
+@keyframes lds-ring {
   0% {
-    transform: scale(0);
+    transform: rotate(0deg);
   }
   100% {
-    transform: scale(1);
-  }
-}
-@-webkit-keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@-webkit-keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
+    transform: rotate(360deg);
   }
 }
 .image-grid-2 {
@@ -11106,7 +11074,7 @@ body {
   padding: 15px 15px 10px;
   background-color: #fff;
   border-radius: 7px;
-  border: 1px solid #e4e4e4;
+  /*border: 1px solid #e4e4e4;*/
   box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;
 }
 
@@ -11496,4 +11464,11 @@ grid-row-gap: 2px;
   background-color: #fff;
   border: none;
   border-radius: none;
+}
+
+.cover:before {
+  content: "";
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, #212529 75%);
+  opacity: 0.5;
 }

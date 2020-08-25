@@ -128,7 +128,9 @@ class PostController extends Controller
 
         }
 
-        $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+        if ($request->has('post.taggedUsers')) {
+            $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+        }
 
         return response()->json([
             'post' => $post
@@ -157,7 +159,9 @@ class PostController extends Controller
 
         }
 
-        $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+        if ($request->has('post.taggedUsers')) {
+            $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
+        }
 
         return response()->json([
             'fileName' => $post->post_id

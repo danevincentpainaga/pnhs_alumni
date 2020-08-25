@@ -53,7 +53,7 @@ var app = angular.module('pnhsApp')
         console.log("Not Valid");
       }else{
         p.post_status = 'Sharing';
-        p.positingInProgress = true;
+        p.postingInProgress = true;
       }
     };
 
@@ -149,7 +149,7 @@ var app = angular.module('pnhsApp')
       }, function (resp) {
           console.log('Error status: ' + resp.status);
       }, function (evt) {
-          $timeout(()=> { p.positingInProgress = false; }, 1000);
+          $timeout(()=> { p.postingInProgress = false; }, 1000);
           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
           $scope.$emit('load_start', progressPercentage);
           $scope.$emit('uploaded_file', { fileName: evt.config.data.file.name });
@@ -160,7 +160,7 @@ var app = angular.module('pnhsApp')
 
     function savePost(fn, user_post){
       let timer;
-      if (fn.name == "savePostDescriptionOnly") { $scope.$emit('load_start', -1);  timer = 2000; }
+      if (fn.name == "savePostDescriptionOnly") { $scope.$emit('load_start', -1);  timer = 2000; $timeout(()=> { p.postingInProgress = false; }, 100); }
       fn({post: user_post,}).then(function(response){
         console.log(response.data);
         $timeout(()=> {$scope.$emit('upload_finished', { bool: false, post_images }); }, timer);
