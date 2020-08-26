@@ -3,14 +3,14 @@
 		<div class="col-md-9 center-panel timeline">
 			<div class="group-cover">
 				<div class="cover" style="display: flex;width: 100%;height: 250px;border-radius: 7.5pt .104166667in 0 0;overflow: hidden;position: relative;">
-					<img src="images/10.jpg" style="object-fit: cover;max-width: 890px;min-width: 890px;max-height: 395px; min-height: 395px; position: absolute;">
-					<div style="display: flex;width: 100%; position: absolute; top: 7.5pc;height: auto;z-index: 3;padding: 0px 25px 0 25px;align-items: center;">
+					<img src="images/06.jpg" style="object-fit: cover;max-width: 851px;min-width: 851px;max-height: 315px; min-height: 315px; position: absolute;">
+					<div style="display: flex;width: 100%; position: absolute; top: 5pc;height: auto;z-index: 0;padding: 0px 25px 0 25px;align-items: center;background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, #000000 175%);min-height: 73%;">
 						<div style="margin-right: 17px;">
-							<img src="uploads/dane.jpg" style="object-fit: cover;max-width: 110px;border: 2px solid #fefefe;border-radius: 100%;">
+							<img src="uploads/dane.jpg" style="object-fit: cover;max-width: 110px;min-width: 110px;min-height: 110px;border: 2px solid #fefefe;border-radius: 100%;">
 						</div>
 						<div style="flex-grow: 1;padding-top: 40px;">
-							<span style="font-size: 21px;line-height: 1.4;color: #fff;">Dane Vincent Painaga</span>
-							<p style="font-size: 14px;color: #fff;">Followers</p>
+							<span style="font-size: 21px;line-height: 1.4;color: #e8e8e8; font-weight: 400;">Dane Vincent Painaga</span>
+							<p style="font-size: 14px;color: #e8e8e8; font-weight: 400;">Followers</p>
 						</div>
 						<div style="margin: 30px 20px 0px 0px;">
 							<button style="border-radius: 10px;background-color: #2080e6;width: 117px;outline: none;border: 1px solid #2080e6;color: #fff;padding: 5px;">
@@ -22,7 +22,7 @@
 				<div style="display: flex;width: 100%;height: 45pt;box-shadow: 0 0px 0 0 rgba(139,141,157,.05),0px 1.5pt 10px -.020833333in rgba(65,71,108,.15) !important; margin-bottom: 1em;">
 				  <ul class="nav" style="justify-content: center;align-items: center;">
 				    <li class="nav-item">
-				      <a class="nav-link" href="#" style="color: #8e8e8e;font-weight: 600;font-size: 15px;">Feed</a>
+				      <a class="nav-link" href="#" style="color: #8e8e8e;font-weight: 600;font-size: 15px;">Timeline</a>
 				    </li>
 				    <li class="nav-item">
 				      <a class="nav-link" href="#" style="color: #8e8e8e;font-weight: 600;font-size: 15px;">Friends</a>
@@ -33,58 +33,13 @@
 				    <li class="nav-item">
 				      <a class="nav-link" href="#" style="color: #8e8e8e;font-weight: 600;font-size: 15px;">About</a>
 				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="#" style="color: #8e8e8e;font-weight: 600;font-size: 15px;">Photos</a>
+				    </li>
 				  </ul>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<div class="widget" >
-					  <ul class="left-menu">
-					    <li><a href=""><i class="fa fa-bars"></i>Timeline</a></li>
-					    <li><a href=""><i class="fa fa-users"></i>Friends</a></li>
-					    <li><a href=""><i class="fa fa-user-plus"></i>Followers</a></li>
-					    <li><a href=""><i class="fa fa-folder-open"></i>Jobs</a></li>
-					    <li><a href=""><i class="fa fa-hands"></i>Donations</a></li>
-					    <li><a href=""><i class="fa fa-globe-asia"></i>Community</a></li>
-					    <hr style="margin-top: 1pc; margin-bottom: .5pc;">
-					    <li>
-					      <div class="friend-header">
-					        <div class="friend-header-content-left" >
-					          <span>Photos</span>
-					        </div>
-					        <div class="friend-header-content-right">
-					          <a href="" style="">See all</a>
-					        </div>
-					      </div>
-					      <div class="col">
-					        <div class="row friend-image-body">
-					          <div class="col-4" style="">
-					            <img src="uploads/dane.jpg">
-					          </div>
-					          <div class="col-4">
-					            <img src="uploads/pic1.jpg" >
-					          </div>
-					          <div class="col-4">
-					            <img src="uploads/pic2.jpg">
-					          </div>
-					          <div class="col-4">
-					            <img src="images/web.gif">
-					          </div>
-					          <div class="col-4">
-					            <img src="uploads/dane.jpg">
-					          </div>
-					        </div>
-					      </div>
-					    </li>
-					  </ul>
-					</div>
-				</div>
-				<div class="col-md-8 center-panel">
-					<div class="row">
-						<news-feed-directive class="col"></news-feed-directive>
-					</div>
-				</div>
-			</div>
+			<div ui-view="timeline-view"></div>
 		</div>
 		<div class="col" >
 			<div class="row">

@@ -73520,7 +73520,21 @@ angular.module('pnhsApp', ['ngCookies', 'ngResource', 'ui.router', 'ui.router.st
     controllerAs: 'lg'
   }).state('timeline', {
     url: '/timeline',
-    templateUrl: 'views/timeline.html'
+    views: {
+      '': {
+        templateUrl: 'views/timeline.html'
+      },
+      'timeline-view@timeline': {
+        templateUrl: 'views/timeline-feed.html'
+      }
+    }
+  }).state('timeline.friends', {
+    url: '/friends',
+    views: {
+      'timeline-view@timeline': {
+        templateUrl: 'views/timeline-friends.html'
+      }
+    }
   });
   $urlRouterProvider.otherwise('/');
 }).run(['$transitions', '$rootScope', 'apiService', '$cookies', '$timeout', '$stateParams', function ($transitions, $rootScope, apiService, $cookies, $timeout, $stateParams) {

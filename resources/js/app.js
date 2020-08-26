@@ -27,7 +27,22 @@ angular
     })
     .state('timeline', {
       url: '/timeline',
-      templateUrl: 'views/timeline.html',
+      views:{
+        '':{
+          templateUrl: 'views/timeline.html',
+        },
+        'timeline-view@timeline':{
+          templateUrl: 'views/timeline-feed.html',
+        }
+      },
+    })
+    .state('timeline.friends', {
+      url: '/friends',
+      views:{
+        'timeline-view@timeline':{
+          templateUrl: 'views/timeline-friends.html',
+        },
+      }
     })
 
   $urlRouterProvider.otherwise('/');
