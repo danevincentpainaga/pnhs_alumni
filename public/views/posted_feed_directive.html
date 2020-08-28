@@ -1,0 +1,65 @@
+<div class="posts-header" style="display: flex; background-color: #fff;width: 100%;padding: 15pt .15625in 0px .15625in;border-top-left-radius: 7px;border-top-right-radius: 7px;">
+  <div class="post-image" style="width: 11%;">
+
+    <img ng-src="{{ userpost.user.photo | checkPhoto }}" style="width: 50px;border-radius: 100%;border:3px solid whitesmoke;">
+  </div>
+  <div class="post-title" style="width: 89%;display: block;margin-left: .4375pc;">
+    <i class="fa fa-ellipsis-h" style="float: right;color:#757a95;padding-top: 5px;"></i>
+    
+    <div style="
+    position: absolute;
+    left: 333.391px;
+    box-sizing: border-box;
+    min-width: 200px;
+    padding: 12px;
+    background: #fff;
+    color: #666;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;margin-top: 25px;">
+      <ul style="white-space: nowrap;list-style-type: none;padding: 0;line-height: 1.8;">
+        <li>
+          <a href="" style="color: #999;padding-left: 8px;text-decoration: none;display: flex;align-items: center;font-size: 15px;">
+            <i class="far fa-edit" style="margin-right: 7px;"></i>
+            Edit Post
+          </a>
+        </li>
+        <li>
+          <a href="" style="color: #999;padding-left: 8px;text-decoration: none;display: flex;align-items: center;font-size: 15px;">
+            <i class="far fa-bookmark" style="margin-right: 13px;"></i>
+            Save
+          </a>
+        </li>
+        <li>
+          <a href="" style="color: #999;padding-left: 8px;text-decoration: none;display: flex;align-items: center;font-size: 15px;">
+            <i class="far fa-trash-alt" style="margin-right: 11px;"></i>
+            Delete
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <p style="margin-bottom: 0px;color: #545454;">{{ userpost.user.firstname }}&nbsp;{{ userpost.user.lastname }}</p>
+    <p style="margin-bottom: 0px;color: #6d6d6d;font-size: 13px;">{{ userpost.created_at }}</p>
+  </div>
+</div>
+<div class="posts-description" style="background-color: #fff;width: 100%;padding: 0px .15625in 0px .15625in;">
+  <hr style="margin-top: .7pc; margin-bottom: .5pc;">
+  <p style="padding-top: 5px;color: #6d6d6d;font-size: 14.5px;">{{ userpost.description }}</p>
+</div>
+<div class="post-grid" style="min-height: 100px;">
+  <div post-grid-wrapper postfiles="userpost.images" ></div>
+</div>
+<div class="react-section" style="">
+  <a href="" style="">
+    <i class="far fa-thumbs-up"></i>
+    Like
+  </a>
+  <a href="">
+    <i class="far fa-comment-alt"></i>
+    Comment
+  </a>
+  <a href="">
+    <i class="far fa-bookmark"></i>
+    save
+  </a>
+</div>

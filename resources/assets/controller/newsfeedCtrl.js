@@ -32,35 +32,52 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
-    nf.post = [
-        {
-            user_id: 1,
-            photo: "uploads/dane.jpg",
-            name: 'Dane Vincent painaga',
-            description: "testing",
-            files:[
-                {id: 1, file: "images/2.jpg", type: "image/jpg"},
-                {id: 2, file: "images/9.jpg", type: "image/jpg"},
-                {id: 3, file: "images/1.jpg", type: "image/jpg"},
-                {id: 4, file: "uploads/pic1.jpg", type: "image/jpg"},
-                {id: 5, file: "uploads/pic2.jpg", type: "image/jpg"},
-            ],
-        },
-        {
-            user_id: 2,
-            photo: "uploads/zoe.jpg",
-            name: 'Sophia Elizabeth painaga',
-            description: "Lorem ipsum the maze",
-            files:[
-                {file: "images/dane.jpg", type: "image/jpg"},
-                {file: "uploads/zoe.jpg", type: "image/jpg"},
-                {file: "uploads/dane.jpg", type: "image/jpg"},
-                {file: "uploads/pic1.jpg", type: "image/jpg"},
-                {file: "images/3.jpg", type: "image/jpg"},
-            ],
-        },
-    ];
+    // nf.post = [
+    //     {
+    //         user_id: 1,
+    //         photo: "uploads/dane.jpg",
+    //         name: 'Dane Vincent painaga',
+    //         datetime: '3hrs',
+    //         description: "Lorem ipsum the amazing",
+    //         files:[
+    //             {id: 1, file: "images/user-1.jpg", type: "image/jpg"},
+    //             {id: 2, file: "images/06.jpg", type: "image/jpg"},
+    //             {id: 3, file: "images/1.jpg", type: "image/jpg"},
+    //             {id: 4, file: "images/user-2.jpg", type: "image/jpg"},
+    //             {id: 5, file: "images/013.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/05.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/03.jpg", type: "image/jpg"},
+    //         ],
+    //     },
+    //     {
+    //         user_id: 2,
+    //         photo: "uploads/zoe.jpg",
+    //         name: 'Sophia Elizabeth painaga',
+    //         datetime: '5hrs',
+    //         description: "Lorem ipsum the maze",
+    //         files:[
+    //             {id: 1, file: "images/10.jpg", type: "image/jpg"},
+    //             {id: 2, file: "images/02.jpg", type: "image/jpg"},
+    //             {id: 3, file: "images/user-17.jpg", type: "image/jpg"},
+    //             {id: 4, file: "images/07.jpg", type: "image/jpg"},
+    //             {id: 5, file: "images/user-15.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/02.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/7.jpg", type: "image/jpg"},
+    //         ],
+    //     },
+    // ];
 
+
+    function getPost(){
+        apiService.getPost().then(function(response){
+          nf.post = response.data
+          console.log(nf.post);
+        }, function(err){
+          console.log(err);
+        });
+    }
+
+    getPost();
 
 }]);
 

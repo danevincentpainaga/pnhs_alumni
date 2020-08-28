@@ -125,7 +125,7 @@ var app = angular.module('pnhsApp')
         files_to_upload.push({ 
             name: resp.data.name,
             path: resp.data.path, 
-            mime_type: resp.data.mime_type,
+            mime_type: resp.data.mime_type.replace('-', '/'),
             description: "No description",
         });
 
@@ -144,7 +144,7 @@ var app = angular.module('pnhsApp')
             savePost(methodName, objToPass);
         }
 
-        console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
+        console.log('mime_type: '+resp.data.mime_type.replace('-', '/'));
 
       }, function (resp) {
           console.log('Error status: ' + resp.status);

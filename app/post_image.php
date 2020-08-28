@@ -10,6 +10,11 @@ class post_image extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'image_post_id ', 'image_name'
+        'image_post_id ', 'image_name', 'mime_type'
     ];
+
+	public function post()
+    {
+        return $this->belongsTo('App\post');
+    }
 }

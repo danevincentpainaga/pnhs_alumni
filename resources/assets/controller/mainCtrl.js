@@ -49,6 +49,20 @@ app.directive('newsFeedDirective', function(){
   }
 });
 
+
+app.directive('postedFeedDirective', function(){
+  return{
+    restrict: 'E',
+    scope:{
+      userpost: '='
+    },
+    templateUrl: 'views/posted_feed_directive.html',
+    controller: 'postedFeedCtrl',
+    controllerAs: 'p'
+  }
+});
+
+
 app.directive('rightColumnDirective', function(){
   return{
     restrict: 'E',
@@ -249,11 +263,14 @@ app.directive('postGridWrapper', function(){
     });
 
     scope.preLoadFiles = function(files){
+
       let count = 0;
       let arr = [ {value: 0, name: 'landscape'}, {value: 0, name: 'portrait'}, {value: 0, name: 'even'}   ]
 
-      angular.forEach(files, function(f){
-         
+      for(i = 0; i < files.length; i++){
+        
+        if (i > 4) { count = 0; console.log('break...', i); return false; } else { console.log('continuing...', i)};
+
         let img = new Image();
         img.onload = function(loaded){
 
@@ -270,7 +287,7 @@ app.directive('postGridWrapper', function(){
               arr[2].value+= 1;            
             }
 
-            if (files.length == count) {
+            if (files.length === count || count === 5) {
               switch(scope.checkDimension(arr)){
                 case 'even':
                       scope.ngClass = 'post-photo-grid-wrapper';
@@ -285,22 +302,22 @@ app.directive('postGridWrapper', function(){
                       scope.$apply(scope.ngClass);
                       break;
               }
-              scope.pf = files;
-              scope.$apply(scope.pf);
-              console.log(scope.ngClass);
-            }
 
+              scope.pf = files.slice(0, 5); 
+              scope.$apply(scope.pf);
+              console.log(scope.pf);
+            }
         }
 
-        img.src = f.file;
 
-      });
+        img.src = 'storage/'+files[i].image_name;
+      }
     }
 
     scope.checkDimension = function(arr){
       for(i = 0; i < arr.length; i++){
         if (arr[0].value < arr[i].value) {
-          arr[0] = arr[i+1];
+          arr[0] = arr[i];
         }
       }
       return arr[0].name;
@@ -310,11 +327,11 @@ app.directive('postGridWrapper', function(){
 
   return{
     restrict:'A',
-    template:'<div ng-class="ngClass"><div ng-repeat="f in pf">'+
-                '<img ng-src="{{ f.file }}" ng-if="f.type | checkImage">'+
-                '<div class="video-wrap" ng-if="f.type | checkVideo" >'+
+    template:'<div ng-class="ngClass"><div ng-repeat="f in pf track by $index">'+
+                '<img ng-src="storage/{{ f.image_name }}" ng-if="f.mime_type | checkImage">'+
+                '<div class="video-wrap" ng-if="f.mime_type | checkVideo" >'+
                   '<video>'+
-                    '<source ng-src="{{ f.file }}" type="video/mp4"/>'+
+                    '<source ng-src="{{ f.image_name }}" type="video/mp4"/>'+
                   '</video>'+
                  ' <figure>'+
                     '<button name="play"></button>'+
@@ -356,7 +373,8 @@ app.directive('emoji',['$sce', function($sce){
 
 app.filter('checkImage', function(){
   return function(type){
-    if (type == 'image/jpg') {
+    let valid_image_type = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+    if (valid_image_type.indexOf(type) != -1) {
       return true;
     }
     return false;

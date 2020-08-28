@@ -30,7 +30,7 @@
 <div style="width: 20%;background: #fff; position: fixed;right: 3px;height: 87.8%; border: 1px solid #dcdcdc;z-index: 90;display: none;">
     <span>Chat</span>
 </div>
-<div style="width: 207px; background: red;position: fixed;right: 3px;bottom: 0px;height: 40px;background-color: #555;color: #fff; border-radius: 5px 5px 0 0;text-align: center;padding: 9px;cursor: pointer;box-shadow: rgba(0, 0, 0, 0.22) 0px 0px 4px, rgba(0, 0, 0, 0.31) 0px 4px 8px;">
+<div style="width: 207px; background: red;position: fixed;right: 25px;bottom: 0px;height: 40px;background-color: #555;color: #fff; border-radius: 5px 5px 0 0;text-align: center;padding: 9px;cursor: pointer;box-shadow: rgba(0, 0, 0, 0.22) 0px 0px 4px, rgba(0, 0, 0, 0.31) 0px 4px 8px;">
     <span><i class="fa fa-envelope"></i> Message</span>
 </div>
 <!-- <div style="width: 50px; height: 50px;background: red;position: fixed;right: 15px;bottom: 13px;background-color: #555;display: flex;justify-content: center;align-items: center;color: #fff;border-radius: 100%;font-size: 14px;border: 3px solid #2080e6;">

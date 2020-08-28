@@ -14,6 +14,7 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use App\user;
 use App\post;
 use App\post_image;
 use App\tagged_user;
@@ -123,6 +124,7 @@ class PostController extends Controller
             $photo = new post_image();
             $photo->image_post_id  = $post->post_id;
             $photo->image_name = $new_image_name;
+            $photo->mime_type = $value['mime_type'];
             $photo->image_description = $value['description'];
             $photo->save();
 
@@ -154,6 +156,7 @@ class PostController extends Controller
             $photo = new post_image();
             $photo->image_post_id  = $post->post_id;
             $photo->image_name = $new_image_name;
+            $photo->mime_type = $value['mime_type'];
             $photo->image_description = $value['description'];
             $photo->save();
 
@@ -175,6 +178,10 @@ class PostController extends Controller
             $t->tagged_user_id  = $tag['id'];
             $t->save();
         }
+    }
+
+    public function getPost(){
+        return post::with('user', 'images')->orderBy('post_id', 'DESC')->get();
     }
 
 }

@@ -10298,16 +10298,6 @@ body {
   width: 3px;
   background-color: #2080e6;
 }
-.widget .widget-title::after {
-  content: "";
-  height: 20px;
-  right: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  background-color: #2080e6;
-}
 .widget .your-page {
   display: inline-block;
   padding: 5px 20px 15px;
@@ -11217,9 +11207,12 @@ width: 100%;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(1) {
   grid-area: 1/1/4/3;
+  max-height: 245px;
+  min-height: 245px;
+  min-width: 245px;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(1) img {
-  max-height: 245px;
+  /*max-height: 245px;*/
   min-height: 245px;
   min-width: 245px;
 }
@@ -11230,9 +11223,12 @@ width: 100%;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(2) {
   grid-area: 4/1/7/3;
+  max-height: 245px;
+  min-height: 245px;
+  min-width: 245px;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(2) img {
-  max-height: 245px;
+  /*max-height: 245px;*/
   min-height: 245px;
   min-width: 245px;
 }
@@ -11243,11 +11239,15 @@ width: 100%;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(3) {
   grid-area: 1/3/3/5;
-}
-.post-photo-grid-wrapper-landscape div:nth-child(3) img {
   max-height: 163px;
   min-height: 163px;
   max-width: 245px;
+  min-width: 245px;
+}
+.post-photo-grid-wrapper-landscape div:nth-child(3) img {
+  /*max-height: 163px;*/
+  min-height: 163px;
+  /*max-width: 245px;*/
   min-width: 245px;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(3) video {
@@ -11258,11 +11258,15 @@ width: 100%;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(4) {
   grid-area: 3/3/5/5;
-}
-.post-photo-grid-wrapper-landscape div:nth-child(4) img {
   max-height: 163px;
   min-height: 163px;
   max-width: 245px;
+  min-width: 245px;
+}
+.post-photo-grid-wrapper-landscape div:nth-child(4) img {
+  /*max-height: 163px;*/
+  min-height: 163px;
+  /*max-width: 245px;*/
   min-width: 245px;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(4) video {
@@ -11273,11 +11277,15 @@ width: 100%;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(5) {
   grid-area: 5/3/7/5;
-}
-.post-photo-grid-wrapper-landscape div:nth-child(5) img {
   max-height: 163px;
   min-height: 163px;
   max-width: 245px;
+  min-width: 245px;
+}
+.post-photo-grid-wrapper-landscape div:nth-child(5) img {
+  /*max-height: 163px;*/
+  min-height: 163px;
+  /*max-width: 245px;*/
   min-width: 245px;
 }
 .post-photo-grid-wrapper-landscape div:nth-child(5) video {
@@ -11344,9 +11352,11 @@ grid-row-gap: 2px;
 }
 .post-photo-grid-wrapper div:nth-child(1) {
   grid-area: 1/1/4/4;
+  max-height: 245px;
+  min-height: 245px;
 }
 .post-photo-grid-wrapper div:nth-child(1) img {
-  max-height: 245px;
+  /*max-height: 245px;*/
   min-height: 245px;
 }
 .post-photo-grid-wrapper div:nth-child(1) video {
@@ -11355,9 +11365,11 @@ grid-row-gap: 2px;
 }
 .post-photo-grid-wrapper div:nth-child(2) {
   grid-area: 1/4/4/7;
+  max-height: 245px;
+  min-height: 245px;
 }
 .post-photo-grid-wrapper div:nth-child(2) img {
-  max-height: 245px;
+  /*max-height: 245px;*/
   min-height: 245px;
 }
 .post-photo-grid-wrapper div:nth-child(2) video {
@@ -11366,35 +11378,41 @@ grid-row-gap: 2px;
 }
 .post-photo-grid-wrapper div:nth-child(3) {
   grid-area: 4/1/6/3;
-}
-.post-photo-grid-wrapper div:nth-child(3) img {
   max-height: 163px;
   min-height: 163px;
 }
+.post-photo-grid-wrapper div:nth-child(3) img {
+  /*max-height: 163px;*/
+  min-height: 163px;
+}
 .post-photo-grid-wrapper div:nth-child(3) video {
-  max-height: 163px;
+  /*max-height: 163px;*/
   min-height: 163px;
 }
 .post-photo-grid-wrapper div:nth-child(4) {
   grid-area: 4/3/6/5;
-}
-.post-photo-grid-wrapper div:nth-child(4) img {
   max-height: 163px;
   min-height: 163px;
 }
+.post-photo-grid-wrapper div:nth-child(4) img {
+  /*max-height: 163px;*/
+  min-height: 163px;
+}
 .post-photo-grid-wrapper div:nth-child(4) video {
-  max-height: 163px;
+  /*max-height: 163px;*/
   min-height: 163px;
 }
 .post-photo-grid-wrapper div:nth-child(5) {
   grid-area: 4/5/6/7;
-}
-.post-photo-grid-wrapper div:nth-child(5) img {
   max-height: 163px;
   min-height: 163px;
 }
+.post-photo-grid-wrapper div:nth-child(5) img {
+  /*max-height: 163px;*/
+  min-height: 163px;
+}
 .post-photo-grid-wrapper div:nth-child(5) video {
-  max-height: 163px;
+  /*max-height: 163px;*/
   min-height: 163px;
 }
 

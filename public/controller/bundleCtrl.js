@@ -96,6 +96,20 @@ app.directive('newsFeedDirective', function(){
   }
 });
 
+
+app.directive('postedFeedDirective', function(){
+  return{
+    restrict: 'E',
+    scope:{
+      userpost: '='
+    },
+    templateUrl: 'views/posted_feed_directive.html',
+    controller: 'postedFeedCtrl',
+    controllerAs: 'p'
+  }
+});
+
+
 app.directive('rightColumnDirective', function(){
   return{
     restrict: 'E',
@@ -296,11 +310,14 @@ app.directive('postGridWrapper', function(){
     });
 
     scope.preLoadFiles = function(files){
+
       let count = 0;
       let arr = [ {value: 0, name: 'landscape'}, {value: 0, name: 'portrait'}, {value: 0, name: 'even'}   ]
 
-      angular.forEach(files, function(f){
-         
+      for(i = 0; i < files.length; i++){
+        
+        if (i > 4) { count = 0; console.log('break...', i); return false; } else { console.log('continuing...', i)};
+
         let img = new Image();
         img.onload = function(loaded){
 
@@ -317,7 +334,7 @@ app.directive('postGridWrapper', function(){
               arr[2].value+= 1;            
             }
 
-            if (files.length == count) {
+            if (files.length === count || count === 5) {
               switch(scope.checkDimension(arr)){
                 case 'even':
                       scope.ngClass = 'post-photo-grid-wrapper';
@@ -332,22 +349,22 @@ app.directive('postGridWrapper', function(){
                       scope.$apply(scope.ngClass);
                       break;
               }
-              scope.pf = files;
-              scope.$apply(scope.pf);
-              console.log(scope.ngClass);
-            }
 
+              scope.pf = files.slice(0, 5); 
+              scope.$apply(scope.pf);
+              console.log(scope.pf);
+            }
         }
 
-        img.src = f.file;
 
-      });
+        img.src = 'storage/'+files[i].image_name;
+      }
     }
 
     scope.checkDimension = function(arr){
       for(i = 0; i < arr.length; i++){
         if (arr[0].value < arr[i].value) {
-          arr[0] = arr[i+1];
+          arr[0] = arr[i];
         }
       }
       return arr[0].name;
@@ -357,11 +374,11 @@ app.directive('postGridWrapper', function(){
 
   return{
     restrict:'A',
-    template:'<div ng-class="ngClass"><div ng-repeat="f in pf">'+
-                '<img ng-src="{{ f.file }}" ng-if="f.type | checkImage">'+
-                '<div class="video-wrap" ng-if="f.type | checkVideo" >'+
+    template:'<div ng-class="ngClass"><div ng-repeat="f in pf track by $index">'+
+                '<img ng-src="storage/{{ f.image_name }}" ng-if="f.mime_type | checkImage">'+
+                '<div class="video-wrap" ng-if="f.mime_type | checkVideo" >'+
                   '<video>'+
-                    '<source ng-src="{{ f.file }}" type="video/mp4"/>'+
+                    '<source ng-src="{{ f.image_name }}" type="video/mp4"/>'+
                   '</video>'+
                  ' <figure>'+
                     '<button name="play"></button>'+
@@ -403,7 +420,8 @@ app.directive('emoji',['$sce', function($sce){
 
 app.filter('checkImage', function(){
   return function(type){
-    if (type == 'image/jpg') {
+    let valid_image_type = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+    if (valid_image_type.indexOf(type) != -1) {
       return true;
     }
     return false;
@@ -461,34 +479,70 @@ var app = angular.module('pnhsApp')
 		nf.uploadedfile = file;
     });
 
-    nf.post = [
-        {
-            user_id: 1,
-            photo: "uploads/dane.jpg",
-            name: 'Dane Vincent painaga',
-            description: "testing",
-            files:[
-                {id: 1, file: "images/2.jpg", type: "image/jpg"},
-                {id: 2, file: "images/9.jpg", type: "image/jpg"},
-                {id: 3, file: "images/1.jpg", type: "image/jpg"},
-                {id: 4, file: "uploads/pic1.jpg", type: "image/jpg"},
-                {id: 5, file: "uploads/pic2.jpg", type: "image/jpg"},
-            ],
-        },
-        {
-            user_id: 2,
-            photo: "uploads/zoe.jpg",
-            name: 'Sophia Elizabeth painaga',
-            description: "Lorem ipsum the maze",
-            files:[
-                {file: "images/dane.jpg", type: "image/jpg"},
-                {file: "uploads/zoe.jpg", type: "image/jpg"},
-                {file: "uploads/dane.jpg", type: "image/jpg"},
-                {file: "uploads/pic1.jpg", type: "image/jpg"},
-                {file: "images/3.jpg", type: "image/jpg"},
-            ],
-        },
-    ];
+    // nf.post = [
+    //     {
+    //         user_id: 1,
+    //         photo: "uploads/dane.jpg",
+    //         name: 'Dane Vincent painaga',
+    //         datetime: '3hrs',
+    //         description: "Lorem ipsum the amazing",
+    //         files:[
+    //             {id: 1, file: "images/user-1.jpg", type: "image/jpg"},
+    //             {id: 2, file: "images/06.jpg", type: "image/jpg"},
+    //             {id: 3, file: "images/1.jpg", type: "image/jpg"},
+    //             {id: 4, file: "images/user-2.jpg", type: "image/jpg"},
+    //             {id: 5, file: "images/013.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/05.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/03.jpg", type: "image/jpg"},
+    //         ],
+    //     },
+    //     {
+    //         user_id: 2,
+    //         photo: "uploads/zoe.jpg",
+    //         name: 'Sophia Elizabeth painaga',
+    //         datetime: '5hrs',
+    //         description: "Lorem ipsum the maze",
+    //         files:[
+    //             {id: 1, file: "images/10.jpg", type: "image/jpg"},
+    //             {id: 2, file: "images/02.jpg", type: "image/jpg"},
+    //             {id: 3, file: "images/user-17.jpg", type: "image/jpg"},
+    //             {id: 4, file: "images/07.jpg", type: "image/jpg"},
+    //             {id: 5, file: "images/user-15.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/02.jpg", type: "image/jpg"},
+    //             {id: 6, file: "images/7.jpg", type: "image/jpg"},
+    //         ],
+    //     },
+    // ];
+
+
+    function getPost(){
+        apiService.getPost().then(function(response){
+          nf.post = response.data
+          console.log(nf.post);
+        }, function(err){
+          console.log(err);
+        });
+    }
+
+    getPost();
+
+}]);
+
+
+'use strict';
+/**
+ * @ngdoc function
+ * @name pnhs_alumni.controller:newsfeedCtrl
+ * @description
+ * # newsfeedCtrl
+ * Controller of the pnhs_alumni
+ */
+
+var app = angular.module('pnhsApp')
+  app.controller('postedFeedCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload',
+    function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload) {
+
+    var p = this;
 
 
 }]);
@@ -621,7 +675,7 @@ var app = angular.module('pnhsApp')
         files_to_upload.push({ 
             name: resp.data.name,
             path: resp.data.path, 
-            mime_type: resp.data.mime_type,
+            mime_type: resp.data.mime_type.replace('-', '/'),
             description: "No description",
         });
 
@@ -640,7 +694,7 @@ var app = angular.module('pnhsApp')
             savePost(methodName, objToPass);
         }
 
-        console.log('files uploaded: '+files_to_upload.length+" files length "+p.file.length );
+        console.log('mime_type: '+resp.data.mime_type.replace('-', '/'));
 
       }, function (resp) {
           console.log('Error status: ' + resp.status);

@@ -28,7 +28,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'student_id_number', 'email', 'password', 'contact_no', 'birthdate', 'relationship_status', 
+        'address', 'permanent_address', 'year_graduated', 'section', 'job', 'company', 'job_started', 
+        'gender', 'status', 'email_verified_at', 'remember_token', 'updated_at'
     ];
 
     /**
@@ -39,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\post');
+    }
+
 }

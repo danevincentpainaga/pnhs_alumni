@@ -168,6 +168,16 @@ app.factory('apiService', ['$http', '$cookies', '$rootScope', function ($http, $
           Authorization: 'Bearer ' + $rootScope.token
         }
       });
+    },
+    getPost: function getPost() {
+      return $http({
+        method: 'GET',
+        url: baseUrl + 'api/getPost',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + $rootScope.token
+        }
+      });
     }
   };
 }]);
