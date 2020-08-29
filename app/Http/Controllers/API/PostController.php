@@ -180,8 +180,4 @@ class PostController extends Controller
         }
     }
 
-    public function getPost(){
-        return post::with('user', 'images')->orderBy('post_id', 'DESC')->get();
-    }
-
 }

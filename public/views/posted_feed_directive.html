@@ -39,7 +39,7 @@
     </div>
 
     <p style="margin-bottom: 0px;color: #545454;">{{ userpost.user.firstname }}&nbsp;{{ userpost.user.lastname }}</p>
-    <p style="margin-bottom: 0px;color: #6d6d6d;font-size: 13px;">{{ userpost.created_at }}</p>
+    <p style="margin-bottom: 0px;color: #6d6d6d;font-size: 13px;">{{ userpost.created_at | formatDate }}</p>
   </div>
 </div>
 <div class="posts-description" style="background-color: #fff;width: 100%;padding: 0px .15625in 0px .15625in;">

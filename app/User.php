@@ -42,8 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function user(){
-        return $this->belongsTo('App\post');
+    public function friends(){
+        return $this->hasMany('App\friend_request', 'request_reciever', 'id')->where('confirmation_status', 1);
     }
 
 }

@@ -28,7 +28,8 @@ Route::group(['middleware'=>'auth:api'], function(){
 	Route::get('getUser', 'API\AuthController@getUser');
 	
 	Route::post('getSearchFriends', 'API\FriendsController@getSearchFriends');
-	Route::get('getPost', 'API\PostController@getPost');
+	
+	Route::get('getPost', 'API\NewsFeedController@getPost');
 	
 	
 	// Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');

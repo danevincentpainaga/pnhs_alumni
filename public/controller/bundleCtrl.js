@@ -445,6 +445,15 @@ app.filter('checkPhoto', function(){
     return 'images/avatarmale.svg';
   }
 });
+
+app.filter('formatDate', function(){
+  return function(date){
+    if (date) return moment(date).startOf('hour').fromNow();  
+  }
+});
+
+
+
 'use strict';
 /**
  * @ngdoc function

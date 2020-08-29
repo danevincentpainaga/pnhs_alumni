@@ -54,6 +54,7 @@
         <script src="{{asset('node_modules/grid/src/images-grid.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/video.js/dist/video.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/emojionearea/dist/emojionearea.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('node_modules/moment/min/moment.min.js')}}" type="text/javascript" ></script>
         <!-- <script src="https://vjs.zencdn.net/7.8.4/video.js"></script> -->
         
 
