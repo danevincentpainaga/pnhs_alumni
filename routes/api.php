@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +17,18 @@ Route::post('login', 'API\AuthController@login');
 // Route::post('register', 'API\AuthController@register');
 Route::post('registerTest', 'API\AuthController@register');
 
+// Route::get('getRedis', function(){
+// 	$redis = app()->make('redis');
+// 	$redis->set('post', 'testing');
+// 	print_r('post');
+// });
+
+
+Route::get('getRedis', function(){
+	$val = Cache::get('user:2');
+	print_r($val);
+});
+
 Route::group(['middleware'=>'auth:api'], function(){
 
 	Route::post('uploadFiles', 'API\PostController@uploadFiles');
@@ -30,6 +43,8 @@ Route::group(['middleware'=>'auth:api'], function(){
 	Route::post('getSearchFriends', 'API\FriendsController@getSearchFriends');
 	
 	Route::get('getPost', 'API\NewsFeedController@getPost');
+
+
 	
 	
 	// Route::post('uploadProfilePic', 'API\userAccountsController@uploadProfilePic');

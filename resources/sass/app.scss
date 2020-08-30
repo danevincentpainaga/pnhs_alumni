@@ -377,6 +377,7 @@ body{
         max-width: 530px;
         margin: 5.75rem auto;
         .wrapper{
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             min-height: 283px;
             position: relative;
             overflow: hidden;
@@ -392,7 +393,6 @@ body{
                 background-color: #fff;
                 border-radius: 7px;
                 border: 1px solid #a3a3a3;
-                box-shadow: $header-box-shadow;
 
                 .pop-up-body-header{
                     display: flex;width: 100%;

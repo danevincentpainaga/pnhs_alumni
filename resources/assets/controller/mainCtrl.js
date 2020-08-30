@@ -257,7 +257,6 @@ app.directive('postGridWrapper', function(){
 
     scope.$watch('postfiles', function(files, o){
       if (files) {
-        console.log(files);
         scope.preLoadFiles(files);
       }
     });
@@ -305,7 +304,6 @@ app.directive('postGridWrapper', function(){
 
               scope.pf = files.slice(0, 5); 
               scope.$apply(scope.pf);
-              console.log(scope.pf);
             }
         }
 

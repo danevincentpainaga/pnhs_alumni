@@ -73519,7 +73519,14 @@ angular.module('pnhsApp', ['ngCookies', 'ngResource', 'ui.router', 'ui.router.st
     controller: 'loginCtrl',
     controllerAs: 'lg'
   }).state('timeline', {
-    url: '/timeline',
+    url: '/timeline/:uname',
+    resolve: {
+      app: function app($stateParams, $location) {
+        if (!$stateParams.uname) {
+          $location.path('/');
+        }
+      }
+    },
     views: {
       '': {
         templateUrl: 'views/timeline.html'

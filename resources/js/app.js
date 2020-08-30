@@ -26,7 +26,14 @@ angular
       controllerAs: 'lg'
     })
     .state('timeline', {
-      url: '/timeline',
+      url: '/timeline/:uname',
+      resolve:{
+        app: function($stateParams, $location){
+          if (!$stateParams.uname) {
+            $location.path('/');
+          }
+        }
+      },
       views:{
         '':{
           templateUrl: 'views/timeline.html',
