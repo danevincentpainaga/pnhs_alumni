@@ -15,7 +15,7 @@
         "laravel/passport": "^8.4",
         "laravel/tinker": "^1.0",
         "pion/laravel-chunk-upload": "^1.4",
-        "predis/predis": "^1.1"
+        "vetruvet/laravel-phpredis": "1.*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

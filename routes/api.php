@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,17 +17,12 @@ Route::post('login', 'API\AuthController@login');
 // Route::post('register', 'API\AuthController@register');
 Route::post('registerTest', 'API\AuthController@register');
 
-// Route::get('getRedis', function(){
-// 	$redis = app()->make('redis');
-// 	$redis->set('post', 'testing');
-// 	print_r('post');
-// });
-
-
 Route::get('getRedis', function(){
-	$val = Cache::get('user:2');
-	print_r($val);
+	$redis = Redis::connection();
+	// $val = $redis->setEx('post', 3600, 'testing');
+	print_r($redis);
 });
+
 
 Route::group(['middleware'=>'auth:api'], function(){
 
