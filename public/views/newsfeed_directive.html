@@ -1,5 +1,6 @@
-<div class="container">
-  <div class="row post-section">
+<!-- <div class="container"> -->
+  <!-- <div class="row post-section"> -->
+  <div class="post-section">
     <div class="post-new">
       <div class="post-new-body">
         <div class="post-new-image">
@@ -27,10 +28,10 @@
     </div>
   </div>
   <upload-progress-directive percentage="{{ nf.percentage }}" fileuploaded="nf.uploadedfile" ng-if="nf.uploading"></upload-progress-directive>
-  <div class="row posts-body" style="margin-top: .7em;box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;" ng-repeat="post in nf.post">
+  <div class="posts-body" style="margin-top: .7em;box-shadow: 0px 0.0625pc 0.5625pc -0.125pc #d2d2d2;" ng-repeat="post in nf.post">
     <posted-feed-directive userpost="post" style="width: 100%;"></posted-feed-directive>
   </div>
-</div>
+<!-- </div> -->
 
 
 

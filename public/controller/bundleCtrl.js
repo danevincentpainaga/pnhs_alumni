@@ -315,7 +315,7 @@ app.directive('postGridWrapper', function(){
 
       for(i = 0; i < files.length; i++){
         
-        if (i > 4) { count = 0; console.log('break...', i); return false; } else { console.log('continuing...', i)};
+        if (i > 4) { count = 0;  return false; };
 
         let img = new Image();
         img.onload = function(loaded){
@@ -485,42 +485,6 @@ var app = angular.module('pnhsApp')
         }
 		nf.uploadedfile = file;
     });
-
-    // nf.post = [
-    //     {
-    //         user_id: 1,
-    //         photo: "uploads/dane.jpg",
-    //         name: 'Dane Vincent painaga',
-    //         datetime: '3hrs',
-    //         description: "Lorem ipsum the amazing",
-    //         files:[
-    //             {id: 1, file: "images/user-1.jpg", type: "image/jpg"},
-    //             {id: 2, file: "images/06.jpg", type: "image/jpg"},
-    //             {id: 3, file: "images/1.jpg", type: "image/jpg"},
-    //             {id: 4, file: "images/user-2.jpg", type: "image/jpg"},
-    //             {id: 5, file: "images/013.jpg", type: "image/jpg"},
-    //             {id: 6, file: "images/05.jpg", type: "image/jpg"},
-    //             {id: 6, file: "images/03.jpg", type: "image/jpg"},
-    //         ],
-    //     },
-    //     {
-    //         user_id: 2,
-    //         photo: "uploads/zoe.jpg",
-    //         name: 'Sophia Elizabeth painaga',
-    //         datetime: '5hrs',
-    //         description: "Lorem ipsum the maze",
-    //         files:[
-    //             {id: 1, file: "images/10.jpg", type: "image/jpg"},
-    //             {id: 2, file: "images/02.jpg", type: "image/jpg"},
-    //             {id: 3, file: "images/user-17.jpg", type: "image/jpg"},
-    //             {id: 4, file: "images/07.jpg", type: "image/jpg"},
-    //             {id: 5, file: "images/user-15.jpg", type: "image/jpg"},
-    //             {id: 6, file: "images/02.jpg", type: "image/jpg"},
-    //             {id: 6, file: "images/7.jpg", type: "image/jpg"},
-    //         ],
-    //     },
-    // ];
-
 
     function getPost(){
         apiService.getPost().then(function(response){

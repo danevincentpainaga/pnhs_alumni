@@ -19,8 +19,9 @@ Route::post('registerTest', 'API\AuthController@register');
 
 Route::get('getRedis', function(){
 	$redis = Redis::connection();
-	// $val = $redis->setEx('post', 3600, 'testing');
-	print_r($redis);
+	$redis->del('post');
+	$val = $redis->lPush('post', 'peter');
+	print_r($val);
 });
 
 

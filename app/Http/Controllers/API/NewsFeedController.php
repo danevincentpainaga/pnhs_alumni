@@ -12,26 +12,40 @@ use App\post;
 
 class NewsFeedController extends Controller
 {
-    public function getPost(){
 
-        $redis = Redis::connection();
-        $redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
+    private $redis;
 
-        if (Cache::has('user:'.Auth::user()->id)) {
+    public function __construct(){
+
+      Redis::connection();
+
+    }
+
+    public function getPost()
+    {
+
+        if (Redis::exists('user:'.Auth::user()->id)) {
 
             $posts_from_cache = [];
 
-            $post_ids = Cache::get('user:'.Auth::user()->id);
+            $post_ids = Redis::lRange('user:'.Auth::user()->id, 0, -1);
 
             foreach ($post_ids as $key => $postid) {
-              $posts_from_cache[] = $redis->get('post:'.$postid);
-            }
 
+              if (Redis::exists('post:'.$postid)) {
+                  $posts_from_cache[] = json_decode(Redis::get('post:'.$postid));
+              }
+              else{
+                  $post_from_db = post::with('user', 'images')->find($postid);
+                  $posts_from_cache[] = $post_from_db;
+                  Redis::set('post:'.$postid, json_encode($post_from_db));
+              }
+
+            }
+            
             return $posts_from_cache;
         }
         else{
-
-          $this->usersfeed = [];
 
           $user = user::find(Auth::user()->id)->friends;
 
@@ -45,19 +59,21 @@ class NewsFeedController extends Controller
                   ->orderBy('post_id', 'DESC')
                   ->get();
 
-
-          $redis->pipeline(function ($pipe) use ($posts){
-              foreach ($posts as $key => $row) {
-                  $this->usersfeed[] = $row['post_id'];
-                  $pipe->set('post:'.$row['post_id'], $posts[$key], 50000);
-              }
-          });
-
-          Cache::add('user:'.Auth::user()->id, $this->usersfeed);
+          $this->cachePost($posts);
 
           return $posts;
+          
         }
-
-
     }
+
+    public function cachePost($posts)
+    {
+        Redis::pipeline(function ($pipe) use ($posts){
+            foreach ($posts as $key => $row) {
+                Redis::lPush('user:'.Auth::user()->id, $row['post_id']);
+                $pipe->set('post:'.$row['post_id'], json_encode($row), 50000);
+            }
+        });
+    }
+
 }

@@ -103,6 +103,9 @@ class PostController extends Controller
                 $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
             }
 
+
+            Redis::lPush('user:'.Auth::user()->id, $post->post_id);
+
             return response()->json([
                 'post' => $request->post
             ]);
@@ -133,6 +136,9 @@ class PostController extends Controller
         if ($request->has('post.taggedUsers')) {
             $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
         }
+
+
+        Redis::lPush('user:'.Auth::user()->id, $post->post_id);
 
         return response()->json([
             'post' => $post
@@ -165,6 +171,9 @@ class PostController extends Controller
         if ($request->has('post.taggedUsers')) {
             $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
         }
+
+
+        Redis::lPush('user:'.Auth::user()->id, (string)$post->post_id);
 
         return response()->json([
             'fileName' => $post->post_id

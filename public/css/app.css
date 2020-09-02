@@ -11312,7 +11312,7 @@ grid-row-gap: 2px;
 .post-grid {
   display: block;
   width: 100%;
-  padding: 15px;
+  padding: 15px 15px 0px 15px;
   background-color: #fff;
 }
 
@@ -11422,7 +11422,7 @@ grid-row-gap: 2px;
   width: 100%;
   padding: 7px;
   background-color: #fff;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .react-section a {
   color: #757a95;

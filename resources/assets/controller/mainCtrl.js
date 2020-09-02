@@ -268,7 +268,7 @@ app.directive('postGridWrapper', function(){
 
       for(i = 0; i < files.length; i++){
         
-        if (i > 4) { count = 0; console.log('break...', i); return false; } else { console.log('continuing...', i)};
+        if (i > 4) { count = 0;  return false; };
 
         let img = new Image();
         img.onload = function(loaded){
