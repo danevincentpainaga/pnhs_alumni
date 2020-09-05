@@ -311,7 +311,7 @@ app.directive('postGridWrapper', function(){
     scope.preLoadFiles = function(files){
 
       let count = 0;
-      let arr = [ {value: 0, name: 'landscape'}, {value: 0, name: 'portrait'}, {value: 0, name: 'even'}   ]
+      let countStyleArray = [ {value: 0, name: 'landscape'}, {value: 0, name: 'portrait'}, {value: 0, name: 'even'}   ]
 
       for(i = 0; i < files.length; i++){
         
@@ -323,49 +323,58 @@ app.directive('postGridWrapper', function(){
             count++;
 
             if (img.naturalWidth > img.naturalHeight) {
-              arr[0].value += 1;
+              countStyleArray[0].value += 1;
               
             }
             else if(img.naturalWidth < img.naturalHeight){
-              arr[1].value += 1;
+              countStyleArray[1].value += 1;
             }
             else if(img.naturalWidth == img.naturalHeight){
-              arr[2].value+= 1;            
+              countStyleArray[2].value+= 1;            
             }
 
-            if (files.length === count || count === 5) {
-              switch(scope.checkDimension(arr)){
-                case 'even':
-                      scope.ngClass = 'post-photo-grid-wrapper';
-                      scope.$apply(scope.ngClass);
-                      break;
-                case 'portrait':
-                      scope.ngClass = 'post-photo-grid-wrapper';
-                      scope.$apply(scope.ngClass);
-                      break;
-                case 'landscape':
-                      scope.ngClass = 'post-photo-grid-wrapper-landscape';
-                      scope.$apply(scope.ngClass);
-                      break;
-              }
-
-              scope.pf = files.slice(0, 5); 
-              scope.$apply(scope.pf);
-            }
+            setStyle(files, count, countStyleArray);
         }
 
-
-        img.src = 'storage/'+files[i].image_name;
+        if (files[i].mime_type != "video/mp4") {
+          img.src = 'storage/'+files[i].image_name;
+        }
+        else{
+          count++;
+          setStyle(files, count, countStyleArray);
+        }
       }
     }
 
-    scope.checkDimension = function(arr){
-      for(i = 0; i < arr.length; i++){
-        if (arr[0].value < arr[i].value) {
-          arr[0] = arr[i];
+    scope.checkDimension = function(countStyleArray){
+      for(i = 0; i < countStyleArray.length; i++){
+        if (countStyleArray[0].value < countStyleArray[i].value) {
+          countStyleArray[0] = countStyleArray[i];
         }
       }
-      return arr[0].name;
+      return countStyleArray[0].name;
+    }
+
+    function setStyle(files, count, countStyleArray){
+      if (files.length === count || count === 5) {
+        switch(scope.checkDimension(countStyleArray)){
+          case 'even':
+                scope.ngClass = 'post-photo-grid-wrapper';
+                scope.$apply(scope.ngClass);
+                break;
+          case 'portrait':
+                scope.ngClass = 'post-photo-grid-wrapper';
+                scope.$apply(scope.ngClass);
+                break;
+          case 'landscape':
+                scope.ngClass = 'post-photo-grid-wrapper-landscape';
+                scope.$apply(scope.ngClass);
+                break;
+        }
+
+        scope.pf = files.slice(0, 5); 
+        scope.$apply(scope.pf);
+      }
     }
 
   }
@@ -376,7 +385,7 @@ app.directive('postGridWrapper', function(){
                 '<img ng-src="storage/{{ f.image_name }}" ng-if="f.mime_type | checkImage">'+
                 '<div class="video-wrap" ng-if="f.mime_type | checkVideo" >'+
                   '<video>'+
-                    '<source ng-src="{{ f.image_name }}" type="video/mp4"/>'+
+                    '<source ng-src="storage/{{ f.image_name }}" type="video/mp4"/>'+
                   '</video>'+
                  ' <figure>'+
                     '<button name="play"></button>'+

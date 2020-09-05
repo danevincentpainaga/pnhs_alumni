@@ -55,6 +55,47 @@ body{
     background: #fff;
 }
 
+@mixin video-wrap($height, $width){
+    .video-wrap{
+        figure {
+            background: transparent;
+            height: $height;
+            display: -ms-flex;
+            display: flex;
+            position: absolute;
+            width: $width;
+
+            button{
+                &[name="play"] {
+                    width: 50px;
+                    height: 50px;
+                    background: #00000029;
+                    border: 2px solid #fff;
+                    border-radius: 100%;
+                    margin: auto;
+                }
+
+                &[name="play"]:focus {
+                    outline: 0;
+                    border: 2px solid #fff;
+/*                  box-shadow: 0 0 0 3px hsla(210, 76%, 57%, 0.5);*/
+                }
+
+                &[name="play"]::after {
+                    content: '';
+                    display: inline-block;
+                    position: relative;
+                    top: 3px;
+                    left: 3px;
+                    border-style: solid;
+                    border-width: 10px 0 10px 20px;
+                    border-color: transparent transparent transparent white;
+                }
+            }
+        }
+    }
+}
+
 @mixin custom-card{
     display: block;
     width: 100%;
@@ -1158,11 +1199,6 @@ width: 100%;
             max-width: 100%;
         }
 
-        .video-wrap{
-            position: relative;
-            height: 100%; 
-        }
-
         video{
             object-fit: cover;
             object-position: top;
@@ -1187,6 +1223,8 @@ width: 100%;
                 min-height: 245px;
                 min-width: 245px;
             }
+
+            @include video-wrap(245px, 245px);
         }
         &:nth-child(2){
             grid-area: 4 / 1 / 7 / 3;
@@ -1203,6 +1241,8 @@ width: 100%;
                 min-height: 245px;
                 min-width: 245px;
             }
+
+            @include video-wrap(245px, 245px);
         }
         &:nth-child(3){
             grid-area: 1 / 3 / 3 / 5;
@@ -1222,6 +1262,8 @@ width: 100%;
                 max-width: 245px;
                 min-width: 245px;
             }
+
+            @include video-wrap(163px, 245px);
         }
         &:nth-child(4){
             grid-area: 3 / 3 / 5 / 5;
@@ -1241,6 +1283,8 @@ width: 100%;
                 max-width: 245px;
                 min-width: 245px;
             }
+
+            @include video-wrap(163px, 245px);
         }
         &:nth-child(5){
             grid-area: 5 / 3 / 7 / 5;
@@ -1260,6 +1304,8 @@ width: 100%;
                 max-width: 245px;
                 min-width: 245px;
             }
+
+            @include video-wrap(163px, 245px);
         }
 
     }
@@ -1273,11 +1319,6 @@ grid-template-rows: repeat(2, 1fr);
 grid-column-gap: 2px;
 grid-row-gap: 2px;
 }
-
-.div1 { grid-area: 1 / 1 / 2 / 2; }
-.div2 { grid-area: 1 / 2 / 2 / 3; }
-.div3 { grid-area: 2 / 1 / 3 / 2; }
-.div4 { grid-area: 2 / 2 / 3 / 3; }*/
 
 
 /*Five*/
@@ -1307,11 +1348,6 @@ grid-row-gap: 2px;
             max-width: 100%;
         }
 
-        .video-wrap{
-            position: relative;
-            height: 100%; 
-        }
-
         video{
             object-fit: cover;
             object-position: top;
@@ -1332,7 +1368,11 @@ grid-row-gap: 2px;
             video{
                 max-height: 245px;
                 min-height: 245px;
+                max-width: 245px;
+                min-width: 245px;
             }
+
+            @include video-wrap(245px, 245px);
         }
         &:nth-child(2){
             grid-area: 1 / 4 / 4 / 7;
@@ -1340,12 +1380,16 @@ grid-row-gap: 2px;
             min-height: 245px;
             img{
                 /*max-height: 245px;*/
-                min-height: 245px;    
+                min-height: 245px;
             }
             video{
                 max-height: 245px;
                 min-height: 245px;
+                max-width: 245px;
+                min-width: 245px;
             }
+
+            @include video-wrap(245px, 245px);
         }
         &:nth-child(3){
             grid-area: 4 / 1 / 6 / 3;
@@ -1356,9 +1400,13 @@ grid-row-gap: 2px;
                 min-height: 163px;
             }
             video{
-                /*max-height: 163px;*/
+                max-height: 163px;
                 min-height: 163px;
+                max-width: 163px;
+                min-width: 163px;
             }
+
+            @include video-wrap(163px, 163px);
         }
         &:nth-child(4){
             grid-area: 4 / 3 / 6 / 5;
@@ -1369,9 +1417,13 @@ grid-row-gap: 2px;
                 min-height: 163px;
             }
             video{
-                /*max-height: 163px;*/
+                max-height: 163px;
                 min-height: 163px;
+                max-width: 163px;
+                min-width: 163px;
             }
+
+            @include video-wrap(163px, 163px);
         }
         &:nth-child(5){
             grid-area: 4 / 5 / 6 / 7;
@@ -1382,9 +1434,13 @@ grid-row-gap: 2px;
                 min-height: 163px;
             }
             video{
-                /*max-height: 163px;*/
+                max-height: 163px;
                 min-height: 163px;
+                max-width: 163px;
+                min-width: 163px;
             }
+
+            @include video-wrap(163px, 163px);
         }
 
     }
@@ -1407,49 +1463,6 @@ grid-row-gap: 2px;
         }
 }
 
-/*.div1 { grid-area: 1 / 1 / 4 / 4; }
-.div2 { grid-area: 1 / 4 / 4 / 7; }
-.div3 { grid-area: 4 / 1 / 6 / 3; }
-.div4 { grid-area: 4 / 3 / 6 / 5; }
-.div5 { grid-area: 4 / 5 / 6 / 7; }*/
-
-
-
-.video-wrap{
-    figure {
-        background: transparent;
-        height: 100%;
-        display: -ms-flex;
-        display: flex;
-        position: absolute;
-        width: 100%;
-    }
-
-    figure button[name="play"] {
-        width: 50px;
-        height: 50px;
-        background: #00000029;
-        border: 2px solid #fff;
-        border-radius: 100%;
-        margin: auto;
-    }
-    figure button[name="play"]:focus {
-      outline: 0;
-      border: 1px solid hsl(210, 58%, 69%);
-      box-shadow: 0 0 0 3px hsla(210, 76%, 57%, 0.5);
-    }
-
-    figure button[name="play"]::after {
-      content: '';
-      display: inline-block;
-      position: relative;
-      top: 3px;
-      left: 3px;
-      border-style: solid;
-      border-width: 10px 0 10px 20px;
-      border-color: transparent transparent transparent white;
-    }
-}
 
 .ph-item {
     direction: ltr;

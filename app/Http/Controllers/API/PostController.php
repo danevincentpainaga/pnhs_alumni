@@ -56,7 +56,6 @@ class PostController extends Controller
         $finalPath = storage_path("app/public/".$filePath);
 
         $file->move($finalPath, $fileName);
-        
 
         return response()->json([
             'path' => $filePath,
@@ -99,15 +98,16 @@ class PostController extends Controller
             $post->p_userid = Auth::user()->id;
             $post->save();
 
+            if ($post) {
+                $this->cachePost($post->post_id);
+            }
+
             if ($request->has('post.taggedUsers')) {
                 $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
             }
 
-
-            Redis::lPush('user:'.Auth::user()->id, $post->post_id);
-
             return response()->json([
-                'post' => $request->post
+                'post' => $post
             ]);
         }
     }
@@ -133,12 +133,13 @@ class PostController extends Controller
 
         }
 
+        if ($post) {
+            $this->cachePost($post->post_id);
+        }
+
         if ($request->has('post.taggedUsers')) {
             $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
         }
-
-
-        Redis::lPush('user:'.Auth::user()->id, $post->post_id);
 
         return response()->json([
             'post' => $post
@@ -168,12 +169,13 @@ class PostController extends Controller
 
         }
 
+        if ($post) {
+            $this->cachePost($post->post_id);
+        }
+
         if ($request->has('post.taggedUsers')) {
             $this->saveTaggedUsers($request->post['taggedUsers'], $post->post_id);
         }
-
-
-        Redis::lPush('user:'.Auth::user()->id, (string)$post->post_id);
 
         return response()->json([
             'fileName' => $post->post_id
@@ -187,6 +189,14 @@ class PostController extends Controller
             $t->tagged_user_id  = $tag['id'];
             $t->save();
         }
+    }
+
+    private function cachePost($postId){
+
+        $post_from_db = post::with('user', 'images')->find($postId);
+        Redis::set('post:'.$postId, json_encode($post_from_db));
+        Redis::lPush('user:'.Auth::user()->id, $postId);
+
     }
 
 }

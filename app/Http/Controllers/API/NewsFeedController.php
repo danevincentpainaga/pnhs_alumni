@@ -13,8 +13,6 @@ use App\post;
 class NewsFeedController extends Controller
 {
 
-    private $redis;
-
     public function __construct(){
 
       Redis::connection();
@@ -31,16 +29,9 @@ class NewsFeedController extends Controller
             $post_ids = Redis::lRange('user:'.Auth::user()->id, 0, -1);
 
             foreach ($post_ids as $key => $postid) {
-
               if (Redis::exists('post:'.$postid)) {
                   $posts_from_cache[] = json_decode(Redis::get('post:'.$postid));
               }
-              else{
-                  $post_from_db = post::with('user', 'images')->find($postid);
-                  $posts_from_cache[] = $post_from_db;
-                  Redis::set('post:'.$postid, json_encode($post_from_db));
-              }
-
             }
             
             return $posts_from_cache;
@@ -71,7 +62,7 @@ class NewsFeedController extends Controller
         Redis::pipeline(function ($pipe) use ($posts){
             foreach ($posts as $key => $row) {
                 Redis::lPush('user:'.Auth::user()->id, $row['post_id']);
-                $pipe->set('post:'.$row['post_id'], json_encode($row), 50000);
+                $pipe->set('post:'.$row['post_id'], json_encode($row));
             }
         });
     }
