@@ -44,6 +44,8 @@
         "@fortawesome/fontawesome-free": "^5.13.0",
         "@mikepol/ng-photo-grid": "^1.0.3",
         "angularjs-lightbox": "^1.1.0",
+        "emoji-datasource-facebook": "^5.0.1",
+        "emoji-js": "^3.5.0",
         "emoji-mart": "^3.0.0",
         "emojionearea": "^3.0.0",
         "moment": "^2.27.0",

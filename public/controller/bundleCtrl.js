@@ -13,7 +13,7 @@ angular.module('pnhsApp').directive('emoji',['$sce', function($sce){
       });
 
       elem[0].emojioneArea.on("change", function(btn, event) {
-       scope.description =  $sce.trustAsJs( $(elem)[0].emojioneArea.getText() );
+        scope.description =  $sce.trustAsJs( $(elem)[0].emojioneArea.getText() );
         scope.$apply(scope.description);
       });
 
@@ -56,6 +56,16 @@ app.filter('formatDate', function(){
   }
 });
 
+app.filter('formatDescription',['$sce', function($sce){
+  return function(input){
+
+    let emoji = new EmojiConvertor();
+    emoji.img_set = 'facebook';
+    emoji.img_sets.facebook.path = 'node_modules/emoji-datasource-facebook/img/facebook/64/';
+
+    return $sce.trustAsHtml(emoji.replace_colons(input));
+  }
+}]);
 'use strict';
 
 /**

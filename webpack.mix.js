@@ -55,3 +55,5 @@ mix.copyDirectory('node_modules/video.js', 'public/node_modules/video.js');
 mix.copyDirectory('node_modules/placeholder-loading', 'public/node_modules/placeholder-loading');
 mix.copyDirectory('node_modules/emojionearea', 'public/node_modules/emojionearea');
 mix.copyDirectory('node_modules/moment', 'public/node_modules/moment');
+mix.copyDirectory('node_modules/emoji-js', 'public/node_modules/emoji-js');
+mix.copyDirectory('node_modules/emoji-datasource-facebook', 'public/node_modules/emoji-datasource-facebook');

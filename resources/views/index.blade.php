@@ -15,6 +15,7 @@
         <link href="{{asset('node_modules/grid/src/images-grid.css')}}" rel="stylesheet">
         <link href="{{asset('node_modules/video.js/dist/video-js.css')}}" rel="stylesheet">
         <link href="{{asset('node_modules/emojionearea/dist/emojionearea.min.css')}}" rel="stylesheet">
+        <link href="{{asset('node_modules/emoji-js/lib/emoji.css')}}" rel="stylesheet">
         <!-- <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" /> -->
         
     </head>
@@ -55,6 +56,7 @@
         <script src="{{asset('node_modules/video.js/dist/video.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/emojionearea/dist/emojionearea.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('node_modules/moment/min/moment.min.js')}}" type="text/javascript" ></script>
+        <script src="{{asset('node_modules/emoji-js/lib/emoji.js')}}" type="text/javascript" ></script>
         <!-- <script src="https://vjs.zencdn.net/7.8.4/video.js"></script> -->
         
 

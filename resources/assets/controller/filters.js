@@ -32,3 +32,14 @@ app.filter('formatDate', function(){
     if (date) return moment(date).startOf('hour').fromNow();  
   }
 });
+
+app.filter('formatDescription',['$sce', function($sce){
+  return function(input){
+
+    let emoji = new EmojiConvertor();
+    emoji.img_set = 'facebook';
+    emoji.img_sets.facebook.path = 'node_modules/emoji-datasource-facebook/img/facebook/64/';
+
+    return $sce.trustAsHtml(emoji.replace_colons(input));
+  }
+}]);

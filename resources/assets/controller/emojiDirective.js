@@ -13,7 +13,7 @@ angular.module('pnhsApp').directive('emoji',['$sce', function($sce){
       });
 
       elem[0].emojioneArea.on("change", function(btn, event) {
-       scope.description =  $sce.trustAsJs( $(elem)[0].emojioneArea.getText() );
+        scope.description =  $sce.trustAsJs( $(elem)[0].emojioneArea.getText() );
         scope.$apply(scope.description);
       });
 

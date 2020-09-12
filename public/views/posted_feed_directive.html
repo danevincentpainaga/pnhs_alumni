@@ -44,7 +44,7 @@
 </div>
 <div class="posts-description" style="background-color: #fff;width: 100%;padding: 0px .15625in 0px .15625in;">
   <hr style="margin-top: .7pc; margin-bottom: .5pc;">
-  <p style="padding-top: 5px;color: #6d6d6d;font-size: 14.5px;">{{ userpost.description }}</p>
+  <p style="padding-top: 5px;color: #6d6d6d;font-size: 14.5px;" ng-bind-html="userpost.description | formatDescription"></p>
 </div>
 <div class="post-grid" style="min-height: 100px;">
   <div post-grid-wrapper postfiles="userpost.images" ></div>
