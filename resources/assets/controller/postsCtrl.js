@@ -7,9 +7,8 @@
  * Controller of the pnhs_alumni
  */
 
-var app = angular.module('pnhsApp')
-  app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload', '$sce',
-      function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload, $sce) {
+app.controller('postsCtrl',['$scope', '$rootScope', '$location', '$state', '$http','$filter', '$timeout', '$cookies', '$window', '$stateParams', '$q', 'swalert', 'fileReader', 'apiService', 'Upload', '$sce',
+  function ($scope, $rootScope, $location, $state, $http, $filter, $timeout, $cookies, $window, $stateParams, $q, swalert, fileReader, apiService, Upload, $sce) {
 
     var p = this;
 
@@ -20,6 +19,10 @@ var app = angular.module('pnhsApp')
     p.privacy_status = 'public';
     p.show_tagged_limit = 1;
     p.filesize = 2000000;
+
+    $scope.$on('selected_emoji', function(v, feelingEmoji){
+      p.selected_feeling = $sce.getTrustedJs(feelingEmoji);
+    });
 
     $scope.$watch('status', function(bool, o){
       p.show_suggestions = bool;
@@ -44,6 +47,10 @@ var app = angular.module('pnhsApp')
 
     p.tagFriends = function(){
       p.show_suggestions = true;
+    }
+
+    p.feelingActivity = function(){
+      p.show_feeling_activity = true;
     }
 
     /* upload later on form submit */

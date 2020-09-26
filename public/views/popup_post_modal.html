@@ -24,6 +24,7 @@
 		    				</a>
 		    			</span>
 		    		</div>
+		    		<div style="padding: 0px 0px 1px 10px;font-size: 14px; color: #757a95;">Feeling - <span ng-bind-html="p.selected_feeling | formatDescription"></span></div>
 		    		<div class="upload-holder">
 		    			<textarea placeholder="Whats on your mind? Dane" ng-model="p.post_description" emoji description="p.post_description"></textarea>
 		    		</div>
@@ -44,7 +45,7 @@
 		        <a href="" ng-click="p.tagFriends()">
 		          <img src="images/tag.svg">
 		        </a>
-		        <a href="">
+		        <a href="" ng-click="p.feelingActivity()">
 		          <img src="images/feeling.svg">
 		        </a>
 			</div>
@@ -64,5 +65,6 @@
     		</div>
 		</div>		
 		<tag-friends-suggestions status="p.show_suggestions" ></tag-friends-suggestions>
+		<feeling-activity status="p.show_feeling_activity"></feeling-activity>
 	</div>
 </div>

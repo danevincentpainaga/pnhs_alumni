@@ -1,4 +1,5 @@
-angular.module('pnhsApp').directive('emoji',['$sce', function($sce){
+angular
+.module('pnhsApp').directive('emoji',['$sce', function($sce){
   return{
     restrict:'A',
     scope:{

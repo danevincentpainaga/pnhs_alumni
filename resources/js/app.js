@@ -3,7 +3,7 @@ import '@uirouter/angularjs/lib/legacy/stateEvents.js';
 require('./bootstrap');
 
 
-angular
+var app = angular
 .module('pnhsApp', [
   'ngCookies',
   'ngResource',

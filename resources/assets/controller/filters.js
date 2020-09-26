@@ -35,11 +35,12 @@ app.filter('formatDate', function(){
 
 app.filter('formatDescription',['$sce', function($sce){
   return function(input){
+    if (input) {
+      let emoji = new EmojiConvertor();
+      emoji.img_set = 'facebook';
+      emoji.img_sets.facebook.path = 'node_modules/emoji-datasource-facebook/img/facebook/64/';
 
-    let emoji = new EmojiConvertor();
-    emoji.img_set = 'facebook';
-    emoji.img_sets.facebook.path = 'node_modules/emoji-datasource-facebook/img/facebook/64/';
-
-    return $sce.trustAsHtml(emoji.replace_colons(input));
+      return $sce.trustAsHtml(emoji.replace_colons(input));
+    }
   }
 }]);

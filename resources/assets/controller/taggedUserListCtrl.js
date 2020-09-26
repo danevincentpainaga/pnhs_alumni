@@ -7,9 +7,8 @@
  * # taggedUserListCtrl
  * Controller of the pnhs_alumni
  */ 
-var app = angular.module('pnhsApp')
-  app.controller('taggedUserListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'apiService', 'swalert', 'debounce',
-    function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert, debounce) {
+app.controller('taggedUserListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'apiService', 'swalert', 'debounce',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, apiService, swalert, debounce) {
 
   var tc = this;
   tc.taggedUsers = [];
