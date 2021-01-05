@@ -19,7 +19,7 @@
         "angular-sanitize": "^1.4.0",
         "angular-touch": "^1.4.0",
         "angularjs-datepicker": "2.1.23",
-        "axios": "^0.18",
+        "axios": "^0.21",
         "bootstrap": "^4.0.0",
         "browser-sync": "^2.26.7",
         "browser-sync-webpack-plugin": "^2.0.1",
